@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-25 06:18",
+  "updated": "2026-03-25 08:20",
   "source": "KIPRIS (한국특허정보원)",
   "source_url": "https://plus.kipris.or.kr",
   "new_count": 0,
@@ -10,7 +10,7 @@
       "applicant": "지멘스 가메사 리뉴어블 에너지 아/에스",
       "app_date": "2025-08-05",
       "ipc": "H01F 1/057|H02K 1/02|F03D 9/25",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020250107366",
+      "url": "https://doi.org/10.8080/1020250107366",
       "abstract": "28 내지 35 중량%의 희토류 원소들을 포함하는 nd-fe-b 영구 자석(354)이 설명되며, nd(neodymium)와 pr(praseodymium)의 합계 함량은 20 내지 25 중량%이고, ce(cerium)의 함량은 5 내지 10 중량%이고, 공간적 연장, 즉 nd-fe-b 영구 자석(354)의 메인 자화 방향으로의 자석(354)의 높이(h)는 1...",
       "source": "KIPRIS",
       "is_new": false
@@ -21,7 +21,7 @@
       "applicant": "(주)한청알에프",
       "app_date": "2023-12-28",
       "ipc": "C22B 59/00|C22B 3/08|C22B 7/00|C22B 1/00",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020230194728",
+      "url": "https://doi.org/10.8080/1020230194728",
       "abstract": "본 발명은 Dy가 포함된 NdFeB 폐영구자석에서 염분리 방법에 의한 Nd 및 Dy 분리 회수 방법에 관한 것으로, NdFeB자석의 재활용 공정에서 Nd와 Dy를 분리함에 있어 용매추출 사전공정에서 Dy를 약 50% 분리함으로써 용매추출 공정의 단수를 80% 이상 줄일 수 있으면서도 Nd와 Dy를 99.8% 이상 분리할 수 있는 Dy가 포함된 NdFeB 폐...",
       "source": "KIPRIS",
       "is_new": false
@@ -32,7 +32,7 @@
       "applicant": "한국생산기술연구원",
       "app_date": "2023-09-19",
       "ipc": "C22B 4/06|C22B 3/06|C22B 1/02",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020230124432",
+      "url": "https://doi.org/10.8080/1020230124432",
       "abstract": "폐 NdFeB 영구자석으로부터 희토류 금속 회수를 위해 열처리를 통해 폐 NdFeB 분말 내부에 기공을 미리 형성시켜 침출시 침출 속도를 향상시킬 수 있도록 고효율 침출을 실행하는 다공성 구조용 열처리 방법에 관한 것으로, (a) 폐 NdFeB 영구자석으로부터 NdFeB 분말을 마련하는 단계, (b) 상기 NdFeB 분말을 열처리로 내부에 적재하고, 상기 ...",
       "source": "KIPRIS",
       "is_new": false
@@ -43,7 +43,7 @@
       "applicant": "포항공과대학교 산학협력단|재단법인 막스플랑크 한국포스텍연구소",
       "app_date": "2022-11-02",
       "ipc": "H01F 1/01|C22C 38/00",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020220144421",
+      "url": "https://doi.org/10.8080/1020220144421",
       "abstract": "본 발명에서는 기존의 네오디뮴 자석 Nd  2  Fe  14  B 대체 영구자석으로 CeFe  12  기반 화합물이 제시되었다. 정방정계의 결정을 가지며 층상으로 철 원소들이 복잡한 망을 가진 Ce  2  Fe  14  B 에 비해 철이 균일하게 분포한 ThMn  12  형태의 구조인 CeFe  12  화합물은 적은 희토류 조성에 비해 많은 철 원소 조성을...",
       "source": "KIPRIS",
       "is_new": false
@@ -54,7 +54,7 @@
       "applicant": "현대자동차주식회사|기아 주식회사|성림첨단산업(주)",
       "app_date": "2021-07-19",
       "ipc": "H01F 41/02|H01F 1/055|H01F 1/053",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020210094428",
+      "url": "https://doi.org/10.8080/1020210094428",
       "abstract": "NdFeB 소결자석을 준비하는 단계; 희토류금속 수화물을 포함하는 제1입계확산물질을 제조하는 단계; 희토류금속 및 천이금속이 혼합된 수화물을 포함하는 제2입계확산물질을 제조하는 단계; NdFeB 소결자석의 표면에 제1입계확산물질 또는 제2입계확산물질을 도포하여 입계확산 코팅층을 형성하는 단계; 열처리하여 제1입계확산물질 또는 제2입계확산물질을 NdFeB 소...",
       "source": "KIPRIS",
       "is_new": false
@@ -65,7 +65,7 @@
       "applicant": "푸젠 골든 드래곤 레어-어스 컴퍼니 리미티드",
       "app_date": "2021-05-21",
       "ipc": "C22C 28/00|C22C 19/07|C22C 30/00|C22C 38/00|B22F 9/04|H01F 1/057",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020227024171",
+      "url": "https://doi.org/10.8080/1020227024171",
       "abstract": "본 발명은 중희토류 합금, 네오디뮴철붕소 영구자석 재료, 원료 및 제조방법을 개시한다. 이 중희토류 합금은 질량 백분율로 다음의 성분을 포함하며, RH:30~100 mas%(또한 100 mas%를 제외); X: 0~20 mas%(또한 0을 제외); B:0~1.1 mas%; Fe 및/또는 Co: 15~69mas%, RH는 Gd, Tb, Dy, Ho, Er, ...",
       "source": "KIPRIS",
       "is_new": false
@@ -76,7 +76,7 @@
       "applicant": "기아 주식회사|현대자동차주식회사|성림첨단산업(주)",
       "app_date": "2017-06-16",
       "ipc": "H01F 41/02|H01F 1/053|H01F 7/02",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020170076368",
+      "url": "https://doi.org/10.8080/1020170076368",
       "abstract": "본 발명의 일 실시예에 따른 희토류 영구자석 제조방법은 NNdFeB 소결자석을 마련하는 준비단계; R 수화물 또는 R 불화물과 RaMb 또는 M을 포함하는 입계확산물질을 상기 NdFeB 소결자석의 표면에 도포하여 입계확산 코팅층을 형성하는 코팅단계; 및 열처리하여 상기 입계확산물질을 상기 NdFeB 소결자석의 결정립 입계로 확산시키는 확산단계;를 포함하고,...",
       "source": "KIPRIS",
       "is_new": false
