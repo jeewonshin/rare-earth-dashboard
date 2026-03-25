@@ -1,7 +1,19 @@
 {
-  "updated": "2026-03-25 05:42",
+  "updated": "2026-03-25 06:09",
   "source": "KIPRIS (한국특허정보원)",
   "source_url": "https://plus.kipris.or.kr",
   "new_count": 0,
-  "items": []
+  "items": [
+    {
+      "title": "탄탈륨 함유 석출물을 포함하는 영구자석 및 이의 제조방법",
+      "app_no": "1020240038163",
+      "applicant": "현대자동차주식회사|기아 주식회사",
+      "app_date": "2024-03-20",
+      "ipc": "H01F 1/057|H01F 41/02",
+      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020240038163",
+      "abstract": "본 발명은 네오디뮴, 세륨, 철 및 붕소를 포함하는 기본물질을 포함하고, 탄탈륨 함유 석출물을 포함하며, 잔류자화 값이 12.82 kG 이상인, 영구자석 및 이의 제조방법을 제공한다.",
+      "source": "KIPRIS",
+      "is_new": false
+    }
+  ]
 }
