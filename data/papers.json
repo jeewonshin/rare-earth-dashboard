@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-25 08:49",
+  "updated": "2026-03-25 23:43",
   "source": "arXiv + CrossRef",
   "new_count": 0,
   "items": [
@@ -10,6 +10,15 @@
       "url": "https://doi.org/10.1016/j.jmst.2025.10.080",
       "abstract": "...",
       "source": "CrossRef (Journal of Materials Science &amp; Technology)",
+      "is_new": false
+    },
+    {
+      "title": "Giant magnetic and optical anisotropy in cerium-substituted M-type strontium hexaferrite driven by 4$f$ electrons",
+      "authors": "Churna Bhandari, Durga Paudyal",
+      "date": "2023-08-08",
+      "url": "http://arxiv.org/abs/2308.04594v2",
+      "abstract": "By performing density functional calculations, we find a giant magnetocrystalline anisotropy (MCA) constant in abundant element cerium (Ce) substituted M-type hexaferrite, in the energetically favorab...",
+      "source": "arXiv",
       "is_new": false
     },
     {
@@ -36,6 +45,15 @@
       "date": "2018-06-06",
       "url": "http://arxiv.org/abs/1806.01990v1",
       "abstract": "A systematic study of magnetocrystalline anisotropy is performed for R(La/Ce/Nd)2Fe14B tetragonal compound with the site substitution mechanism. Theoretical calculation suggests the 50% doping with Ce...",
+      "source": "arXiv",
+      "is_new": false
+    },
+    {
+      "title": "Spin structures of textured and isotropic Nd-Fe-B-based nanocomposites: Evidence for correlated crystallographic and spin texture",
+      "authors": "Andreas Michels, Raoul Weber, Ivan Titov et al.",
+      "date": "2016-09-12",
+      "url": "http://arxiv.org/abs/1609.03383v1",
+      "abstract": "We report the results of a comparative study of the magnetic microstructure of textured and isotropic $\\mathrm{Nd}_2\\mathrm{Fe}_{14}\\mathrm{B}/α$-$\\mathrm{Fe}$ nanocomposites using magnetometry, trans...",
       "source": "arXiv",
       "is_new": false
     },
