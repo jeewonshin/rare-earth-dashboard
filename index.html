@@ -4,85 +4,324 @@
   <meta charset="UTF-8">
   <title>희토류 기술 대시보드</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; padding: 20px; }
-    h1 { color: #1a365d; text-align: center; margin-bottom: 4px; }
-    .subtitle { text-align:center; color:#666; margin-bottom:20px; font-size:13px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-    .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .card h2 { color: #2b6cb0; border-bottom: 2px solid #ebf8ff; padding-bottom: 8px; margin-top:0; }
-    .item { border-bottom: 1px solid #eee; padding: 10px 0; font-size:14px; }
-    .item:last-child { border-bottom: none; }
-    .item a { color: #2b6cb0; text-decoration: none; font-weight: bold; }
-    .item a:hover { text-decoration: underline; }
-    .tag { font-size: 11px; background: #ebf8ff; color: #2b6cb0; padding: 2px 8px; border-radius: 10px; margin-left:4px; }
-    .price-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #eee; }
-    .price-name { font-weight:bold; color:#2d3748; }
-    .price-value { font-size: 20px; font-weight: bold; color: #276749; }
-    .updated { font-size: 12px; color: #aaa; text-align: right; margin-top:16px; }
-    .loading { color:#aaa; font-size:14px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      padding: 24px;
+    }
+
+    h1 {
+      color: #1a365d;
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      color: #2b6cb0;
+      font-size: 16px;
+      border-bottom: 2px solid #ebf8ff;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    /* 가격 카드 */
+    .price-big {
+      font-size: 40px;
+      font-weight: bold;
+      color: #1a365d;
+      line-height: 1.1;
+    }
+
+    .price-unit {
+      font-size: 15px;
+      color: #888;
+      font-weight: normal;
+    }
+
+    .price-grade {
+      color: #888;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .price-date {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    /* 논문/특허 카드 */
+    .item {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .item a {
+      color: #2b6cb0;
+      text-decoration: none;
+      font-weight: bold;
+      line-height: 1.4;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .item a:hover {
+      text-decoration: underline;
+    }
+
+    .item .meta {
+      color: #777;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .item .abstract {
+      color: #999;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .updated {
+      font-size: 11px;
+      color: #bbb;
+      text-align: right;
+      margin-top: 14px;
+    }
+
+    .loading {
+      color: #aaa;
+      font-size: 14px;
+      padding: 10px 0;
+    }
   </style>
 </head>
 <body>
+
   <h1>🧲 희토류 기술 대시보드</h1>
   <p class="subtitle">Nd-Fe-B / Ce 자석 · 희토류 소재 · 최신 정보 자동 수집</p>
 
   <div class="grid">
 
-    <!-- 가격 카드 -->
+    <!-- ===== 가격 카드 ===== -->
     <div class="card">
-      <h2>💰 희토류 가격 동향</h2>
-      <div id="prices-container"><p class="loading">데이터 로딩 중...</p></div>
+      <h2>💰 네오디뮴 (Nd) 가격 동향</h2>
+
+      <div class="price-big" id="price-value">
+        --<span class="price-unit"> USD/kg</span>
+      </div>
+      <div class="price-grade" id="price-grade"></div>
+      <div style="margin-top:4px">
+        <span id="price-change" style="font-weight:bold;font-size:15px"></span>
+      </div>
+      <div class="price-date">기준일: <span id="price-date">--</span></div>
+
+      <!-- 차트 -->
+      <canvas id="priceChart" height="140"
+        style="width:100%;display:block;margin-top:14px"></canvas>
+
       <div class="updated" id="price-updated"></div>
     </div>
 
-    <!-- 논문 카드 -->
+    <!-- ===== 논문 카드 ===== -->
     <div class="card">
-      <h2>📄 최신 논문</h2>
-      <div id="papers-container"><p class="loading">데이터 로딩 중...</p></div>
+      <h2>📄 최신 논문 (arXiv)</h2>
+      <div id="papers-container">
+        <p class="loading">데이터 로딩 중...</p>
+      </div>
       <div class="updated" id="paper-updated"></div>
     </div>
 
-    <!-- 특허 카드 -->
+    <!-- ===== 특허 카드 ===== -->
     <div class="card">
       <h2>🔐 최신 특허</h2>
-      <div id="patents-container"><p class="loading">데이터 로딩 중...</p></div>
+      <div id="patents-container">
+        <p class="loading">데이터 로딩 중...</p>
+      </div>
       <div class="updated" id="patent-updated"></div>
     </div>
 
   </div>
 
   <script>
-    fetch('data/prices.json').then(r=>r.json()).then(data=>{
-      document.getElementById('price-updated').textContent = '업데이트: ' + data.updated;
-      const el = document.getElementById('prices-container');
-      el.innerHTML = data.items.map(p=>
-        `<div class="price-row">
-          <span class="price-name">${p.name}</span>
-          <span class="price-value">${p.value} <small style="font-size:12px;color:#888">${p.unit}</small></span>
-        </div>`).join('');
-    }).catch(()=>{ document.getElementById('prices-container').innerHTML='<p class="loading">데이터 없음 (첫 실행 후 표시됩니다)</p>'; });
+    // ================================================
+    // 가격 카드
+    // ================================================
+    fetch('data/prices.json')
+      .then(r => r.json())
+      .then(data => {
+        const t = data.today;
 
-    fetch('data/papers.json').then(r=>r.json()).then(data=>{
-      document.getElementById('paper-updated').textContent = '업데이트: ' + data.updated;
-      const el = document.getElementById('papers-container');
-      el.innerHTML = data.items.map(p=>
-        `<div class="item">
-          <a href="${p.url}" target="_blank">${p.title}</a><br>
-          <small style="color:#666">${p.authors} · ${p.date}</small><br>
-          <small style="color:#888">${p.abstract}</small>
-        </div>`).join('');
-    }).catch(()=>{ document.getElementById('papers-container').innerHTML='<p class="loading">데이터 없음 (첫 실행 후 표시됩니다)</p>'; });
+        // 가격
+        document.getElementById('price-value').innerHTML =
+          (t.value !== null ? t.value.toFixed(2) : 'N/A') +
+          '<span class="price-unit"> USD/kg</span>';
 
-    fetch('data/patents.json').then(r=>r.json()).then(data=>{
-      document.getElementById('patent-updated').textContent = '업데이트: ' + data.updated;
-      const el = document.getElementById('patents-container');
-      el.innerHTML = data.items.map(p=>
-        `<div class="item">
-          <a href="${p.url}" target="_blank">${p.title}</a><br>
-          <small style="color:#666">${p.assignee} · ${p.date}</small><br>
-          <small style="color:#888">${p.snippet}</small>
-        </div>`).join('');
-    }).catch(()=>{ document.getElementById('patents-container').innerHTML='<p class="loading">데이터 없음 (첫 실행 후 표시됩니다)</p>'; });
+        // 등급
+        document.getElementById('price-grade').textContent = t.grade || '';
+
+        // 기준일
+        document.getElementById('price-date').textContent = t.date || '';
+
+        // 출처
+        document.getElementById('price-updated').textContent =
+          '출처: ' + data.source + ' | 업데이트: ' + data.updated;
+
+        // 등락
+        if (t.change_val !== null && t.change_pct !== null) {
+          const up    = t.change_val >= 0;
+          const color = up ? '#c53030' : '#276749';
+          const arrow = up ? '▲' : '▼';
+          document.getElementById('price-change').innerHTML =
+            `<span style="color:${color}">
+              ${arrow} ${Math.abs(t.change_val).toFixed(2)}
+              (${Math.abs(t.change_pct).toFixed(2)}%)
+            </span>`;
+        }
+
+        // 차트
+        const history = data.history || [];
+        if (history.length < 2) return;
+
+        const canvas  = document.getElementById('priceChart');
+        canvas.width  = canvas.parentElement.clientWidth;
+        canvas.height = 140;
+        const ctx = canvas.getContext('2d');
+        const W   = canvas.width;
+        const H   = canvas.height;
+        const pad = { top: 10, right: 10, bottom: 28, left: 44 };
+        const iW  = W - pad.left - pad.right;
+        const iH  = H - pad.top  - pad.bottom;
+
+        const vals  = history.map(d => d.value);
+        const dates = history.map(d => d.date);
+        const minV  = Math.min(...vals);
+        const maxV  = Math.max(...vals);
+        const rng   = maxV - minV || 1;
+
+        const xOf = i => pad.left + (i / (vals.length - 1)) * iW;
+        const yOf = v => pad.top  + (1 - (v - minV) / rng)  * iH;
+
+        // 그라데이션
+        const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+        grad.addColorStop(0, 'rgba(43,108,176,0.25)');
+        grad.addColorStop(1, 'rgba(43,108,176,0.00)');
+
+        // 채우기
+        ctx.beginPath();
+        ctx.moveTo(xOf(0), yOf(vals[0]));
+        vals.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
+        ctx.lineTo(xOf(vals.length - 1), H - pad.bottom);
+        ctx.lineTo(xOf(0), H - pad.bottom);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // 라인
+        ctx.beginPath();
+        ctx.moveTo(xOf(0), yOf(vals[0]));
+        vals.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
+        ctx.strokeStyle = '#2b6cb0';
+        ctx.lineWidth   = 2;
+        ctx.stroke();
+
+        // 마지막 점 강조
+        ctx.beginPath();
+        ctx.arc(xOf(vals.length - 1), yOf(vals[vals.length - 1]), 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#2b6cb0';
+        ctx.fill();
+
+        // Y축 라벨
+        ctx.fillStyle = '#888';
+        ctx.font      = '11px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(maxV.toFixed(1), pad.left - 4, pad.top + 10);
+        ctx.fillText(minV.toFixed(1), pad.left - 4, H - pad.bottom - 2);
+
+        // X축 라벨
+        ctx.textAlign = 'left';
+        ctx.fillText(dates[0], pad.left, H - 6);
+        ctx.textAlign = 'right';
+        ctx.fillText(dates[dates.length - 1], W - pad.right, H - 6);
+      })
+      .catch(() => {
+        document.getElementById('price-value').innerHTML =
+          'N/A<span class="price-unit"> USD/kg</span>';
+        document.getElementById('price-updated').textContent =
+          '데이터 없음 (Actions 실행 후 표시됩니다)';
+      });
+
+    // ================================================
+    // 논문 카드
+    // ================================================
+    fetch('data/papers.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('paper-updated').textContent =
+          '업데이트: ' + data.updated;
+        document.getElementById('papers-container').innerHTML =
+          data.items.map(p => `
+            <div class="item">
+              <a href="${p.url}" target="_blank">${p.title}</a>
+              <div class="meta">${p.authors} · ${p.date}</div>
+              <div class="abstract">${p.abstract}</div>
+            </div>
+          `).join('');
+      })
+      .catch(() => {
+        document.getElementById('papers-container').innerHTML =
+          '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
+      });
+
+    // ================================================
+    // 특허 카드
+    // ================================================
+    fetch('data/patents.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('patent-updated').textContent =
+          '업데이트: ' + data.updated;
+        document.getElementById('patents-container').innerHTML =
+          data.items.map(p => `
+            <div class="item">
+              <a href="${p.url}" target="_blank">${p.title}</a>
+              <div class="meta">${p.assignee} · ${p.date}</div>
+              <div class="abstract">${p.snippet}</div>
+            </div>
+          `).join('');
+      })
+      .catch(() => {
+        document.getElementById('patents-container').innerHTML =
+          '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
+      });
   </script>
+
 </body>
 </html>
