@@ -1,42 +1,15 @@
 {
-  "updated": "2026-03-25 01:58",
+  "updated": "2026-03-25 02:06",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
+  "status": "success",
   "items": [
     {
       "name": "네오디뮴 (Nd)",
+      "grade": "99.5%min FOB China",
       "value": "N/A",
       "unit": "USD/kg",
-      "date": "",
-      "change": ""
-    },
-    {
-      "name": "망간 (Mn)",
-      "value": "N/A",
-      "unit": "USD/kg",
-      "date": "",
-      "change": ""
-    },
-    {
-      "name": "터븀 (Tb)",
-      "value": "N/A",
-      "unit": "USD/kg",
-      "date": "",
-      "change": ""
-    },
-    {
-      "name": "란탄 (La)",
-      "value": "N/A",
-      "unit": "USD/kg",
-      "date": "",
-      "change": ""
-    },
-    {
-      "name": "갈륨 (Ga)",
-      "value": "N/A",
-      "unit": "USD/kg",
-      "date": "",
-      "change": ""
+      "date": "2026-03-25"
     }
   ]
 }
