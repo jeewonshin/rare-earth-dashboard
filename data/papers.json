@@ -1,75 +1,165 @@
-{
-  "updated": "2026-03-25",
-  "items": [
-    {
-      "title": "Hall Viscosity in the Quark-Gluon Plasma",
-      "authors": "Sukrut Mondkar, Giorgio Torrieri, Matthias Kaminski",
-      "abstract": "We study the Hall viscosity of the quark gluon plasma (QGP) created in non-central heavy-ion collisions. In the presence of a strong magnetic field or vorticity, rotational symmetry is broken from O(3...",
-      "url": "http://arxiv.org/abs/2603.23498v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "WildWorld: A Large-Scale Dataset for Dynamic World Modeling with Actions and Explicit State toward Generative ARPG",
-      "authors": "Zhen Li, Zian Meng, Shuwei Shi",
-      "abstract": "Dynamical systems theory and reinforcement learning view world evolution as latent-state dynamics driven by actions, with visual observations providing partial information about the state. Recent vide...",
-      "url": "http://arxiv.org/abs/2603.23497v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Ferromagnetic Spin Glass State and Anomalous Hall Effect in Topological Semimetal Candidate Mn2Sb2Te5",
-      "authors": "M. M. Sharma, Ankush Saxena, S. M. Huang",
-      "abstract": "Materials that intrinsically possess both magnetism and topological states represent a key frontier of quantum materials research. Recently, Mn2(Bi/Sb)2Te5 has emerged as a promising candidate for hos...",
-      "url": "http://arxiv.org/abs/2603.23426v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Exact analytical PGSE signal for diffusion confined to a cylindrical surface using a spectral Laplacian formalism",
-      "authors": "Erick J Canales-Rodríguez, Chantal M. W. Tax, Juan Manuel Górriz",
-      "abstract": "Pulsed-gradient spin-echo (PGSE) MRI experiments probe molecular self-diffusion through spin phase accumulation under time-dependent magnetic field gradients. For diffusion confined to cylindrical sur...",
-      "url": "http://arxiv.org/abs/2603.23421v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Magnetic flux distribution, quasiparticle spectroscopy, and quality factors in Nb films for superconducting qubits",
-      "authors": "Amlan Datta, Bicky S. Moirangthem, Kamal R. Joshi",
-      "abstract": "Niobium is a practical material platform for superconducting microwave circuits; however, device-level performance can vary significantly depending on film growth and processing conditions. We compare...",
-      "url": "http://arxiv.org/abs/2603.23402v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Two-parameter Family-Vicsek scaling in a dissipative XXZ spin chain",
-      "authors": "Cătălin Paşcu Moca, Doru Sticlet, Tamás Vicsek",
-      "abstract": "Family-Vicsek (FV) scaling provides an understanding for the growth and finite-size saturation of fluctuations in classical systems. Here, we extend the FV roughness to transferred segment magnetizati...",
-      "url": "http://arxiv.org/abs/2603.23388v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Glassy magnetic freezing of interacting clusters in LK-99-family materials",
-      "authors": "Serafim Teknowijoyo, Domenico Napoletani, Vahan Nikoghosyan",
-      "abstract": "We report reproducible magnetization anomalies appearing below room temperature in copper-doped apatite materials belonging to the LK-99 family synthesized via hydrothermal methods. These anomalies ar...",
-      "url": "http://arxiv.org/abs/2603.23377v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Photometric and late-time spectropolarimetric observations of GRB 250129A afterglow",
-      "authors": "A. Ghosh, S. Razzaque, J. Barnard",
-      "abstract": "Gamma-Ray Burst (GRB) afterglows arise from the interaction of relativistic ejecta with the circumburst medium and are observed across the electromagnetic spectrum. Afterglow polarisation is expected ...",
-      "url": "http://arxiv.org/abs/2603.23359v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Multistage spin correlations in the $s$ = 1/2 stuffed hyper-star lattice Li$_{2}$Cu$_{2}$(MoO$_{4}$)$_{3}$",
-      "authors": "J. Khatua, Taeyun Kim, G. Senthil Murugan",
-      "abstract": "Star lattice, which can be visualized as a honeycomb network with each vertex replaced by a triangle, provides a rare platform for realizing exotic quantum states such as quantum spin liquids and diso...",
-      "url": "http://arxiv.org/abs/2603.23350v1",
-      "date": "2026-03-24"
-    },
-    {
-      "title": "Signatures of localised particle acceleration at a global coronal shock wave",
-      "authors": "C. Cuddy, D. M. Long, M. Nedal",
-      "abstract": "Extreme ultraviolet (EUV) waves are global waves in the solar corona which can accelerate particles. The efficiency of the acceleration depends on local plasma characteristics e.g. Alfvén speed and th...",
-      "url": "http://arxiv.org/abs/2603.23335v1",
-      "date": "2026-03-24"
-    }
-  ]
+import requests
+import json
+import os
+import re
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
+
+print("📡 논문 수집 시작 (arXiv + CrossRef)...")
+
+os.makedirs("data", exist_ok=True)
+
+KEYWORDS = "NdFeB OR \"Nd-Fe-B\" OR \"rare earth magnet\" OR \"neodymium magnet\" OR \"Ce substitution magnet\""
+
+papers = []
+seen_titles = set()
+
+# ================================================
+# 1. arXiv API
+# ================================================
+print("\n  [1/2] arXiv 수집 중...")
+
+try:
+    res = requests.get(
+        "https://export.arxiv.org/api/query",
+        params={
+            "search_query": f"all:{KEYWORDS}",
+            "start":        0,
+            "max_results":  8,
+            "sortBy":       "submittedDate",
+            "sortOrder":    "descending",
+        },
+        timeout=20
+    )
+
+    ns   = {"atom": "http://www.w3.org/2005/Atom"}
+    root = ET.fromstring(res.text)
+
+    for entry in root.findall("atom:entry", ns):
+        title    = entry.find("atom:title",    ns).text.strip().replace("\n", " ")
+        url      = entry.find("atom:id",       ns).text.strip()
+        date_raw = entry.find("atom:published",ns).text.strip()[:10]
+        authors  = [a.find("atom:name", ns).text
+                    for a in entry.findall("atom:author", ns)]
+        abstract = entry.find("atom:summary",  ns).text.strip().replace("\n", " ")
+
+        if title not in seen_titles:
+            seen_titles.add(title)
+            papers.append({
+                "title":    title,
+                "authors":  ", ".join(authors[:3]) + (" et al." if len(authors) > 3 else ""),
+                "date":     date_raw,
+                "url":      url,
+                "abstract": abstract[:200] + "...",
+                "source":   "arXiv",
+            })
+
+    print(f"  ✅ arXiv {len(papers)}건 수집")
+
+except Exception as e:
+    print(f"  ❌ arXiv 실패: {e}")
+
+
+# ================================================
+# 2. CrossRef API
+# ================================================
+print("\n  [2/2] CrossRef 수집 중...")
+
+crossref_count = 0
+
+try:
+    from_date = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+
+    res = requests.get(
+        "https://api.crossref.org/works",
+        params={
+            "query":  "NdFeB rare earth magnet neodymium Ce substitution",
+            "filter": f"from-pub-date:{from_date},type:journal-article",
+            "rows":   15,
+            "sort":   "published",
+            "order":  "desc",
+            "select": "title,author,published,URL,abstract,container-title",
+        },
+        headers={"User-Agent": "RareEarthDashboard/1.0 (research tool)"},
+        timeout=20
+    )
+
+    items = res.json().get("message", {}).get("items", [])
+
+    for item in items:
+        title_list = item.get("title", [])
+        if not title_list:
+            continue
+        title = title_list[0].strip()
+        if title in seen_titles:
+            continue
+
+        authors_raw = item.get("author", [])
+        authors_str = ", ".join(
+            f"{a.get('given','')} {a.get('family','')}".strip()
+            for a in authors_raw[:3]
+        ) + (" et al." if len(authors_raw) > 3 else "")
+
+        pub      = item.get("published", {}).get("date-parts", [[""]])[0]
+        date_str = "-".join(str(x).zfill(2) for x in pub if x) or ""
+
+        journal      = item.get("container-title", [""])[0]
+        abstract_raw = item.get("abstract", "")
+        abstract_clean = re.sub(r"<[^>]+>", "", abstract_raw)[:200] + "..."
+        url = item.get("URL", "#")
+
+        seen_titles.add(title)
+        papers.append({
+            "title":    title,
+            "authors":  authors_str,
+            "date":     date_str,
+            "url":      url,
+            "abstract": abstract_clean,
+            "source":   f"CrossRef ({journal})" if journal else "CrossRef",
+        })
+        crossref_count += 1
+
+    print(f"  ✅ CrossRef {crossref_count}건 수집")
+
+except Exception as e:
+    print(f"  ❌ CrossRef 실패: {e}")
+
+
+# ── 날짜 기준 최신순 정렬 ─────────────────────────────────
+papers.sort(key=lambda x: x["date"], reverse=True)
+papers = papers[:15]
+
+# ── 기존 데이터와 비교 (신규 여부 판단) ──────────────────
+existing_urls = set()
+try:
+    with open("data/papers.json", "r", encoding="utf-8") as f:
+        old_data = json.load(f)
+        existing_urls = set(p["url"] for p in old_data.get("items", []))
+    print(f"\n기존 논문 수: {len(existing_urls)}건")
+except:
+    print("\n기존 데이터 없음 (첫 실행)")
+
+today = datetime.now().date()
+for p in papers:
+    is_new_url = p["url"] not in existing_urls
+    try:
+        pub_date    = datetime.strptime(p["date"][:10], "%Y-%m-%d").date()
+        is_new_date = (today - pub_date).days <= 7
+    except:
+        is_new_date = False
+    p["is_new"] = is_new_url or is_new_date
+
+new_count = sum(1 for p in papers if p["is_new"])
+print(f"신규 논문: {new_count}건 / 전체: {len(papers)}건")
+
+output = {
+    "updated":   datetime.now().strftime("%Y-%m-%d %H:%M"),
+    "source":    "arXiv + CrossRef",
+    "new_count": new_count,
+    "items":     papers,
 }
+
+with open("data/papers.json", "w", encoding="utf-8") as f:
+    json.dump(output, f, ensure_ascii=False, indent=2)
+
+print("\n✅ data/papers.json 저장 완료!")
