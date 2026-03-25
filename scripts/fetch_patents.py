@@ -111,7 +111,9 @@ for query in SEARCH_QUERIES:
             except Exception:
                 pass
 
-            url = f"https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber={app_no}"
+            # 출원번호에서 숫자만 추출해서 DOI 링크 생성
+            app_no_clean = re.sub(r"[^0-9]", "", app_no)
+            url = f"https://doi.org/10.8080/{app_no_clean}"
 
             seen_ids.add(app_no)
             patents.append({
