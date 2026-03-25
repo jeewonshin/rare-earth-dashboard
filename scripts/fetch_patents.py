@@ -13,18 +13,17 @@ API_KEY = os.environ.get("KIPRIS_API_KEY", "")
 BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
 SEARCH_QUERIES = [
-    "열간변형 영구자석 네오디뮴",
-    "열간변형 영구자석 Nd-Fe-B",
-    "열간변형 영구자석 세륨",
-    "열간변형 영구자석 입계확산",
-    "열간변형 영구자석 Ce 치환",
-    "hot deformation permanent magnet NdFeB",
-    "hot deformation permanent magnet Nd-Fe-B",
-    "hot deformation permanent magnet Ce substituted",
-    "hot deformation permanent magnet grain boundary diffusion",
-    "hot deformed permanent magnet rare earth",
+    "영구자석 네오디뮴",
+    "영구자석 Nd",
+    "영구자석 희토류",
+    "영구자석 입계확산",
+    "영구자석 열간",
+    "permanent magnet NdFeB",
+    "permanent magnet Nd",
+    "permanent magnet hot deform",
+    "permanent magnet grain boundary",
+    "permanent magnet Rare Earth",
 ]
-
 MUST_TITLE = ["영구자석", "영구 자석", "permanent magnet"]
 
 MUST_ND = ["ndfeb", "nd-fe-b", "네오디뮴", "neodymium"]
@@ -32,7 +31,7 @@ MUST_ND = ["ndfeb", "nd-fe-b", "네오디뮴", "neodymium"]
 DETAIL_ANY = [
     "열간변형", "열간성형", "열간가압", "열간소성",
     "열간 변형", "열간 성형", "열간 가압",
-    "ce 치환", "ce-치환", "세륨", "cerium", "ce substitut",
+    "치환", "Ce", "세륨", "cerium", "ce substitut",
     "입계확산", "입계 확산", "grain boundary",
     "hot deform", "hot press",
     "희토류", "rare earth",
@@ -54,7 +53,7 @@ for query in SEARCH_QUERIES:
             "word": query,
             "ServiceKey": API_KEY,
             "docsStart": 1,
-            "docsCount": 10,
+            "docsCount": 50,
             "patent": "true",
             "utility": "false",
             "sortSpec": "AD",
