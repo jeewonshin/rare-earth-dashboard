@@ -31,7 +31,7 @@ jobs:
       - name: 특허 수집
         run: python scripts/fetch_patents.py
         env:
-          SERP_API_KEY: ${{ secrets.SERP_API_KEY }}
+          KIPRIS_API_KEY: ${{ secrets.KIPRIS_API_KEY }}
 
       - name: 가격 데이터 업데이트
         run: python scripts/fetch_prices.py
