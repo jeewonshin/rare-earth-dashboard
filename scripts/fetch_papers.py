@@ -154,13 +154,13 @@ except Exception as e:
 
 
 papers.sort(key=lambda x: x['date'], reverse=True)
-papers = papers[:15]
+papers = papers[:20]
 
 today = datetime.now().date()
 for p in papers:
     try:
         pub_date    = datetime.strptime(p['date'][:10], '%Y-%m-%d').date()
-        p['is_new'] = (today - pub_date).days <= 7
+        p['is_new'] = (today - pub_date).days <= 30
     except Exception:
         p['is_new'] = False
 
