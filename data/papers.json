@@ -1,7 +1,7 @@
 {
-  "updated": "2026-03-25 02:44",
+  "updated": "2026-03-25 02:54",
   "source": "arXiv + CrossRef",
-  "new_count": 15,
+  "new_count": 4,
   "items": [
     {
       "title": "Patterns of Cannabis and Alcohol Co-Use: Substitution Versus Complementary Effects",
@@ -10,7 +10,7 @@
       "url": "https://doi.org/10.35946/arcr.v42.1.04",
       "abstract": "...",
       "source": "CrossRef (Alcohol Research: Current Reviews)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Primary high grade mucoepidermoid carcinoma of skin and cervical lymphatic affection a rare entity",
@@ -46,7 +46,7 @@
       "url": "https://doi.org/10.7199/ped.oncall.2027.3",
       "abstract": "...",
       "source": "CrossRef (Pediatric Oncall)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Restoration of phonograms from collection of rare records of Department of Music Fonds of V.I. Vernadskyi National Library of Ukraine: digitization, digital restoration, creation of metadata, integration into international music web resources",
@@ -64,7 +64,7 @@
       "url": "https://doi.org/10.1016/j.rines.2026.100157",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "The influence of geomagnetic storms on global main shock earthquake occurrence: A study of solar wind parameters and seismic activity",
@@ -73,7 +73,7 @@
       "url": "https://doi.org/10.1016/j.rines.2025.100148",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Landslide morphology of the Batote area, Jammu &amp; Kashmir, NW Himalaya: Implications for the age of prehistoric debris slides",
@@ -82,7 +82,7 @@
       "url": "https://doi.org/10.1016/j.rines.2026.100153",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Automation-driven multi-well reservoir characterization of cenomanian–eocene clastic reservoirs in the offshore Douala Sub-Basin, Cameroon",
@@ -91,7 +91,7 @@
       "url": "https://doi.org/10.1016/j.rines.2026.100156",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Gravity and field data interpretation of a probabilistic buried impact crater in Mboutou and Environs, North Cameroon",
@@ -100,7 +100,7 @@
       "url": "https://doi.org/10.1016/j.rines.2025.100150",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Geomorphic signatures of active tectonics in the Poonch basin, Northwestern Himalaya, India",
@@ -109,7 +109,7 @@
       "url": "https://doi.org/10.1016/j.rines.2026.100154",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Quantification of fracture porosity and reservoir heterogeneity in carbonates: An integrated core-log zoning workflow, Southwest Iran",
@@ -118,7 +118,7 @@
       "url": "https://doi.org/10.1016/j.rines.2025.100149",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Structural controls on gold mineralization based on gravity data in the Batouri area, Eastern Cameroon",
@@ -127,7 +127,7 @@
       "url": "https://doi.org/10.1016/j.rines.2026.100158",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Mapping subsurface lineaments beneath the Ethiopian plateaus and the adjoining Ethiopian rifts using gravity data: Implications for tectonic evolution of the underlying crust",
@@ -136,7 +136,7 @@
       "url": "https://doi.org/10.1016/j.rines.2026.100152",
       "abstract": "...",
       "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": true
+      "is_new": false
     }
   ]
 }
