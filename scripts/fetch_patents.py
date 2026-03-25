@@ -12,10 +12,6 @@ os.makedirs("data", exist_ok=True)
 API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
 BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
-# ── 키워드 구조 ───────────────────────────────────────────
-# 필수: permanent magnet OR Nd-Fe-B
-# 세부: Hot deform OR Ce substituted OR Grain boundary diffusion
-
 SEARCH_QUERIES = [
     "permanent magnet Hot deformation",
     "permanent magnet Ce substituted",
@@ -23,11 +19,24 @@ SEARCH_QUERIES = [
     "Nd-Fe-B Hot deformation",
     "Nd-Fe-B Ce substituted",
     "Nd-Fe-B Grain boundary diffusion",
+    "네오디뮴 자석 열간변형",
+    "네오디뮴 자석 입계확산",
+    "희토류 자석 세륨",
 ]
 
-# 후처리 필터링용
-MUST_KEYWORDS   = ["permanent magnet", "nd-fe-b", "ndfeb"]
-DETAIL_KEYWORDS = ["hot deform", "ce substitut", "grain boundary diffusion"]
+# 필수 키워드 (하나 이상 포함)
+MUST_KEYWORDS = [
+    "영구자석", "소결자석", "nd-fe-b", "ndfeb",
+    "네오디뮴", "희토류 자석", "permanent magnet",
+    "rare earth magnet",
+]
+
+# 세부 키워드 (하나 이상 포함)
+DETAIL_KEYWORDS = [
+    "열간변형", "열간 변형", "hot deform",
+    "세륨", "ce 치환", "ce-치환", "ce substitut",
+    "입계확산", "입계 확산", "grain boundary",
+]
 
 patents  = []
 seen_ids = set()
@@ -39,21 +48,17 @@ for query in SEARCH_QUERIES:
             "word":       query,
             "ServiceKey": API_KEY,
             "docsStart":  1,
-            "docsCount":  5,
+            "docsCount":  10,
             "patent":     "true",
             "utility":    "false",
-            "sortSpec":   "AD",      # 출원일 기준
-            "descSort":   "true",    # 최신순
+            "sortSpec":   "AD",
+            "descSort":   "true",
         }
 
         res = requests.get(BASE_URL, params=params, timeout=20)
         res.raise_for_status()
 
-        print(f"  응답 코드: {res.status_code}")
-
-        root  = ET.fromstring(res.text)
-
-        # 오류 메시지 확인
+        root    = ET.fromstring(res.text)
         err_msg = root.findtext(".//errMsg", "")
         if err_msg:
             print(f"  ⚠️ API 오류: {err_msg}")
@@ -73,20 +78,32 @@ for query in SEARCH_QUERIES:
             ipc       = item.findtext("ipcNumber",       "").strip()
             abstract  = item.findtext("astrtCont",       "").strip()
 
-            # 후처리 필터링
+            # ── 후처리 필터링 (한국어 + 영어) ────────────────
             text_lower = (title + " " + abstract).lower()
-            has_must   = any(k in text_lower for k in MUST_KEYWORDS)
-            has_detail = any(k in text_lower for k in DETAIL_KEYWORDS)
+            has_must   = any(k.lower() in text_lower for k in MUST_KEYWORDS)
+            has_detail = any(k.lower() in text_lower for k in DETAIL_KEYWORDS)
 
             if not (has_must and has_detail):
+                print(f"    ⏭ 필터 제외: {title[:40]}...")
                 continue
 
-            # 날짜 포맷 (20240101 → 2024-01-01)
+            # ── 날짜 포맷 (20240101 → 2024-01-01) ────────────
             def fmt_date(d):
                 d = re.sub(r"[^0-9]", "", d)
                 return f"{d[:4]}-{d[4:6]}-{d[6:]}" if len(d) == 8 else d
 
             app_date_fmt = fmt_date(app_date)
+
+            # ── 날짜 필터: 최근 1년 이내만 ───────────────────
+            try:
+                app_dt   = datetime.strptime(app_date_fmt[:10], "%Y-%m-%d").date()
+                days_old = (datetime.now().date() - app_dt).days
+                if days_old > 365:
+                    print(f"    ⏭ 날짜 제외 ({app_date_fmt}): {title[:40]}...")
+                    continue
+            except:
+                pass
+
             url = f"https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber={app_no}"
 
             seen_ids.add(app_no)
@@ -108,20 +125,23 @@ for query in SEARCH_QUERIES:
 
 # ── 출원일 기준 최신순 정렬 ───────────────────────────────
 patents.sort(key=lambda x: x["app_date"], reverse=True)
-patents = patents[:15]
+patents = patents[:20]
 
-# ── 출원일 기준 7일 이내면 NEW ────────────────────────────
+# ── 출원일 기준 30일 이내면 NEW ───────────────────────────
 today = datetime.now().date()
 
 for p in patents:
     try:
         app_date    = datetime.strptime(p["app_date"][:10], "%Y-%m-%d").date()
-        p["is_new"] = (today - app_date).days <= 7
+        p["is_new"] = (today - app_date).days <= 30
     except:
         p["is_new"] = False
 
 new_count = sum(1 for p in patents if p["is_new"])
-print(f"\n신규 특허 (7일 이내): {new_count}건 / 전체: {len(patents)}건")
+print(f"\n신규 특허 (30일 이내): {new_count}건 / 전체: {len(patents)}건")
+
+for p in patents[:5]:
+    print(f"  {p['app_date']} | {p['title'][:50]}...")
 
 output = {
     "updated":    datetime.now().strftime("%Y-%m-%d %H:%M"),
