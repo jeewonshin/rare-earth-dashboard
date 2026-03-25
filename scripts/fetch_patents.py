@@ -5,7 +5,29 @@ import re
 from datetime import datetime
 from xml.etree import ElementTree as ET
 
-print("KIPRIS 특-fe-b", "네오디뮴", "neodymium"]print("KIPRIS 특허 수집 중...")
+print("KIPRIS 특허 수집 중...")
+
+os.makedirs("data", exist_ok=True)
+
+API_KEY = os.environ.get("KIPRIS_API_KEY", "")
+BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
+
+SEARCH_QUERIES = [
+    "열간변형 영구자석 네오디뮴",
+    "열간변형 영구자석 Nd-Fe-B",
+    "열간변형 영구자석 세륨",
+    "열간변형 영구자석 입계확산",
+    "열간변형 영구자석 Ce 치환",
+    "hot deformation permanent magnet NdFeB",
+    "hot deformation permanent magnet Nd-Fe-B",
+    "hot deformation permanent magnet Ce substituted",
+    "hot deformation permanent magnet grain boundary diffusion",
+    "hot deformed permanent magnet rare earth",
+]
+
+MUST_TITLE = ["영구자석", "영구 자석", "permanent magnet"]
+
+MUST_ND = ["ndfeb", "nd-fe-b", "네오디뮴", "neodymium"]
 
 DETAIL_ANY = [
     "열간변형", "열간성형", "열간가압", "열간소성",
@@ -138,24 +160,3 @@ with open("data/patents.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print(f"data/patents.json 저장 완료! ({len(patents)}건)")
-
-os.makedirs("data", exist_ok=True)
-
-API_KEY = os.environ.get("KIPRIS_API_KEY", "")
-BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
-
-SEARCH_QUERIES = [
-    "열간변형 영구자석 네오디뮴",
-    "열간변형 영구자석 Nd-Fe-B",
-    "열간변형 영구자석 세륨",
-    "열간변형 영구자석 입계확산",
-    "열간변형 영구자석 Ce 치환",
-    "hot deformation permanent magnet NdFeB",
-    "hot deformation permanent magnet Nd-Fe-B",
-    "hot deformation permanent magnet Ce substituted",
-    "hot deformation permanent magnet grain boundary diffusion",
-    "hot deformed permanent magnet rare earth",
-]
-
-MUST_TITLE = ["영구자석", "영구 자석", "permanent magnet"]
-
