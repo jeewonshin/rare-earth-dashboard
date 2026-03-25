@@ -2,23 +2,22 @@ import requests
 import json
 import os
 import re
-from datetime import datetime, timedelta
-from xml.etree import ElementTree as ET...")from xml.etree import ElementTree as ET
+from datetime import datetime
+from xml.etree import ElementTree as ET
+
+print("📡 KIPRIS 특허 수집 중...")
 
 os.makedirs("data", exist_ok=True)
 
 API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
 BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
-# ── 검색 쿼리 (한국어 + 영어) ────────────────────────────
 SEARCH_QUERIES = [
-    # 한국어 쿼리
     "열간변형 영구자석 네오디뮴",
     "열간변형 영구자석 Nd-Fe-B",
     "열간변형 영구자석 세륨",
     "열간변형 영구자석 입계확산",
     "열간변형 영구자석 Ce 치환",
-    # 영어 쿼리
     "hot deformation permanent magnet NdFeB",
     "hot deformation permanent magnet Nd-Fe-B",
     "hot deformation permanent magnet Ce substituted",
@@ -26,12 +25,9 @@ SEARCH_QUERIES = [
     "hot deformed permanent magnet rare earth",
 ]
 
-# ── 필터링 키워드 ─────────────────────────────────────────
-# 필수: 둘 다 포함 (한국어 OR 영어)
 MUST_ALL_KO = ["열간변형", "영구자석"]
 MUST_ALL_EN = ["hot deform", "permanent magnet"]
 
-# 세부: 하나 이상 포함
 DETAIL_ANY = [
     "nd-fe-b", "ndfeb", "네오디뮴", "neodymium",
     "세륨", "ce 치환", "ce-치환", "cerium", "ce substitut",
@@ -41,6 +37,12 @@ DETAIL_ANY = [
 
 patents  = []
 seen_ids = set()
+
+
+def fmt_date(d):
+    d = re.sub(r"[^0-9]", "", d)
+    return f"{d[:4]}-{d[4:6]}-{d[6:]}" if len(d) == 8 else d
+
 
 for query in SEARCH_QUERIES:
     print(f"\n  검색어: {query}")
@@ -79,16 +81,11 @@ for query in SEARCH_QUERIES:
             ipc       = item.findtext("ipcNumber",       "").strip()
             abstract  = item.findtext("astrtCont",       "").strip()
 
-            # ── 후처리 필터링 ─────────────────────────────
-            text_lower = (title + " " + abstract).lower()
-
-            # 필수: 한국어 세트 OR 영어 세트 둘 중 하나라도 충족
+            text_lower  = (title + " " + abstract).lower()
             has_must_ko = all(k.lower() in text_lower for k in MUST_ALL_KO)
             has_must_en = all(k.lower() in text_lower for k in MUST_ALL_EN)
             has_must    = has_must_ko or has_must_en
-
-            # 세부: 하나 이상 포함
-            has_detail = any(k.lower() in text_lower for k in DETAIL_ANY)
+            has_detail  = any(k.lower() in text_lower for k in DETAIL_ANY)
 
             if not has_must:
                 print(f"    ⏭ 필수 키워드 없음: {title[:40]}...")
@@ -97,14 +94,8 @@ for query in SEARCH_QUERIES:
                 print(f"    ⏭ 세부 키워드 없음: {title[:40]}...")
                 continue
 
-            # ── 날짜 포맷 (20240101 → 2024-01-01) ────────
-            def fmt_date(d):
-                d = re.sub(r"[^0-9]", "", d)
-                return f"{d[:4]}-{d[4:6]}-{d[6:]}" if len(d) == 8 else d
-
             app_date_fmt = fmt_date(app_date)
 
-            # ── 날짜 필터: 최근 1년 이내만 ───────────────
             try:
                 app_dt   = datetime.strptime(app_date_fmt[:10], "%Y-%m-%d").date()
                 days_old = (datetime.now().date() - app_dt).days
@@ -133,13 +124,11 @@ for query in SEARCH_QUERIES:
         print(f"  ❌ 실패: {e}")
         import traceback; traceback.print_exc()
 
-# ── 출원일 기준 최신순 정렬 ───────────────────────────────
+
 patents.sort(key=lambda x: x["app_date"], reverse=True)
 patents = patents[:20]
 
-# ── 출원일 기준 30일 이내면 NEW ───────────────────────────
 today = datetime.now().date()
-
 for p in patents:
     try:
         app_date    = datetime.strptime(p["app_date"][:10], "%Y-%m-%d").date()
@@ -165,4 +154,3 @@ with open("data/patents.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print(f"\n✅ data/patents.json 저장 완료! ({len(patents)}건)")
-
