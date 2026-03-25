@@ -2,7 +2,7 @@ name: Daily Dashboard Update
 
 on:
   schedule:
-    - cron: '0 1 * * *'  # 매일 오전 10시 KST
+    - cron: '30 1 * * *'  # 매일 오전 10시 30분 KST
   workflow_dispatch:       # 수동 실행 버튼도 생김
 
 jobs:
