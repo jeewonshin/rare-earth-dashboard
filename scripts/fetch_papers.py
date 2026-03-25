@@ -14,16 +14,22 @@ os.makedirs("data", exist_ok=True)
 # 세부: Hot deform OR Ce substituted OR Grain boundary diffusion
 
 ARXIV_QUERY = (
-    '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR abs:"permanent magnet" OR abs:"Nd-Fe-B")'
+    '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR ti:"rare earth magnet"'
+    ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"rare earth magnet")'
     ' AND '
     '(ti:"Hot deform" OR ti:"Ce substituted" OR ti:"Grain boundary diffusion"'
     ' OR abs:"Hot deform" OR abs:"Ce substituted" OR abs:"Grain boundary diffusion")'
 )
 
-CROSSREF_QUERY = '"permanent magnet" "Nd-Fe-B" "Hot deform" OR "Ce substituted" OR "Grain boundary diffusion"'
+CROSSREF_QUERY = (
+    '"permanent magnet" OR "Nd-Fe-B" OR "rare earth magnet" '
+    '"Hot deform" OR "Ce substituted" OR "Grain boundary diffusion"'
+)
 
-# 필터링용 (CrossRef 결과 후처리)
-MUST_KEYWORDS   = ["permanent magnet", "nd-fe-b", "ndfeb"]
+# 필터링용 후처리
+# 필수: 하나 이상 포함
+MUST_KEYWORDS   = ["permanent magnet", "nd-fe-b", "ndfeb", "rare earth magnet"]
+# 세부: 하나 이상 포함
 DETAIL_KEYWORDS = ["hot deform", "ce substitut", "grain boundary diffusion"]
 
 papers      = []
