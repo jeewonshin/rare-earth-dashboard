@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>희토류 기술 대시보드</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; padding: 20px; }
+    h1 { color: #1a365d; text-align: center; margin-bottom: 4px; }
+    .subtitle { text-align:center; color:#666; margin-bottom:20px; font-size:13px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .card h2 { color: #2b6cb0; border-bottom: 2px solid #ebf8ff; padding-bottom: 8px; margin-top:0; }
+    .item { border-bottom: 1px solid #eee; padding: 10px 0; font-size:14px; }
+    .item:last-child { border-bottom: none; }
+    .item a { color: #2b6cb0; text-decoration: none; font-weight: bold; }
+    .item a:hover { text-decoration: underline; }
+    .tag { font-size: 11px; background: #ebf8ff; color: #2b6cb0; padding: 2px 8px; border-radius: 10px; margin-left:4px; }
+    .price-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #eee; }
+    .price-name { font-weight:bold; color:#2d3748; }
+    .price-value { font-size: 20px; font-weight: bold; color: #276749; }
+    .updated { font-size: 12px; color: #aaa; text-align: right; margin-top:16px; }
+    .loading { color:#aaa; font-size:14px; }
+  </style>
+</head>
+<body>
+  <h1>🧲 희토류 기술 대시보드</h1>
+  <p class="subtitle">Nd-Fe-B / Ce 자석 · 희토류 소재 · 최신 정보 자동 수집</p>
+
+  <div class="grid">
+
+    <!-- 가격 카드 -->
+    <div class="card">
+      <h2>💰 희토류 가격 동향</h2>
+      <div id="prices-container"><p class="loading">데이터 로딩 중...</p></div>
+      <div class="updated" id="price-updated"></div>
+    </div>
+
+    <!-- 논문 카드 -->
+    <div class="card">
+      <h2>📄 최신 논문</h2>
+      <div id="papers-container"><p class="loading">데이터 로딩 중...</p></div>
+      <div class="updated" id="paper-updated"></div>
+    </div>
+
+    <!-- 특허 카드 -->
+    <div class="card">
+      <h2>🔐 최신 특허</h2>
+      <div id="patents-container"><p class="loading">데이터 로딩 중...</p></div>
+      <div class="updated" id="patent-updated"></div>
+    </div>
+
+  </div>
+
+  <script>
+    fetch('data/prices.json').then(r=>r.json()).then(data=>{
+      document.getElementById('price-updated').textContent = '업데이트: ' + data.updated;
+      const el = document.getElementById('prices-container');
+      el.innerHTML = data.items.map(p=>
+        `<div class="price-row">
+          <span class="price-name">${p.name}</span>
+          <span class="price-value">${p.value} <small style="font-size:12px;color:#888">${p.unit}</small></span>
+        </div>`).join('');
+    }).catch(()=>{ document.getElementById('prices-container').innerHTML='<p class="loading">데이터 없음 (첫 실행 후 표시됩니다)</p>'; });
+
+    fetch('data/papers.json').then(r=>r.json()).then(data=>{
+      document.getElementById('paper-updated').textContent = '업데이트: ' + data.updated;
+      const el = document.getElementById('papers-container');
+      el.innerHTML = data.items.map(p=>
+        `<div class="item">
+          <a href="${p.url}" target="_blank">${p.title}</a><br>
+          <small style="color:#666">${p.authors} · ${p.date}</small><br>
+          <small style="color:#888">${p.abstract}</small>
+        </div>`).join('');
+    }).catch(()=>{ document.getElementById('papers-container').innerHTML='<p class="loading">데이터 없음 (첫 실행 후 표시됩니다)</p>'; });
+
+    fetch('data/patents.json').then(r=>r.json()).then(data=>{
+      document.getElementById('patent-updated').textContent = '업데이트: ' + data.updated;
+      const el = document.getElementById('patents-container');
+      el.innerHTML = data.items.map(p=>
+        `<div class="item">
+          <a href="${p.url}" target="_blank">${p.title}</a><br>
+          <small style="color:#666">${p.assignee} · ${p.date}</small><br>
+          <small style="color:#888">${p.snippet}</small>
+        </div>`).join('');
+    }).catch(()=>{ document.getElementById('patents-container').innerHTML='<p class="loading">데이터 없음 (첫 실행 후 표시됩니다)</p>'; });
+  </script>
+</body>
+</html>
