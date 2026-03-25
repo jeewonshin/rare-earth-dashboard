@@ -1,15 +1,15 @@
 {
-  "updated": "2026-03-25 02:06",
+  "updated": "2026-03-25 02:17",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "status": "success",
-  "items": [
-    {
-      "name": "네오디뮴 (Nd)",
-      "grade": "99.5%min FOB China",
-      "value": "N/A",
-      "unit": "USD/kg",
-      "date": "2026-03-25"
-    }
-  ]
+  "today": {
+    "date": "2026-03-25",
+    "value": null,
+    "unit": "USD/kg",
+    "grade": "99.5%min FOB China",
+    "change_val": null,
+    "change_pct": null
+  },
+  "history": []
 }
