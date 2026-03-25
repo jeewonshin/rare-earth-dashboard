@@ -42,7 +42,7 @@ try:
         params={
             'search_query': ARXIV_QUERY,
             'start':        0,
-            'max_results':  20,
+            'max_results':  50,
             'sortBy':       'submittedDate',
             'sortOrder':    'descending',
         },
@@ -89,14 +89,14 @@ print('  [2/2] CrossRef 수집 중...')
 crossref_count = 0
 
 try:
-    from_date = (datetime.now() - timedelta(days=180)).strftime('%Y-%m-%d')
+    from_date = (datetime.now() - timedelta(days=365*5)).strftime('%Y-%m-%d')
 
     res = requests.get(
         'https://api.crossref.org/works',
         params={
             'query':  CROSSREF_QUERY,
             'filter': 'from-pub-date:' + from_date + ',type:journal-article',
-            'rows':   30,
+            'rows':   50,
             'sort':   'published',
             'order':  'desc',
             'select': 'title,author,published,URL,abstract,container-title',
