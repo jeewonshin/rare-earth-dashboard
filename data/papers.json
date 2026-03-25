@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-25 23:43",
+  "updated": "2026-03-25 23:49",
   "source": "arXiv + CrossRef",
   "new_count": 0,
   "items": [
@@ -10,6 +10,24 @@
       "url": "https://doi.org/10.1016/j.jmst.2025.10.080",
       "abstract": "...",
       "source": "CrossRef (Journal of Materials Science &amp; Technology)",
+      "is_new": false
+    },
+    {
+      "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
+      "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
+      "date": "2026-05",
+      "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
+      "abstract": "...",
+      "source": "CrossRef (Materials Research Bulletin)",
+      "is_new": false
+    },
+    {
+      "title": "A grain size dependent constitutive model of hot deformation Nd-Fe-B permanent magnetic material",
+      "authors": "Yajie Xu, Xu Tang, Hubin Luo et al.",
+      "date": "2026-05",
+      "url": "https://doi.org/10.1016/j.jmrt.2026.03.096",
+      "abstract": "...",
+      "source": "CrossRef (Journal of Materials Research and Technology)",
       "is_new": false
     },
     {
