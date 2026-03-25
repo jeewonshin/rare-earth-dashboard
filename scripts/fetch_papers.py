@@ -3,16 +3,32 @@ import json
 import os
 import re
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta    # ← 이게 빠져있었어요!
+from datetime import datetime, timedelta
 
 print("📡 논문 수집 시작 (arXiv + CrossRef)...")
 
 os.makedirs("data", exist_ok=True)
 
-KEYWORDS = "NdFeB OR \"Nd-Fe-B\" OR \"rare earth magnet\" OR \"neodymium magnet\" OR \"Ce substitution magnet\""
+# ── 키워드 구조 ───────────────────────────────────────────
+# 필수: permanent magnet OR Nd-Fe-B
+# 세부: Hot deform OR Ce substituted OR Grain boundary diffusion
+
+ARXIV_QUERY = (
+    '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR abs:"permanent magnet" OR abs:"Nd-Fe-B")'
+    ' AND '
+    '(ti:"Hot deform" OR ti:"Ce substituted" OR ti:"Grain boundary diffusion"'
+    ' OR abs:"Hot deform" OR abs:"Ce substituted" OR abs:"Grain boundary diffusion")'
+)
+
+CROSSREF_QUERY = '"permanent magnet" "Nd-Fe-B" "Hot deform" OR "Ce substituted" OR "Grain boundary diffusion"'
+
+# 필터링용 (CrossRef 결과 후처리)
+MUST_KEYWORDS   = ["permanent magnet", "nd-fe-b", "ndfeb"]
+DETAIL_KEYWORDS = ["hot deform", "ce substitut", "grain boundary diffusion"]
 
 papers      = []
 seen_titles = set()
+
 
 # ================================================
 # 1. arXiv API
@@ -23,9 +39,9 @@ try:
     res = requests.get(
         "https://export.arxiv.org/api/query",
         params={
-            "search_query": f"all:{KEYWORDS}",
+            "search_query": ARXIV_QUERY,
             "start":        0,
-            "max_results":  8,
+            "max_results":  10,
             "sortBy":       "submittedDate",
             "sortOrder":    "descending",
         },
@@ -42,6 +58,14 @@ try:
         authors  = [a.find("atom:name", ns).text
                     for a in entry.findall("atom:author", ns)]
         abstract = entry.find("atom:summary",   ns).text.strip().replace("\n", " ")
+
+        # 후처리 필터링
+        text_lower = (title + " " + abstract).lower()
+        has_must   = any(k in text_lower for k in MUST_KEYWORDS)
+        has_detail = any(k in text_lower for k in DETAIL_KEYWORDS)
+
+        if not (has_must and has_detail):
+            continue
 
         if title not in seen_titles:
             seen_titles.add(title)
@@ -68,14 +92,14 @@ print("\n  [2/2] CrossRef 수집 중...")
 crossref_count = 0
 
 try:
-    from_date = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+    from_date = (datetime.now() - timedelta(days=180)).strftime("%Y-%m-%d")
 
     res = requests.get(
         "https://api.crossref.org/works",
         params={
-            "query":  "NdFeB rare earth magnet neodymium Ce substitution",
+            "query":  CROSSREF_QUERY,
             "filter": f"from-pub-date:{from_date},type:journal-article",
-            "rows":   15,
+            "rows":   20,
             "sort":   "published",
             "order":  "desc",
             "select": "title,author,published,URL,abstract,container-title",
@@ -94,18 +118,27 @@ try:
         if title in seen_titles:
             continue
 
+        abstract_raw   = item.get("abstract", "")
+        abstract_clean = re.sub(r"<[^>]+>", "", abstract_raw)
+
+        # 후처리 필터링
+        text_lower = (title + " " + abstract_clean).lower()
+        has_must   = any(k in text_lower for k in MUST_KEYWORDS)
+        has_detail = any(k in text_lower for k in DETAIL_KEYWORDS)
+
+        if not (has_must and has_detail):
+            continue
+
         authors_raw = item.get("author", [])
         authors_str = ", ".join(
             f"{a.get('given','')} {a.get('family','')}".strip()
             for a in authors_raw[:3]
         ) + (" et al." if len(authors_raw) > 3 else "")
 
-        pub          = item.get("published", {}).get("date-parts", [[""]])[0]
-        date_str     = "-".join(str(x).zfill(2) for x in pub if x) or ""
-        journal      = item.get("container-title", [""])[0]
-        abstract_raw = item.get("abstract", "")
-        abstract_clean = re.sub(r"<[^>]+>", "", abstract_raw)[:200] + "..."
-        url          = item.get("URL", "#")
+        pub      = item.get("published", {}).get("date-parts", [[""]])[0]
+        date_str = "-".join(str(x).zfill(2) for x in pub if x) or ""
+        journal  = item.get("container-title", [""])[0]
+        url      = item.get("URL", "#")
 
         seen_titles.add(title)
         papers.append({
@@ -113,7 +146,7 @@ try:
             "authors":  authors_str,
             "date":     date_str,
             "url":      url,
-            "abstract": abstract_clean,
+            "abstract": abstract_clean[:200] + "...",
             "source":   f"CrossRef ({journal})" if journal else "CrossRef",
         })
         crossref_count += 1
