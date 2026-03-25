@@ -1,141 +1,51 @@
 {
-  "updated": "2026-03-25 02:54",
+  "updated": "2026-03-25 03:58",
   "source": "arXiv + CrossRef",
-  "new_count": 4,
+  "new_count": 0,
   "items": [
     {
-      "title": "Patterns of Cannabis and Alcohol Co-Use: Substitution Versus Complementary Effects",
-      "authors": "R Gunn",
-      "date": "2122",
-      "url": "https://doi.org/10.35946/arcr.v42.1.04",
+      "title": "Artificially seeded dislocations boost grain boundary diffusion depth in stress-engineered Nd-Fe-B magnets",
+      "authors": "Dongmin Zhang, Minggang Zhu, Jingyan Zuo et al.",
+      "date": "2026-09",
+      "url": "https://doi.org/10.1016/j.jmst.2025.10.080",
       "abstract": "...",
-      "source": "CrossRef (Alcohol Research: Current Reviews)",
+      "source": "CrossRef (Journal of Materials Science &amp; Technology)",
       "is_new": false
     },
     {
-      "title": "Primary high grade mucoepidermoid carcinoma of skin and cervical lymphatic affection a rare entity",
-      "authors": "Zaki Taissoun Aslan, Martin Granados Garcia, Kuauhyama Luna Ortiz et al.",
-      "date": "2108-08-03",
-      "url": "https://doi.org/10.15406/mojs.2018.06.00136",
-      "abstract": "...",
-      "source": "CrossRef (MOJ Surgery)",
-      "is_new": true
-    },
-    {
-      "title": "Rare Adrenal Gland Emergencies: A Case Series of Giant Myelolipoma Presenting With Massive Hemorrhage and Abscess",
-      "authors": "Santosh Kumar, Kumar Jayant, Seema Prasad et al.",
-      "date": "2038-01-19",
-      "url": "https://doi.org/10.5812/numonthly.22671",
-      "abstract": "...",
-      "source": "CrossRef (Nephro-Urology Monthly)",
-      "is_new": true
-    },
-    {
-      "title": "La douleur somatique comme opportunité de création. Ce que nous apprend Shiki",
-      "authors": "Huê Ly-Thanh, Patrick Martin-Mattera",
-      "date": "2030-04-21",
-      "url": "https://doi.org/10.3917/bupsy.pr1.0006",
-      "abstract": "Les artistes nous précèdent, disait Freud. Et comme l’étudia Lacan, avec Joyce ou avec le Hamlet de Shakespeare, le processus de création peut donner une issue neuve aux mécanismes intimes des diverse...",
-      "source": "CrossRef (Bulletin de psychologie)",
-      "is_new": true
-    },
-    {
-      "title": "Scalp Abscess in a Newborn: A Rare Condition With An Unusual Etiology",
-      "authors": "Luzia Condessa, Cristina Novais, Carlos Castaneda et al.",
-      "date": "2027",
-      "url": "https://doi.org/10.7199/ped.oncall.2027.3",
-      "abstract": "...",
-      "source": "CrossRef (Pediatric Oncall)",
+      "title": "Coercivity enhancement of selective laser sintered NdFeB magnets by grain boundary infiltration",
+      "authors": "Christian Huber, Hossein Sepehri-Amin, Michael Goertler et al.",
+      "date": "2019-03-06",
+      "url": "http://arxiv.org/abs/1903.02233v1",
+      "abstract": "Laser powder bed fusion is a well-established additive manufacturing method that can be used for the production of net-shaped Nd-Fe-B sintered magnets. However, low coercivity has been one of the draw...",
+      "source": "arXiv",
       "is_new": false
     },
     {
-      "title": "Restoration of phonograms from collection of rare records of Department of Music Fonds of V.I. Vernadskyi National Library of Ukraine: digitization, digital restoration, creation of metadata, integration into international music web resources",
-      "authors": ", Andrii Kriuchyn, Yurii Kovtaniuk et al.",
-      "date": "2026-12-16",
-      "url": "https://doi.org/10.15407/rksu.40.189",
-      "abstract": "...",
-      "source": "CrossRef (Rukopisna ta knižkova spadŝina Ukraïni)",
-      "is_new": true
-    },
-    {
-      "title": "Integrated assessment of groundwater potential in Ngaoundal (Adamawa, Cameroon) using geoelectrical methods and satellite imagery",
-      "authors": "Abdoul Aboubakar, Donald Eric Teikeu Ngueveu, Quentin Marc Anaba Fotze et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2026.100157",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
+      "title": "Rare earth permanent magnets prepared by hot deformation process",
+      "authors": "Ren-Jie Chen, Ze-Xuan Wang, Xu Tang et al.",
+      "date": "2018-09-26",
+      "url": "http://arxiv.org/abs/1809.09838v1",
+      "abstract": "Hot deformation process is one of the primary methods to produce anisotropic rare earth permanent magnets. Firstly, rapidly quenched powder flakes with nanocrystal structure are condensed into the ful...",
+      "source": "arXiv",
       "is_new": false
     },
     {
-      "title": "The influence of geomagnetic storms on global main shock earthquake occurrence: A study of solar wind parameters and seismic activity",
-      "authors": "S. Prasanna Subramanian, A. Mujiber Rahman",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2025.100148",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
+      "title": "High performance magnetic material with Ce and La: an alternative to Nd-Fe-B magnet",
+      "authors": "Rajiv K. Chouhan, Arjun K. Pathak, D. Paudyal et al.",
+      "date": "2018-06-06",
+      "url": "http://arxiv.org/abs/1806.01990v1",
+      "abstract": "A systematic study of magnetocrystalline anisotropy is performed for R(La/Ce/Nd)2Fe14B tetragonal compound with the site substitution mechanism. Theoretical calculation suggests the 50% doping with Ce...",
+      "source": "arXiv",
       "is_new": false
     },
     {
-      "title": "Landslide morphology of the Batote area, Jammu &amp; Kashmir, NW Himalaya: Implications for the age of prehistoric debris slides",
-      "authors": "Abdul Qayoom Paul, Pankaj Kumar, Irfan Maqbool Bhat et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2026.100153",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": false
-    },
-    {
-      "title": "Automation-driven multi-well reservoir characterization of cenomanian–eocene clastic reservoirs in the offshore Douala Sub-Basin, Cameroon",
-      "authors": "Edwin Ayuk Ndip, Michael Agbor Manyoh, Pa Omar Konteh et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2026.100156",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": false
-    },
-    {
-      "title": "Gravity and field data interpretation of a probabilistic buried impact crater in Mboutou and Environs, North Cameroon",
-      "authors": "Jean Paul Sep Nlomngan, Augustin Patrice Moussango Ibohn, Quentin Marc Anaba Fotze et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2025.100150",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": false
-    },
-    {
-      "title": "Geomorphic signatures of active tectonics in the Poonch basin, Northwestern Himalaya, India",
-      "authors": "Ajay Kumar Taloor, Nuzhat Khurshid, Girish Ch Kothyari et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2026.100154",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": false
-    },
-    {
-      "title": "Quantification of fracture porosity and reservoir heterogeneity in carbonates: An integrated core-log zoning workflow, Southwest Iran",
-      "authors": "Zahra Safarpour Kapoorchali, Ezatallah Kazemzadeh, Mehran Arian et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2025.100149",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": false
-    },
-    {
-      "title": "Structural controls on gold mineralization based on gravity data in the Batouri area, Eastern Cameroon",
-      "authors": "Jospin Fomat Tandjong, Victor Metang, Descartes Newton Youmssi Metang et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2026.100158",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
-      "is_new": false
-    },
-    {
-      "title": "Mapping subsurface lineaments beneath the Ethiopian plateaus and the adjoining Ethiopian rifts using gravity data: Implications for tectonic evolution of the underlying crust",
-      "authors": "Zellelew Kassaye Bewketu, Abera Alemu, Kevin Mickus et al.",
-      "date": "2026-12",
-      "url": "https://doi.org/10.1016/j.rines.2026.100152",
-      "abstract": "...",
-      "source": "CrossRef (Results in Earth Sciences)",
+      "title": "Growth and Characterization of Ce- Substituted Nd2Fe14B Single Crystals",
+      "authors": "M. A. Susner, B. S. Conner, B. I. Saparov et al.",
+      "date": "2015-08-31",
+      "url": "http://arxiv.org/abs/1508.07792v1",
+      "abstract": "Single crystals of (Nd1-xCex)2Fe14B are grown out of Fe-(Nd,Ce) flux. Chemical and structural analysis of the crystals indicates that (Nd1-xCex)2Fe14B forms a solid solution until at least x = 0.38 wi...",
+      "source": "arXiv",
       "is_new": false
     }
   ]
