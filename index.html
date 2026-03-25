@@ -153,6 +153,7 @@
     }
     .tag-arxiv    { background: #faf5ff; color: #6b46c1; }
     .tag-crossref { background: #f0fff4; color: #276749; }
+    .tag-kipris   { background: #fff5f5; color: #c53030; } /* ← 추가 */
     .badge-new {
       background: #f6e05e;
       color: #744210;
@@ -208,19 +209,25 @@
       <div class="updated" id="paper-updated"></div>
     </div>
 
-<!-- 특허 카드 -->
+    <!-- 특허 카드 -->
     <div class="card">
       <h2>
         🔐 최신 특허 (KIPRIS)
-        <spanheader">        <span id="patent-badge"></span>
+        <span id="patent-badge"></span>
+      </h2>
+
+      <!-- 🆕 신규 섹션 -->
+      <div class="new-section-header">
         🆕 이번 달 새 특허 <span id="patent-new-count"></span>
       </div>
       <div id="patents-new">
         <p class="loading">로딩 중...</p>
       </div>
 
+      <!-- 구분선 -->
       <hr class="divider" id="patents-divider" style="display:none">
 
+      <!-- 이전 특허 섹션 -->
       <div id="patents-old-section" style="display:none">
         <div class="old-section-header">📋 이전 특허</div>
         <div id="patents-old"></div>
@@ -228,9 +235,6 @@
 
       <div class="updated" id="patent-updated"></div>
     </div>
-      </h2>
-
-
 
   </div>
 
@@ -259,12 +263,10 @@
       const xOf = i => pad.left + (i / (vals.length - 1)) * iW;
       const yOf = v => pad.top  + (1 - (v - minV) / rng)  * iH;
 
-      // 그라데이션
       const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
       grad.addColorStop(0, 'rgba(43,108,176,0.2)');
       grad.addColorStop(1, 'rgba(43,108,176,0.00)');
 
-      // 채우기
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(vals[0]));
       vals.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
@@ -274,7 +276,6 @@
       ctx.fillStyle = grad;
       ctx.fill();
 
-      // 라인
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(vals[0]));
       vals.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
@@ -282,20 +283,16 @@
       ctx.lineWidth   = 1.5;
       ctx.stroke();
 
-      // 마지막 점
       ctx.beginPath();
       ctx.arc(xOf(vals.length - 1), yOf(vals[vals.length - 1]), 3, 0, Math.PI * 2);
       ctx.fillStyle = '#2b6cb0';
       ctx.fill();
 
-      // Y축 라벨
       ctx.fillStyle = '#aaa';
       ctx.font      = '10px sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(maxV.toFixed(1), pad.left - 3, pad.top + 9);
       ctx.fillText(minV.toFixed(1), pad.left - 3, H - pad.bottom - 2);
-
-      // X축 라벨
       ctx.textAlign = 'left';
       ctx.fillText(dates[0], pad.left, H - 4);
       ctx.textAlign = 'right';
@@ -371,13 +368,11 @@
         const newPapers = data.items.filter(p => p.is_new);
         const oldPapers = data.items.filter(p => !p.is_new);
 
-        // 제목 뱃지
         if (data.new_count > 0) {
           document.getElementById('new-badge').innerHTML =
             `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
         }
 
-        // 신규 논문
         document.getElementById('new-count').textContent =
           `(${newPapers.length}건)`;
         document.getElementById('papers-new').innerHTML =
@@ -385,9 +380,8 @@
             ? newPapers.map(paperHTML).join('')
             : '<p class="loading" style="color:#b7791f">이번 주 새 논문 없음</p>';
 
-        // 이전 논문
         if (oldPapers.length > 0) {
-          document.getElementById('papers-divider').style.display    = 'block';
+          document.getElementById('papers-divider').style.display     = 'block';
           document.getElementById('papers-old-section').style.display = 'block';
           document.getElementById('papers-old').innerHTML =
             oldPapers.map(paperHTML).join('');
@@ -398,7 +392,7 @@
           '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
       });
 
-  // ================================================
+    // ================================================
     // 특허 카드
     // ================================================
     function patentHTML(p) {
@@ -406,7 +400,10 @@
         ? `<span class="tag-new">🆕 NEW</span>` : '';
       return `
         <div class="item">
-          ant} · 출원일: ${p.app_date}          <span class="tag tag-kipris">KIPRIS</span>${newTag}
+          <span class="tag tag-kipris">KIPRIS</span>${newTag}
+          <a href="${p.url}" target="_blank">${p.title}</a>
+          <div class="meta">
+            ${p.applicant} · 출원일: ${p.app_date}
             ${p.ipc ? `· IPC: ${p.ipc}` : ''}
           </div>
           <div class="snippet">${p.abstract || '초록 없음'}</div>
@@ -445,10 +442,7 @@
         document.getElementById('patents-new').innerHTML =
           '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
       });
-          <a href="${p.url}" target="_blank">${p.title}</a>
-          <div class="meta">
 
-      });
   </script>
 
 </body>
