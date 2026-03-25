@@ -1,19 +1,7 @@
 {
-  "updated": "2026-03-25 04:32",
+  "updated": "2026-03-25 04:43",
   "source": "KIPRIS (한국특허정보원)",
   "source_url": "https://plus.kipris.or.kr",
   "new_count": 0,
-  "items": [
-    {
-      "title": "세륨을 갖는 Nd-Fe-B 영구 자석, 회전자 어셈블리, 전기기계 트랜스듀서, 풍력 터빈",
-      "app_no": "1020250107366",
-      "applicant": "지멘스 가메사 리뉴어블 에너지 아/에스",
-      "app_date": "2025-08-05",
-      "ipc": "H01F 1/057|H02K 1/02|F03D 9/25",
-      "url": "https://plus.kipris.or.kr/kipi/patinfo/view.do?applicationNumber=1020250107366",
-      "abstract": "28 내지 35 중량%의 희토류 원소들을 포함하는 nd-fe-b 영구 자석(354)이 설명되며, nd(neodymium)와 pr(praseodymium)의 합계 함량은 20 내지 25 중량%이고, ce(cerium)의 함량은 5 내지 10 중량%이고, 공간적 연장, 즉 nd-fe-b 영구 자석(354)의 메인 자화 방향으로의 자석(354)의 높이(h)는 1...",
-      "source": "KIPRIS",
-      "is_new": false
-    }
-  ]
+  "items": []
 }

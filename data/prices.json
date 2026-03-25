@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-25 04:32",
+  "updated": "2026-03-25 04:43",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -7,11 +7,11 @@
       "name": "네오디뮴 (Nd)",
       "grade": "99.5%min FOB China",
       "today": {
-        "date": "2026.03.23",
-        "value": 116.75,
+        "date": "2026.03.24",
+        "value": 117.24,
         "unit": "USD/kg",
-        "change_val": -0.72,
-        "change_pct": -0.61
+        "change_val": 0.49,
+        "change_pct": 0.42
       },
       "history": [
         {
@@ -2041,6 +2041,10 @@
         {
           "date": "2026.03.23",
           "value": 116.75
+        },
+        {
+          "date": "2026.03.24",
+          "value": 117.24
         }
       ]
     },
@@ -2048,11 +2052,11 @@
       "name": "망간 (Mn)",
       "grade": "75%min FOB China",
       "today": {
-        "date": "2026.03.23",
-        "value": 1117.42,
+        "date": "2026.03.24",
+        "value": 1118.58,
         "unit": "USD/kg",
-        "change_val": 5.61,
-        "change_pct": 0.5
+        "change_val": 1.16,
+        "change_pct": 0.1
       },
       "history": [
         {
@@ -4070,6 +4074,10 @@
         {
           "date": "2026.03.23",
           "value": 1117.42
+        },
+        {
+          "date": "2026.03.24",
+          "value": 1118.58
         }
       ]
     },
@@ -4077,11 +4085,11 @@
       "name": "세륨 (Ce)",
       "grade": "99%min FOB China",
       "today": {
-        "date": "2026.03.23",
-        "value": 2.13,
+        "date": "2026.03.24",
+        "value": 2.14,
         "unit": "USD/kg",
-        "change_val": -0.01,
-        "change_pct": -0.47
+        "change_val": 0.01,
+        "change_pct": 0.47
       },
       "history": [
         {
@@ -6107,6 +6115,10 @@
         {
           "date": "2026.03.23",
           "value": 2.13
+        },
+        {
+          "date": "2026.03.24",
+          "value": 2.14
         }
       ]
     }
