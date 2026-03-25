@@ -37,48 +37,65 @@ try:
     res.raise_for_status()
     raw = res.json()
 
-    print("응답 원본 (앞 500자):")
-    print(json.dumps(raw, ensure_ascii=False, indent=2)[:500])
+    # ── 구조 확인용 전체 키 출력 ──────────────────────────
+    print("최상위 키:", list(raw.keys()))
+    print("data 키:", list(raw["data"].keys()))
 
-    # ── 차트 히스토리 데이터 키 탐색 ──────────────────────
-    chart_list = []
-    for key in ["chartData", "data", "priceList", "list", "result"]:
-        if key in raw and isinstance(raw[key], list):
-            chart_list = raw[key]
-            print(f"차트 데이터 키: '{key}', 건수: {len(chart_list)}")
-            break
-    if not chart_list and isinstance(raw, list):
-        chart_list = raw
-        print(f"raw 자체가 리스트, 건수: {len(chart_list)}")
+    # ── xaxis / yaxis 파싱 ────────────────────────────────
+    xaxis = raw["data"]["xaxis"]   # 날짜 리스트
+    
+    # yaxis 키 이름 확인 (yaxis, yData, series 등 가능)
+    data_section = raw["data"]
+    y_key = None
+    for k in data_section.keys():
+        if k != "xaxis":
+            print(f"  후보 키: {k} → {str(data_section[k])[:80]}")
+            if isinstance(data_section[k], list) and len(data_section[k]) == len(xaxis):
+                y_key = k
+                print(f"  ✅ yaxis 키 발견: {k}")
+                break
 
-    # ── 날짜/가격 필드명 자동 탐색 ────────────────────────
+    if y_key is None:
+        # yaxis가 중첩 구조인 경우 (예: series[0].data)
+        for k in data_section.keys():
+            val = data_section[k]
+            if isinstance(val, list) and len(val) > 0 and isinstance(val[0], dict):
+                inner = val[0].get("data", val[0].get("values", None))
+                if inner and len(inner) == len(xaxis):
+                    y_key  = k
+                    xaxis  = xaxis
+                    yaxis  = inner
+                    print(f"  ✅ 중첩 yaxis 키 발견: {k}[0].data")
+                    break
+        else:
+            yaxis = []
+    else:
+        yaxis = data_section[y_key]
+
+    print(f"\n날짜 {len(xaxis)}건, 가격 {len(yaxis)}건")
+
+    # ── history 조합 ──────────────────────────────────────
     history = []
-    if chart_list:
-        sample = chart_list[0]
-        print("첫 번째 항목 키:", list(sample.keys()))
-
-        date_key  = next((k for k in sample if any(x in k.lower() for x in ["date","dt","ymd","기준"])), None)
-        price_key = next((k for k in sample if any(x in k.lower() for x in ["price","prc","val","가격"])), None)
-        print(f"날짜 필드: {date_key}, 가격 필드: {price_key}")
-
-        for item in chart_list:
-            d = str(item.get(date_key, "")).strip()
-            p = item.get(price_key, None)
-            if d and p is not None:
-                try:
-                    history.append({"date": d, "value": float(p)})
-                except:
-                    pass
+    for d, v in zip(xaxis, yaxis):
+        try:
+            if v is not None and v != "" and v != "-":
+                history.append({
+                    "date":  str(d).strip(),
+                    "value": float(v)
+                })
+        except:
+            pass
 
     print(f"히스토리 파싱 건수: {len(history)}")
 
-    # ── 오늘 가격 / 등락 계산 ─────────────────────────────
+    # ── 오늘 가격 / 등락 계산 ────────────────────────────
     today_price = today_date = change_val = change_pct = None
 
     if history:
         latest      = history[-1]
         today_price = latest["value"]
         today_date  = latest["date"]
+
         if len(history) >= 2:
             prev       = history[-2]["value"]
             change_val = round(today_price - prev, 4)
@@ -113,8 +130,10 @@ except Exception as e:
         "updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "source":  "KOMIS", "source_url": "",
         "status":  "error",
-        "today":   {"date": "", "value": None, "unit": "USD/kg",
-                    "grade": "", "change_val": None, "change_pct": None},
+        "today":   {
+            "date": "", "value": None, "unit": "USD/kg",
+            "grade": "", "change_val": None, "change_pct": None
+        },
         "history": [],
     }
 
