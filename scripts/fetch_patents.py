@@ -5,15 +5,7 @@ import re
 from datetime import datetime
 from xml.etree import ElementTree as ET
 
-print("KIPRIS 특허 수집 중...")
-
-os.makedirs("data", exist_ok=True)
-
-API_KEY = os.environ.get("KIPRIS_API_KEY", "")
-BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
-
-SEARCH_QUERIES = [
-    "열간변형 영구자석 네오디뮴",
+print("KIP오디뮴",print("KIPRIS 특허 수집 중...")
     "열간변형 영구자석 Nd-Fe-B",
     "열간변형 영구자석 세륨",
     "열간변형 영구자석 입계확산",
@@ -25,13 +17,23 @@ SEARCH_QUERIES = [
     "hot deformed permanent magnet rare earth",
 ]
 
-MUST_ALL_KO = ["열간변형", "영구자석"]
-MUST_ALL_EN = ["hot deform", "permanent magnet"]
+# 조건 1: 제목에 하나 이상 포함
+MUST_TITLE = [
+    "영구자석", "영구 자석", "permanent magnet",
+]
 
+# 조건 2: 제목 OR 초록에 하나 이상 포함 (NdFeB 계열 필수)
+MUST_ND = [
+    "ndfeb", "nd-fe-b", "네오디뮴", "neodymium",
+]
+
+# 조건 3: 제목 OR 초록에 하나 이상 포함
 DETAIL_ANY = [
-    "nd-fe-b", "ndfeb", "네오디뮴", "neodymium",
-    "세륨", "ce 치환", "ce-치환", "cerium", "ce substitut",
+    "열간변형", "열간성형", "열간가압", "열간소성",
+    "열간 변형", "열간 성형", "열간 가압",
+    "ce 치환", "ce-치환", "세륨", "cerium", "ce substitut",
     "입계확산", "입계 확산", "grain boundary",
+    "hot deform", "hot press",
     "희토류", "rare earth",
 ]
 
@@ -75,32 +77,36 @@ for query in SEARCH_QUERIES:
             if not app_no or app_no in seen_ids:
                 continue
 
-            title = item.findtext("inventionTitle", "제목 없음").strip()
-            app_date = item.findtext("applicationDate", "").strip()
-            applicant = item.findtext("applicantName", "출원인 미상").strip()
-            ipc = item.findtext("ipcNumber", "").strip()
-            abstract = item.findtext("astrtCont", "").strip()
+            title     = item.findtext("inventionTitle",  "제목 없음").strip()
+            app_date  = item.findtext("applicationDate", "").strip()
+            applicant = item.findtext("applicantName",   "출원인 미상").strip()
+            ipc       = item.findtext("ipcNumber",       "").strip()
+            abstract  = item.findtext("astrtCont",       "").strip()
 
-            text_lower = (title + " " + abstract).lower()
-            has_must_ko = all(k.lower() in text_lower for k in MUST_ALL_KO)
-            has_must_en = all(k.lower() in text_lower for k in MUST_ALL_EN)
-            has_must = has_must_ko or has_must_en
-            has_detail = any(k.lower() in text_lower for k in DETAIL_ANY)
+            title_lower = title.lower()
+            text_lower  = (title + " " + abstract).lower()
 
-            if not has_must:
-                print(f"    필수 키워드 없음: {title[:40]}...")
+            has_title  = any(k.lower() in title_lower for k in MUST_TITLE)
+            has_nd     = any(k.lower() in text_lower  for k in MUST_ND)
+            has_detail = any(k.lower() in text_lower  for k in DETAIL_ANY)
+
+            if not has_title:
+                print(f"    [조건1 탈락] 제목에 영구자석 없음: {title[:40]}...")
+                continue
+            if not has_nd:
+                print(f"    [조건2 탈락] NdFeB/네오디뮴 없음: {title[:40]}...")
                 continue
             if not has_detail:
-                print(f"    세부 키워드 없음: {title[:40]}...")
+                print(f"    [조건3 탈락] 세부 키워드 없음: {title[:40]}...")
                 continue
 
             app_date_fmt = fmt_date(app_date)
 
             try:
-                app_dt = datetime.strptime(app_date_fmt[:10], "%Y-%m-%d").date()
+                app_dt   = datetime.strptime(app_date_fmt[:10], "%Y-%m-%d").date()
                 days_old = (datetime.now().date() - app_dt).days
-                if days_old > 365 * 5:
-                    print(f"    날짜 초과 ({app_date_fmt}): {title[:40]}...")
+                if days_old > 365 * 10:
+                    print(f"    [날짜 초과] ({app_date_fmt}): {title[:40]}...")
                     continue
             except Exception:
                 pass
@@ -109,14 +115,14 @@ for query in SEARCH_QUERIES:
 
             seen_ids.add(app_no)
             patents.append({
-                "title": title,
-                "app_no": app_no,
+                "title":     title,
+                "app_no":    app_no,
                 "applicant": applicant,
-                "app_date": app_date_fmt,
-                "ipc": ipc,
-                "url": url,
-                "abstract": abstract[:200] + "..." if len(abstract) > 200 else abstract,
-                "source": "KIPRIS",
+                "app_date":  app_date_fmt,
+                "ipc":       ipc,
+                "url":       url,
+                "abstract":  abstract[:200] + "..." if len(abstract) > 200 else abstract,
+                "source":    "KIPRIS",
             })
             print(f"  추가: {title[:50]}...")
 
@@ -130,7 +136,7 @@ patents = patents[:20]
 today = datetime.now().date()
 for p in patents:
     try:
-        app_date = datetime.strptime(p["app_date"][:10], "%Y-%m-%d").date()
+        app_date    = datetime.strptime(p["app_date"][:10], "%Y-%m-%d").date()
         p["is_new"] = (today - app_date).days <= 30
     except Exception:
         p["is_new"] = False
@@ -138,15 +144,25 @@ for p in patents:
 new_count = sum(1 for p in patents if p["is_new"])
 print(f"신규 특허 (30일 이내): {new_count}건 / 전체: {len(patents)}건")
 
+for p in patents[:5]:
+    print(f"  {p['app_date']} | {p['title'][:50]}...")
+
 output = {
-    "updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
-    "source": "KIPRIS (한국특허정보원)",
+    "updated":    datetime.now().strftime("%Y-%m-%d %H:%M"),
+    "source":     "KIPRIS (한국특허정보원)",
     "source_url": "https://plus.kipris.or.kr",
-    "new_count": new_count,
-    "items": patents,
+    "new_count":  new_count,
+    "items":      patents,
 }
 
 with open("data/patents.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print(f"data/patents.json 저장 완료! ({len(patents)}건)")
+
+os.makedirs("data", exist_ok=True)
+
+API_KEY = os.environ.get("KIPRIS_API_KEY", "")
+BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
+
+SEARCH_QUERIES = [
