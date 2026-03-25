@@ -28,12 +28,11 @@ SEARCH_QUERIES = [
 MUST_KEYWORDS = [
     "영구자석", "소결자석", "nd-fe-b", "ndfeb",
     "네오디뮴", "희토류 자석", "permanent magnet",
-    "rare earth magnet",
+    "rare earth magnet","열간변형", "열간 변형", "hot deform",
 ]
 
 # 세부 키워드 (하나 이상 포함)
 DETAIL_KEYWORDS = [
-    "열간변형", "열간 변형", "hot deform",
     "세륨", "ce 치환", "ce-치환", "ce substitut",
     "입계확산", "입계 확산", "grain boundary",
 ]
