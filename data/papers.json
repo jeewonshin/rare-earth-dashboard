@@ -1,0 +1,75 @@
+{
+  "updated": "2026-03-25",
+  "items": [
+    {
+      "title": "Field-induced spin-flip and spin-flop transitions in NdFeO3",
+      "authors": "Mariana M. Gomes, Rui Vilarinho, E. Miranda",
+      "abstract": "Magnetic control of correlated spin systems is central to the development of next-generation spin-based technologies. Rare-earth orthoferrites provide an interesting platform in which exchange couplin...",
+      "url": "http://arxiv.org/abs/2603.23165v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Impurity quadrupole moments as local probes of flux sectors in the Kitaev spin liquid",
+      "authors": "Masahiro O. Takahashi, Wen-Han Kao, Satoshi Fujimoto",
+      "abstract": "Emergent fluxes play a central role in the low-energy properties of quantum spin liquids (QSLs), where they encode the underlying gauge structure and fractionalization of spins. Here, we show that the...",
+      "url": "http://arxiv.org/abs/2603.23145v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "The Persistent Radio Sources and Multi-wavelength Counterparts of Fast Radio Bursts in Massive Binary Systems",
+      "authors": "Z. Y. Zhao, F. Y. Wang, Z. G. Dai",
+      "abstract": "Fast radio bursts (FRBs) are millisecond-duration pulses originating from cosmological distances. Multi-wavelength counterparts associated with FRBs are important for unveiling their physical origins....",
+      "url": "http://arxiv.org/abs/2603.23144v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Open Quantum System Theory of Muon Spin Relaxation in Materials",
+      "authors": "Elvis F. Arguelles, Osamu Sugino",
+      "abstract": "We present a non-Markovian theory of muon spin relaxation that treats the implanted muon as an open quantum spin coupled to a temporally correlated local magnetic environment. Using a Schwinger-Keldys...",
+      "url": "http://arxiv.org/abs/2603.23137v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Complex magnetic interactions in geometrically frustrated TbOF",
+      "authors": "Pim Witte, Denis Sheptyakov, Elsa Lhotel",
+      "abstract": "We have identified TbOF as a unique frustrated and mixed-anion lattice, hosting unconventional magnetism. By means of magnetization, specific heat and neutron diffraction measurements down to 90 mK, a...",
+      "url": "http://arxiv.org/abs/2603.23130v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Template-free fabrication of reconfigurable magnetic micropillars and filaments through controlled Nanoflower assembly and actuation",
+      "authors": "Caterina Landi, Rosa Pérez-Garrido, Julio Marco Cuenca",
+      "abstract": "Magnetic nanoflowers (MNFs), which exhibit large intrinsic magnetic losses and high specific absorption rates under clinically relevant alternating magnetic fields, highlight strong potential as effic...",
+      "url": "http://arxiv.org/abs/2603.23102v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Anomalously Strong Localized First Ionization Potential Effect Associated with a Solar Subflare",
+      "authors": "Man-Hei Ng, Xiaoping Zhang, P. F. Chen",
+      "abstract": "Plasma composition in the solar corona commonly differs from that of the photosphere, with the enhancement of low--first-ionization-potential (FIP) elements referred to as the FIP effect. This phenome...",
+      "url": "http://arxiv.org/abs/2603.23098v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Assessing the Robustness of Climate Foundation Models under No-Analog Distribution Shifts",
+      "authors": "Maria Conchita Agana Navarro, Geng Li, Theo Wolf",
+      "abstract": "The accelerating pace of climate change introduces profound non-stationarities that challenge the ability of Machine Learning based climate emulators to generalize beyond their training distributions....",
+      "url": "http://arxiv.org/abs/2603.23043v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Stable Matchings with Choice Correspondences Under Acyclicity",
+      "authors": "Varun Bansal, Mihir Bhattacharya, Ojasvi Khare",
+      "abstract": "We study the existence of stable matchings when agents have choice correspondences instead of preference relations. We extend the framework of Chambers and Yenmez (2017) by weakening the Path Independ...",
+      "url": "http://arxiv.org/abs/2603.23038v1",
+      "date": "2026-03-24"
+    },
+    {
+      "title": "Traffic Sign Recognition in Autonomous Driving: Dataset, Benchmark, and Field Experiment",
+      "authors": "Guoyang Zhao, Weiqing Qi, Kai Zhang",
+      "abstract": "Traffic Sign Recognition (TSR) is a core perception capability for autonomous driving, where robustness to cross-region variation, long-tailed categories, and semantic ambiguity is essential for relia...",
+      "url": "http://arxiv.org/abs/2603.23034v1",
+      "date": "2026-03-24"
+    }
+  ]
+}

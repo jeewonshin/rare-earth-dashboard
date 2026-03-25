@@ -1,0 +1,30 @@
+{
+  "updated": "2026-03-25",
+  "items": [
+    {
+      "name": "Neodymium (Nd)",
+      "value": "~82",
+      "unit": "USD/kg"
+    },
+    {
+      "name": "Praseodymium (Pr)",
+      "value": "~84",
+      "unit": "USD/kg"
+    },
+    {
+      "name": "Dysprosium (Dy)",
+      "value": "~290",
+      "unit": "USD/kg"
+    },
+    {
+      "name": "Cerium (Ce)",
+      "value": "~2.5",
+      "unit": "USD/kg"
+    },
+    {
+      "name": "Terbium (Tb)",
+      "value": "~1,050",
+      "unit": "USD/kg"
+    }
+  ]
+}
