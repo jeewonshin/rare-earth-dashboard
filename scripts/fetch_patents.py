@@ -5,11 +5,11 @@ import re
 from datetime import datetime
 from xml.etree import ElementTree as ET
 
-print("📡 ://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"print("📡 KIPRIS 특허 수집 중...")
+print("📡 KIPRIS 특허 수집 중...")
 
-SEARCH_QUERIES = [
-    "열간변형 영구자석 네오디뮴",
-    "열간변형 영구자석 Nd-Fe-B",
+os.makedirs("data", exist_ok=True)
+
+APINd-Fe-B",API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
     "열간변형 영구자석 세륨",
     "열간변형 영구자석 입계확산",
     "열간변형 영구자석 Ce 치환",
@@ -120,11 +120,10 @@ for query in SEARCH_QUERIES:
         print(f"  ❌ 실패: {e}")
         import traceback; traceback.print_exc()
 
-# 출원일 기준 최신순 정렬
+
 patents.sort(key=lambda x: x["app_date"], reverse=True)
 patents = patents[:20]
 
-# 30일 이내면 NEW
 today = datetime.now().date()
 for p in patents:
     try:
@@ -151,7 +150,7 @@ with open("data/patents.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print(f"\n✅ data/patents.json 저장 완료! ({len(patents)}건)")
+BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
-os.makedirs("data", exist_ok=True)
-
-API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
+SEARCH_QUERIES = [
+    "열간변형 영구자석 네오디뮴",
