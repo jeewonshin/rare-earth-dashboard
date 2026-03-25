@@ -5,25 +5,27 @@
   <title>희토류 기술 대시보드</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f0f4f8;
       padding: 24px;
     }
+
     h1 {
       color: #1a365d;
       text-align: center;
       font-size: 26px;
       margin-bottom: 4px;
     }
+
     .subtitle {
       text-align: center;
       color: #666;
       font-size: 13px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
-    /* 전체 레이아웃 */
     .section-title {
       font-size: 15px;
       font-weight: bold;
@@ -33,14 +35,14 @@
       padding-left: 10px;
     }
 
-    /* 가격 카드 3개 가로 배치 */
+    /* 가격 카드 3개 */
     .price-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 16px;
     }
 
-    /* 논문/특허 2개 가로 배치 */
+    /* 논문/특허 2개 */
     .content-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -53,43 +55,32 @@
       padding: 20px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
+
     .card h2 {
       color: #2b6cb0;
       font-size: 15px;
       border-bottom: 2px solid #ebf8ff;
       padding-bottom: 10px;
       margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
-    /* 가격 카드 내부 */
+    /* 가격 카드 */
     .price-big {
       font-size: 36px;
       font-weight: bold;
       color: #1a365d;
       line-height: 1.1;
     }
-    .price-unit {
-      font-size: 14px;
-      color: #888;
-      font-weight: normal;
-    }
-    .price-grade {
-      color: #888;
-      font-size: 12px;
-      margin-top: 4px;
-    }
-    .price-date {
-      font-size: 11px;
-      color: #aaa;
-      margin-top: 2px;
-    }
-    .price-change {
-      font-weight: bold;
-      font-size: 14px;
-      margin-top: 4px;
-    }
+    .price-unit   { font-size: 14px; color: #888; font-weight: normal; }
+    .price-grade  { color: #888; font-size: 12px; margin-top: 4px; }
+    .price-change { font-weight: bold; font-size: 14px; margin-top: 4px; }
+    .price-date   { font-size: 11px; color: #aaa; margin-top: 2px; }
 
-    /* 논문/특허 */
+    /* 논문/특허 아이템 */
     .item {
       border-bottom: 1px solid #eee;
       padding: 10px 0;
@@ -102,11 +93,36 @@
       font-weight: bold;
       line-height: 1.4;
       display: block;
-      margin-bottom: 2px;
+      margin: 3px 0 2px;
     }
-    .item a:hover { text-decoration: underline; }
+    .item a:hover  { text-decoration: underline; }
     .item .meta    { color: #777; font-size: 12px; margin-bottom: 2px; }
     .item .snippet { color: #999; font-size: 12px; line-height: 1.4; }
+
+    /* NEW 섹션 박스 */
+    .new-section-header {
+      background: #fffbeb;
+      border: 1px solid #f6e05e;
+      border-radius: 8px;
+      padding: 7px 12px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #b7791f;
+    }
+
+    .old-section-header {
+      font-size: 12px;
+      font-weight: bold;
+      color: #718096;
+      margin-bottom: 8px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px dashed #e2e8f0;
+      margin: 14px 0;
+    }
 
     .updated {
       font-size: 11px;
@@ -114,7 +130,37 @@
       text-align: right;
       margin-top: 14px;
     }
+
     .loading { color: #aaa; font-size: 13px; padding: 8px 0; }
+
+    /* 태그 */
+    .tag {
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+    .tag-new {
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+    .tag-arxiv    { background: #faf5ff; color: #6b46c1; }
+    .tag-crossref { background: #f0fff4; color: #276749; }
+    .badge-new {
+      background: #f6e05e;
+      color: #744210;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -131,19 +177,43 @@
   </div>
   <div class="updated" id="price-updated"></div>
 
-  <!-- 논문/특허 섹션 -->
+  <!-- 논문 / 특허 섹션 -->
   <div class="section-title">📄 최신 논문 & 🔐 특허</div>
   <div class="content-grid">
 
+    <!-- 논문 카드 -->
     <div class="card">
-      <h2>📄 최신 논문 (arXiv)</h2>
-      <div id="papers-container"><p class="loading">로딩 중...</p></div>
+      <h2>
+        📄 최신 논문 (arXiv + CrossRef)
+        <span id="new-badge"></span>
+      </h2>
+
+      <!-- 🆕 신규 섹션 -->
+      <div class="new-section-header">
+        🆕 이번 주 새 논문 <span id="new-count"></span>
+      </div>
+      <div id="papers-new">
+        <p class="loading">로딩 중...</p>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" id="papers-divider" style="display:none">
+
+      <!-- 이전 논문 섹션 -->
+      <div id="papers-old-section" style="display:none">
+        <div class="old-section-header">📋 이전 논문</div>
+        <div id="papers-old"></div>
+      </div>
+
       <div class="updated" id="paper-updated"></div>
     </div>
 
+    <!-- 특허 카드 -->
     <div class="card">
       <h2>🔐 최신 특허</h2>
-      <div id="patents-container"><p class="loading">로딩 중...</p></div>
+      <div id="patents-container">
+        <p class="loading">로딩 중...</p>
+      </div>
       <div class="updated" id="patent-updated"></div>
     </div>
 
@@ -151,11 +221,10 @@
 
   <script>
     // ================================================
-    // 가격 카드 그리기
+    // 차트 그리기 함수
     // ================================================
     function drawChart(canvasId, history) {
       if (!history || history.length < 2) return;
-
       const canvas  = document.getElementById(canvasId);
       if (!canvas) return;
       canvas.width  = canvas.parentElement.clientWidth;
@@ -205,7 +274,8 @@
       ctx.fill();
 
       // Y축 라벨
-      ctx.fillStyle = '#aaa'; ctx.font = '10px sans-serif';
+      ctx.fillStyle = '#aaa';
+      ctx.font      = '10px sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(maxV.toFixed(1), pad.left - 3, pad.top + 9);
       ctx.fillText(minV.toFixed(1), pad.left - 3, H - pad.bottom - 2);
@@ -217,6 +287,9 @@
       ctx.fillText(dates[dates.length - 1], W - pad.right, H - 4);
     }
 
+    // ================================================
+    // 가격 카드
+    // ================================================
     fetch('data/prices.json')
       .then(r => r.json())
       .then(data => {
@@ -225,8 +298,8 @@
 
         const grid = document.getElementById('price-grid');
         grid.innerHTML = data.metals.map((m, idx) => {
-          const t  = m.today;
-          const up = t.change_val !== null && t.change_val >= 0;
+          const t     = m.today;
+          const up    = t.change_val !== null && t.change_val >= 0;
           const color = t.change_val === null ? '#888' : up ? '#c53030' : '#276749';
           const arrow = t.change_val === null ? '' : up ? '▲' : '▼';
           const chgText = t.change_val === null ? '' :
@@ -247,9 +320,9 @@
             </div>`;
         }).join('');
 
-        // 차트 그리기 (DOM 렌더 후)
         setTimeout(() => {
-          data.metals.forEach((m, idx) => drawChart(`chart-${idx}`, m.history));
+          data.metals.forEach((m, idx) =>
+            drawChart(`chart-${idx}`, m.history));
         }, 100);
       })
       .catch(() => {
@@ -260,21 +333,53 @@
     // ================================================
     // 논문 카드
     // ================================================
+    function paperHTML(p) {
+      const isArxiv  = p.source === 'arXiv';
+      const tagClass = isArxiv ? 'tag-arxiv' : 'tag-crossref';
+      const newTag   = p.is_new
+        ? `<span class="tag-new">🆕 NEW</span>` : '';
+      return `
+        <div class="item">
+          <span class="tag ${tagClass}">${p.source}</span>${newTag}
+          <a href="${p.url}" target="_blank">${p.title}</a>
+          <div class="meta">${p.authors} · ${p.date}</div>
+          <div class="snippet">${p.abstract}</div>
+        </div>`;
+    }
+
     fetch('data/papers.json')
       .then(r => r.json())
       .then(data => {
         document.getElementById('paper-updated').textContent =
-          '업데이트: ' + data.updated;
-        document.getElementById('papers-container').innerHTML =
-          data.items.map(p => `
-            <div class="item">
-              <a href="${p.url}" target="_blank">${p.title}</a>
-              <div class="meta">${p.authors} · ${p.date}</div>
-              <div class="snippet">${p.abstract}</div>
-            </div>`).join('');
+          '출처: ' + data.source + ' | 업데이트: ' + data.updated;
+
+        const newPapers = data.items.filter(p => p.is_new);
+        const oldPapers = data.items.filter(p => !p.is_new);
+
+        // 제목 뱃지
+        if (data.new_count > 0) {
+          document.getElementById('new-badge').innerHTML =
+            `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
+        }
+
+        // 신규 논문
+        document.getElementById('new-count').textContent =
+          `(${newPapers.length}건)`;
+        document.getElementById('papers-new').innerHTML =
+          newPapers.length > 0
+            ? newPapers.map(paperHTML).join('')
+            : '<p class="loading" style="color:#b7791f">이번 주 새 논문 없음</p>';
+
+        // 이전 논문
+        if (oldPapers.length > 0) {
+          document.getElementById('papers-divider').style.display    = 'block';
+          document.getElementById('papers-old-section').style.display = 'block';
+          document.getElementById('papers-old').innerHTML =
+            oldPapers.map(paperHTML).join('');
+        }
       })
       .catch(() => {
-        document.getElementById('papers-container').innerHTML =
+        document.getElementById('papers-new').innerHTML =
           '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
       });
 
