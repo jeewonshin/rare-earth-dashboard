@@ -1,30 +1,42 @@
 {
-  "updated": "2026-03-25",
+  "updated": "2026-03-25 01:58",
+  "source": "KOMIS (한국자원정보서비스)",
+  "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "items": [
     {
-      "name": "Neodymium (Nd)",
-      "value": "~82",
-      "unit": "USD/kg"
+      "name": "네오디뮴 (Nd)",
+      "value": "N/A",
+      "unit": "USD/kg",
+      "date": "",
+      "change": ""
     },
     {
-      "name": "Praseodymium (Pr)",
-      "value": "~84",
-      "unit": "USD/kg"
+      "name": "망간 (Mn)",
+      "value": "N/A",
+      "unit": "USD/kg",
+      "date": "",
+      "change": ""
     },
     {
-      "name": "Dysprosium (Dy)",
-      "value": "~290",
-      "unit": "USD/kg"
+      "name": "터븀 (Tb)",
+      "value": "N/A",
+      "unit": "USD/kg",
+      "date": "",
+      "change": ""
     },
     {
-      "name": "Cerium (Ce)",
-      "value": "~2.5",
-      "unit": "USD/kg"
+      "name": "란탄 (La)",
+      "value": "N/A",
+      "unit": "USD/kg",
+      "date": "",
+      "change": ""
     },
     {
-      "name": "Terbium (Tb)",
-      "value": "~1,050",
-      "unit": "USD/kg"
+      "name": "갈륨 (Ga)",
+      "value": "N/A",
+      "unit": "USD/kg",
+      "date": "",
+      "change": ""
     }
   ]
 }
