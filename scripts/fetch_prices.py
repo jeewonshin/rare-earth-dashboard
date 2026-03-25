@@ -1,83 +1,81 @@
 import requests
 import json
-import time
+import os
 from datetime import datetime
 
-# ============================================================
-# KOMIS 희소금속 가격 수집기
-# 대상: 네오디뮴, 망간, 터븀, 란탄, 갈륨
-# ============================================================
+print("📡 KOMIS 네오디뮴 가격 수집 중...")
 
-# KOMIS 내부 API 엔드포인트
-BASE_URL = "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetalsData"
-
-# 수집할 광종 목록 (광종명: KOMIS 광종코드)
-METALS = {
-    "네오디뮴 (Nd)": "neodymium",
-    "망간 (Mn)":     "manganese",
-    "터븀 (Tb)":     "terbium",
-    "란탄 (La)":     "lanthanum",
-    "갈륨 (Ga)":     "gallium",
-}
+URL = "https://www.komis.or.kr/Komis/RsrcPrice/ajax/getMnrlPriceCrtr"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
     "Referer": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
     "Accept": "application/json, text/plain, */*",
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     "X-Requested-With": "XMLHttpRequest",
 }
 
-def fetch_price(metal_code):
-    """KOMIS에서 특정 광종의 최신 가격을 가져옵니다."""
-    try:
-        params = {
-            "metalCd": metal_code,
-            "avgOpt": "D",   # D=일별, M=월별
-            "startDt": "",
-            "endDt": "",
-        }
-        res = requests.get(BASE_URL, params=params, headers=HEADERS, timeout=15)
-        res.raise_for_status()
-        data = res.json()
+PARAMS = {
+    "HP000": "",
+    "HP002": "",
+    "mnrkndUnqCd": "MNRL1001",   # 네오디뮴 고유 코드
+}
 
-        # 가장 최신 데이터 1건 추출
-        if data and isinstance(data, list) and len(data) > 0:
-            latest = data[-1]  # 마지막이 최신
-            return {
-                "date":  latest.get("priceDate", ""),
-                "value": latest.get("price", "N/A"),
-                "unit":  latest.get("unit", "USD/kg"),
-                "change": latest.get("rateOfChange", ""),
-            }
-    except Exception as e:
-        print(f"  ⚠️ {metal_code} 수집 실패: {e}")
-    return {"date": "", "value": "N/A", "unit": "USD/kg", "change": ""}
+try:
+    res = requests.post(URL, data=PARAMS, headers=HEADERS, timeout=15)
+    res.raise_for_status()
+    raw = res.json()
+    print("응답 원본:", json.dumps(raw, ensure_ascii=False, indent=2)[:300])
 
+    # data 배열에서 첫 번째 항목 추출
+    data_list = raw.get("data", [])
+    
+    # "Neodymium Oxide" 항목 찾기
+    nd_item = next(
+        (d for d in data_list if "Neodymium" in d.get("cdVal", "")),
+        data_list[0] if data_list else None
+    )
 
-# ── 메인 실행 ──────────────────────────────────────────────
-items = []
+    if nd_item:
+        price_value = nd_item.get("spcfct", "N/A")
+        grade       = nd_item.get("cdVal", "Neodymium Oxide")
+        print(f"✅ 네오디뮴 가격: {price_value} | 등급: {grade}")
+    else:
+        price_value = "N/A"
+        grade = "Neodymium Oxide"
+        print("⚠️ 데이터 없음")
 
-for name, code in METALS.items():
-    print(f"📡 수집 중: {name}")
-    result = fetch_price(code)
-    items.append({
-        "name":   name,
-        "value":  str(result["value"]),
-        "unit":   result["unit"],
-        "date":   result["date"],
-        "change": str(result.get("change", "")),
-    })
-    time.sleep(0.5)  # 서버 부하 방지
+    items = [{
+        "name":  "네오디뮴 (Nd)",
+        "grade": grade,
+        "value": price_value,
+        "unit":  "USD/kg",
+        "date":  datetime.now().strftime("%Y-%m-%d"),
+    }]
+    status = "success"
+
+except Exception as e:
+    print(f"❌ 오류: {e}")
+    items = [{
+        "name":  "네오디뮴 (Nd)",
+        "grade": "Neodymium Oxide",
+        "value": "N/A",
+        "unit":  "USD/kg",
+        "date":  datetime.now().strftime("%Y-%m-%d"),
+    }]
+    status = "error"
+
+os.makedirs("data", exist_ok=True)
 
 output = {
-    "updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
-    "source":  "KOMIS (한국자원정보서비스)",
+    "updated":    datetime.now().strftime("%Y-%m-%d %H:%M"),
+    "source":     "KOMIS (한국자원정보서비스)",
     "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
-    "items": items
+    "status":     status,
+    "items":      items,
 }
 
 with open("data/prices.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print(f"\n✅ 가격 데이터 저장 완료 ({len(items)}종)")
-print(json.dumps(output, ensure_ascii=False, indent=2))
+print(f"✅ 저장 완료!")
