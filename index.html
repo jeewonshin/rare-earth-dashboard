@@ -2,8 +2,34 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>희토류 기술 대시보드</title>
-   {  <style>
+  <title>희토류f0f4f8;  <title>희토류 기술 대시보드</title>
+      padding: 24px;
+    }
+
+    h1 {
+      color: #1a365d;
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #2b6cb0;
+      margin: 28px 0 12px 0;
+      border-left: 4px solid #2b6cb0;
+      padding-left: 10px;
+    }
+
+    .price-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 16px;
@@ -28,10 +54,6 @@
       border-bottom: 2px solid #ebf8ff;
       padding-bottom: 10px;
       margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
     }
 
     .price-big    { font-size: 36px; font-weight: bold; color: #1a365d; line-height: 1.1; }
@@ -40,11 +62,7 @@
     .price-change { font-weight: bold; font-size: 14px; margin-top: 4px; }
     .price-date   { font-size: 11px; color: #aaa; margin-top: 2px; }
 
-    .item {
-      border-bottom: 1px solid #eee;
-      padding: 10px 0;
-      font-size: 13px;
-    }
+    .item { border-bottom: 1px solid #eee; padding: 10px 0; font-size: 13px; }
     .item:last-child { border-bottom: none; }
     .item a {
       color: #2b6cb0;
@@ -82,13 +100,7 @@
       margin: 14px 0;
     }
 
-    .updated {
-      font-size: 11px;
-      color: #bbb;
-      text-align: right;
-      margin-top: 14px;
-    }
-
+    .updated { font-size: 11px; color: #bbb; text-align: right; margin-top: 14px; }
     .loading { color: #aaa; font-size: 13px; padding: 8px 0; }
 
     .tag          { font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: bold; display: inline-block; margin-bottom: 3px; }
@@ -96,7 +108,7 @@
     .tag-arxiv    { background: #faf5ff; color: #6b46c1; }
     .tag-crossref { background: #f0fff4; color: #276749; }
     .tag-kipris   { background: #fff5f5; color: #c53030; }
-    .badge-new    { background: #f6e05e; color: #744210; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
+    .badge-new    { background: #f6e05e; color: #744210; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold; margin-left: 6px; }
   </style>
 </head>
 <body>
@@ -113,7 +125,7 @@
   </div>
   <div class="updated" id="price-updated"></div>
 
-  <!-- 논문 / 특허 섹션 -->
+  <!-- 논문/특허 섹션 -->
   <div class="section-title">📄 최신 논문 & 🔐 특허</div>
   <div class="content-grid">
 
@@ -121,17 +133,21 @@
     <div class="card">
       <h2>
         📄 최신 논문 (arXiv + CrossRef)
-        <span id="paper-new-badge"></span>
+        <span id="paper-badge"></span>
       </h2>
+
       <div class="new-section-header">
-        🆕 이번 달 새 논문 <span id="paper-new-count"></span>
+        🆕 이번 주 새 논문 <span id="paper-new-count"></span>
       </div>
       <div id="papers-new"><p class="loading">로딩 중...</p></div>
+
       <hr class="divider" id="papers-divider" style="display:none">
+
       <div id="papers-old-section" style="display:none">
         <div class="old-section-header">📋 이전 논문</div>
         <div id="papers-old"></div>
       </div>
+
       <div class="updated" id="paper-updated"></div>
     </div>
 
@@ -139,17 +155,21 @@
     <div class="card">
       <h2>
         🔐 최신 특허 (KIPRIS)
-        <span id="patent-new-badge"></span>
+        <span id="patent-badge"></span>
       </h2>
+
       <div class="new-section-header">
         🆕 이번 달 새 특허 <span id="patent-new-count"></span>
       </div>
       <div id="patents-new"><p class="loading">로딩 중...</p></div>
+
       <hr class="divider" id="patents-divider" style="display:none">
+
       <div id="patents-old-section" style="display:none">
         <div class="old-section-header">📋 이전 특허</div>
         <div id="patents-old"></div>
       </div>
+
       <div class="updated" id="patent-updated"></div>
     </div>
 
@@ -157,7 +177,7 @@
 
   <script>
     // ================================================
-    // 차트 그리기
+    // 차트 그리기 함수
     // ================================================
     function drawChart(canvasId, history) {
       if (!history || history.length < 2) return;
@@ -227,10 +247,10 @@
 
         const grid = document.getElementById('price-grid');
         grid.innerHTML = data.metals.map((m, idx) => {
-          const t     = m.today;
-          const up    = t.change_val !== null && t.change_val >= 0;
-          const color = t.change_val === null ? '#888' : up ? '#c53030' : '#276749';
-          const arrow = t.change_val === null ? '' : up ? '▲' : '▼';
+          const t       = m.today;
+          const up      = t.change_val !== null && t.change_val >= 0;
+          const color   = t.change_val === null ? '#888' : up ? '#c53030' : '#276749';
+          const arrow   = t.change_val === null ? '' : up ? '▲' : '▼';
           const chgText = t.change_val === null ? '' :
             `${arrow} ${Math.abs(t.change_val).toFixed(2)} (${Math.abs(t.change_pct).toFixed(2)}%)`;
           return `
@@ -284,16 +304,15 @@
         const oldPapers = data.items.filter(p => !p.is_new);
 
         if (data.new_count > 0) {
-          document.getElementById('paper-new-badge').innerHTML =
+          document.getElementById('paper-badge').innerHTML =
             `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
         }
-
         document.getElementById('paper-new-count').textContent =
           `(${newPapers.length}건)`;
         document.getElementById('papers-new').innerHTML =
           newPapers.length > 0
             ? newPapers.map(paperHTML).join('')
-            : '<p class="loading" style="color:#b7791f">이번 달 새 논문 없음</p>';
+            : '<p class="loading" style="color:#b7791f">이번 주 새 논문 없음</p>';
 
         if (oldPapers.length > 0) {
           document.getElementById('papers-divider').style.display     = 'block';
@@ -334,10 +353,9 @@
         const oldPatents = data.items.filter(p => !p.is_new);
 
         if (data.new_count > 0) {
-          document.getElementById('patent-new-badge').innerHTML =
+          document.getElementById('patent-badge').innerHTML =
             `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
         }
-
         document.getElementById('patent-new-count').textContent =
           `(${newPatents.length}건)`;
         document.getElementById('patents-new').innerHTML =
@@ -360,34 +378,8 @@
   </script>
 </body>
 </html>
+  <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
-      padding: 24px;
-    }
-
-    h1 {
-      color: #1a365d;
-      text-align: center;
-      font-size: 26px;
-      margin-bottom: 4px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #666;
-      font-size: 13px;
-      margin-bottom: 28px;
-    }
-
-    .section-title {
-      font-size: 15px;
-      font-weight: bold;
-      color: #2b6cb0;
-      margin: 28px 0 12px 0;
-      border-left: 4px solid #2b6cb0;
-      padding-left: 10px;
-    }
-
