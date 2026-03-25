@@ -5,11 +5,8 @@ import re
 from datetime import datetime
 from xml.etree import ElementTree as ET
 
-print("📡 KIPRIS 특허 수집 중...")
-
-os.makedirs("data", exist_ok=True)
-
-APINd-Fe-B",API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
+print("📡 디뮴",print("📡 KIPRIS 특허 수집 중...")
+    "열간변형 영구자석 Nd-Fe-B",
     "열간변형 영구자석 세륨",
     "열간변형 영구자석 입계확산",
     "열간변형 영구자석 Ce 치환",
@@ -91,7 +88,6 @@ for query in SEARCH_QUERIES:
 
             app_date_fmt = fmt_date(app_date)
 
-            # 날짜 필터: 최근 5년
             try:
                 app_dt   = datetime.strptime(app_date_fmt[:10], "%Y-%m-%d").date()
                 days_old = (datetime.now().date() - app_dt).days
@@ -150,7 +146,10 @@ with open("data/patents.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print(f"\n✅ data/patents.json 저장 완료! ({len(patents)}건)")
+
+os.makedirs("data", exist_ok=True)
+
+API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
 BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
 SEARCH_QUERIES = [
-    "열간변형 영구자석 네오디뮴",
