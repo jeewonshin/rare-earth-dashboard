@@ -1,165 +1,142 @@
-import requests
-import json
-import os
-import re
-import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
-
-print("📡 논문 수집 시작 (arXiv + CrossRef)...")
-
-os.makedirs("data", exist_ok=True)
-
-KEYWORDS = "NdFeB OR \"Nd-Fe-B\" OR \"rare earth magnet\" OR \"neodymium magnet\" OR \"Ce substitution magnet\""
-
-papers = []
-seen_titles = set()
-
-# ================================================
-# 1. arXiv API
-# ================================================
-print("\n  [1/2] arXiv 수집 중...")
-
-try:
-    res = requests.get(
-        "https://export.arxiv.org/api/query",
-        params={
-            "search_query": f"all:{KEYWORDS}",
-            "start":        0,
-            "max_results":  8,
-            "sortBy":       "submittedDate",
-            "sortOrder":    "descending",
-        },
-        timeout=20
-    )
-
-    ns   = {"atom": "http://www.w3.org/2005/Atom"}
-    root = ET.fromstring(res.text)
-
-    for entry in root.findall("atom:entry", ns):
-        title    = entry.find("atom:title",    ns).text.strip().replace("\n", " ")
-        url      = entry.find("atom:id",       ns).text.strip()
-        date_raw = entry.find("atom:published",ns).text.strip()[:10]
-        authors  = [a.find("atom:name", ns).text
-                    for a in entry.findall("atom:author", ns)]
-        abstract = entry.find("atom:summary",  ns).text.strip().replace("\n", " ")
-
-        if title not in seen_titles:
-            seen_titles.add(title)
-            papers.append({
-                "title":    title,
-                "authors":  ", ".join(authors[:3]) + (" et al." if len(authors) > 3 else ""),
-                "date":     date_raw,
-                "url":      url,
-                "abstract": abstract[:200] + "...",
-                "source":   "arXiv",
-            })
-
-    print(f"  ✅ arXiv {len(papers)}건 수집")
-
-except Exception as e:
-    print(f"  ❌ arXiv 실패: {e}")
-
-
-# ================================================
-# 2. CrossRef API
-# ================================================
-print("\n  [2/2] CrossRef 수집 중...")
-
-crossref_count = 0
-
-try:
-    from_date = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
-
-    res = requests.get(
-        "https://api.crossref.org/works",
-        params={
-            "query":  "NdFeB rare earth magnet neodymium Ce substitution",
-            "filter": f"from-pub-date:{from_date},type:journal-article",
-            "rows":   15,
-            "sort":   "published",
-            "order":  "desc",
-            "select": "title,author,published,URL,abstract,container-title",
-        },
-        headers={"User-Agent": "RareEarthDashboard/1.0 (research tool)"},
-        timeout=20
-    )
-
-    items = res.json().get("message", {}).get("items", [])
-
-    for item in items:
-        title_list = item.get("title", [])
-        if not title_list:
-            continue
-        title = title_list[0].strip()
-        if title in seen_titles:
-            continue
-
-        authors_raw = item.get("author", [])
-        authors_str = ", ".join(
-            f"{a.get('given','')} {a.get('family','')}".strip()
-            for a in authors_raw[:3]
-        ) + (" et al." if len(authors_raw) > 3 else "")
-
-        pub      = item.get("published", {}).get("date-parts", [[""]])[0]
-        date_str = "-".join(str(x).zfill(2) for x in pub if x) or ""
-
-        journal      = item.get("container-title", [""])[0]
-        abstract_raw = item.get("abstract", "")
-        abstract_clean = re.sub(r"<[^>]+>", "", abstract_raw)[:200] + "..."
-        url = item.get("URL", "#")
-
-        seen_titles.add(title)
-        papers.append({
-            "title":    title,
-            "authors":  authors_str,
-            "date":     date_str,
-            "url":      url,
-            "abstract": abstract_clean,
-            "source":   f"CrossRef ({journal})" if journal else "CrossRef",
-        })
-        crossref_count += 1
-
-    print(f"  ✅ CrossRef {crossref_count}건 수집")
-
-except Exception as e:
-    print(f"  ❌ CrossRef 실패: {e}")
-
-
-# ── 날짜 기준 최신순 정렬 ─────────────────────────────────
-papers.sort(key=lambda x: x["date"], reverse=True)
-papers = papers[:15]
-
-# ── 기존 데이터와 비교 (신규 여부 판단) ──────────────────
-existing_urls = set()
-try:
-    with open("data/papers.json", "r", encoding="utf-8") as f:
-        old_data = json.load(f)
-        existing_urls = set(p["url"] for p in old_data.get("items", []))
-    print(f"\n기존 논문 수: {len(existing_urls)}건")
-except:
-    print("\n기존 데이터 없음 (첫 실행)")
-
-today = datetime.now().date()
-for p in papers:
-    is_new_url = p["url"] not in existing_urls
-    try:
-        pub_date    = datetime.strptime(p["date"][:10], "%Y-%m-%d").date()
-        is_new_date = (today - pub_date).days <= 7
-    except:
-        is_new_date = False
-    p["is_new"] = is_new_url or is_new_date
-
-new_count = sum(1 for p in papers if p["is_new"])
-print(f"신규 논문: {new_count}건 / 전체: {len(papers)}건")
-
-output = {
-    "updated":   datetime.now().strftime("%Y-%m-%d %H:%M"),
-    "source":    "arXiv + CrossRef",
-    "new_count": new_count,
-    "items":     papers,
+{
+  "updated": "2026-03-25 02:44",
+  "source": "arXiv + CrossRef",
+  "new_count": 15,
+  "items": [
+    {
+      "title": "Patterns of Cannabis and Alcohol Co-Use: Substitution Versus Complementary Effects",
+      "authors": "R Gunn",
+      "date": "2122",
+      "url": "https://doi.org/10.35946/arcr.v42.1.04",
+      "abstract": "...",
+      "source": "CrossRef (Alcohol Research: Current Reviews)",
+      "is_new": true
+    },
+    {
+      "title": "Primary high grade mucoepidermoid carcinoma of skin and cervical lymphatic affection a rare entity",
+      "authors": "Zaki Taissoun Aslan, Martin Granados Garcia, Kuauhyama Luna Ortiz et al.",
+      "date": "2108-08-03",
+      "url": "https://doi.org/10.15406/mojs.2018.06.00136",
+      "abstract": "...",
+      "source": "CrossRef (MOJ Surgery)",
+      "is_new": true
+    },
+    {
+      "title": "Rare Adrenal Gland Emergencies: A Case Series of Giant Myelolipoma Presenting With Massive Hemorrhage and Abscess",
+      "authors": "Santosh Kumar, Kumar Jayant, Seema Prasad et al.",
+      "date": "2038-01-19",
+      "url": "https://doi.org/10.5812/numonthly.22671",
+      "abstract": "...",
+      "source": "CrossRef (Nephro-Urology Monthly)",
+      "is_new": true
+    },
+    {
+      "title": "La douleur somatique comme opportunité de création. Ce que nous apprend Shiki",
+      "authors": "Huê Ly-Thanh, Patrick Martin-Mattera",
+      "date": "2030-04-21",
+      "url": "https://doi.org/10.3917/bupsy.pr1.0006",
+      "abstract": "Les artistes nous précèdent, disait Freud. Et comme l’étudia Lacan, avec Joyce ou avec le Hamlet de Shakespeare, le processus de création peut donner une issue neuve aux mécanismes intimes des diverse...",
+      "source": "CrossRef (Bulletin de psychologie)",
+      "is_new": true
+    },
+    {
+      "title": "Scalp Abscess in a Newborn: A Rare Condition With An Unusual Etiology",
+      "authors": "Luzia Condessa, Cristina Novais, Carlos Castaneda et al.",
+      "date": "2027",
+      "url": "https://doi.org/10.7199/ped.oncall.2027.3",
+      "abstract": "...",
+      "source": "CrossRef (Pediatric Oncall)",
+      "is_new": true
+    },
+    {
+      "title": "Restoration of phonograms from collection of rare records of Department of Music Fonds of V.I. Vernadskyi National Library of Ukraine: digitization, digital restoration, creation of metadata, integration into international music web resources",
+      "authors": ", Andrii Kriuchyn, Yurii Kovtaniuk et al.",
+      "date": "2026-12-16",
+      "url": "https://doi.org/10.15407/rksu.40.189",
+      "abstract": "...",
+      "source": "CrossRef (Rukopisna ta knižkova spadŝina Ukraïni)",
+      "is_new": true
+    },
+    {
+      "title": "Integrated assessment of groundwater potential in Ngaoundal (Adamawa, Cameroon) using geoelectrical methods and satellite imagery",
+      "authors": "Abdoul Aboubakar, Donald Eric Teikeu Ngueveu, Quentin Marc Anaba Fotze et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2026.100157",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "The influence of geomagnetic storms on global main shock earthquake occurrence: A study of solar wind parameters and seismic activity",
+      "authors": "S. Prasanna Subramanian, A. Mujiber Rahman",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2025.100148",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Landslide morphology of the Batote area, Jammu &amp; Kashmir, NW Himalaya: Implications for the age of prehistoric debris slides",
+      "authors": "Abdul Qayoom Paul, Pankaj Kumar, Irfan Maqbool Bhat et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2026.100153",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Automation-driven multi-well reservoir characterization of cenomanian–eocene clastic reservoirs in the offshore Douala Sub-Basin, Cameroon",
+      "authors": "Edwin Ayuk Ndip, Michael Agbor Manyoh, Pa Omar Konteh et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2026.100156",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Gravity and field data interpretation of a probabilistic buried impact crater in Mboutou and Environs, North Cameroon",
+      "authors": "Jean Paul Sep Nlomngan, Augustin Patrice Moussango Ibohn, Quentin Marc Anaba Fotze et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2025.100150",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Geomorphic signatures of active tectonics in the Poonch basin, Northwestern Himalaya, India",
+      "authors": "Ajay Kumar Taloor, Nuzhat Khurshid, Girish Ch Kothyari et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2026.100154",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Quantification of fracture porosity and reservoir heterogeneity in carbonates: An integrated core-log zoning workflow, Southwest Iran",
+      "authors": "Zahra Safarpour Kapoorchali, Ezatallah Kazemzadeh, Mehran Arian et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2025.100149",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Structural controls on gold mineralization based on gravity data in the Batouri area, Eastern Cameroon",
+      "authors": "Jospin Fomat Tandjong, Victor Metang, Descartes Newton Youmssi Metang et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2026.100158",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    },
+    {
+      "title": "Mapping subsurface lineaments beneath the Ethiopian plateaus and the adjoining Ethiopian rifts using gravity data: Implications for tectonic evolution of the underlying crust",
+      "authors": "Zellelew Kassaye Bewketu, Abera Alemu, Kevin Mickus et al.",
+      "date": "2026-12",
+      "url": "https://doi.org/10.1016/j.rines.2026.100152",
+      "abstract": "...",
+      "source": "CrossRef (Results in Earth Sciences)",
+      "is_new": true
+    }
+  ]
 }
-
-with open("data/papers.json", "w", encoding="utf-8") as f:
-    json.dump(output, f, ensure_ascii=False, indent=2)
-
-print("\n✅ data/papers.json 저장 완료!")
