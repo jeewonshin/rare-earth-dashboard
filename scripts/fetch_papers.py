@@ -33,7 +33,8 @@ arxiv_papers    = []
 crossref_papers = []
 seen_titles     = set()
 
-# ★ 기존 papers.json 로드 → url -> first_seen 매핑 저장
+# ★ 기존 papers.json 로드 → existing_urls (전체) + existing_first_seen (first_seen 있는 것만)
+existing_urls       = set()
 existing_first_seen = {}
 if os.path.exists('data/papers.json'):
     try:
@@ -41,15 +42,13 @@ if os.path.exists('data/papers.json'):
             old_data = json.load(f)
             for p in old_data.get('items', []):
                 url = p.get('url', '')
+                if url:
+                    existing_urls.add(url)                      # URL은 무조건 저장
                 if url and p.get('first_seen'):
-                    existing_first_seen[url] = p['first_seen']
-        existing_urls = set(existing_first_seen.keys())
-        print(f'  기존 논문 {len(existing_urls)}건 로드 완료')
+                    existing_first_seen[url] = p['first_seen']  # first_seen 있는 것만
+        print(f'  기존 논문 {len(existing_urls)}건 로드 완료 (first_seen 보유: {len(existing_first_seen)}건)')
     except Exception as e:
-        existing_urls = set()
         print(f'  기존 데이터 로드 실패 (첫 실행 시 정상): {e}')
-else:
-    existing_urls = set()
 
 
 # ── arXiv API ──────────────────────────────────────────────────────────────
@@ -100,7 +99,7 @@ try:
                 'title':     title,
                 'authors':   ', '.join(authors[:3]) + (' et al.' if len(authors) > 3 else ''),
                 'date':      date_raw,
-                'sort_date': date_raw,  # arXiv는 미래 날짜 없으므로 동일
+                'sort_date': date_raw,
                 'url':       url,
                 'abstract':  abstract[:200] + '...',
                 'source':    'arXiv',
@@ -220,18 +219,21 @@ today_date = datetime.now().date()
 
 for p in papers:
     url = p.get('url', '')
-    if url in existing_first_seen:
-        # 기존 논문 → first_seen 유지
-        p['first_seen'] = existing_first_seen[url]
-    else:
-        if not existing_first_seen:
-            # 첫 실행 → sort_date 기준으로 세팅 (미래 논문은 오늘, 오래된 건 실제 날짜)
-            p['first_seen'] = p.get('sort_date', p.get('date', today_str))[:10]
-        else:
-            # 이후 실행 → 오늘 날짜 (진짜 새 논문)
-            p['first_seen'] = today_str
 
-    # ★ first_seen 기준 30일 이내면 NEW (웹 표시용)
+    if url in existing_first_seen:
+        # 케이스 1: 기존 논문 + first_seen 있음 → 유지
+        p['first_seen'] = existing_first_seen[url]
+    elif url in existing_urls:
+        # 케이스 2: 기존 논문인데 first_seen 없음 (이전 버전 데이터) → 논문 날짜 사용
+        p['first_seen'] = p.get('sort_date', p.get('date', today_str))[:10]
+    elif not existing_urls:
+        # 케이스 3: 진짜 첫 실행 (papers.json 자체가 없었음) → 논문 날짜 사용
+        p['first_seen'] = p.get('sort_date', p.get('date', today_str))[:10]
+    else:
+        # 케이스 4: 이후 실행에서 진짜 새 논문 → 오늘 날짜
+        p['first_seen'] = today_str
+
+    # first_seen 기준 30일 이내면 NEW (웹 표시용)
     try:
         first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
         p['is_new'] = (today_date - first_seen_date).days <= 30
