@@ -2,7 +2,7 @@ import smtplib
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -19,6 +19,7 @@ cc_list = [e.strip() for e in NOTIFY_CC.split(',')   if e.strip()]
 
 today        = datetime.now().strftime('%Y-%m-%d')
 is_wednesday = datetime.now().weekday() == 2
+week_ago     = str(date.today() - timedelta(days=7))
 
 # 가격 데이터 로드
 metals = []
@@ -30,23 +31,29 @@ try:
 except Exception as e:
     print(f'prices.json 로드 실패: {e}')
 
-# 논문 데이터 로드
+# 논문 데이터 로드 (7일 이내)
 new_papers = []
 try:
     with open('data/papers.json', 'r', encoding='utf-8') as f:
         papers_data = json.load(f)
-    new_papers = [p for p in papers_data.get('items', []) if p.get('is_new')]
-    print(f'새 논문: {len(new_papers)}건')
+    new_papers = [
+        p for p in papers_data.get('items', [])
+        if p.get('date', '') >= week_ago
+    ]
+    print(f'새 논문 (7일 이내): {len(new_papers)}건')
 except Exception as e:
     print(f'papers.json 로드 실패: {e}')
 
-# 특허 데이터 로드
+# 특허 데이터 로드 (7일 이내)
 new_patents = []
 try:
     with open('data/patents.json', 'r', encoding='utf-8') as f:
         patents_data = json.load(f)
-    new_patents = [p for p in patents_data.get('items', []) if p.get('is_new')]
-    print(f'새 특허: {len(new_patents)}건')
+    new_patents = [
+        p for p in patents_data.get('items', [])
+        if p.get('app_date', '') >= week_ago
+    ]
+    print(f'새 특허 (7일 이내): {len(new_patents)}건')
 except Exception as e:
     print(f'patents.json 로드 실패: {e}')
 
@@ -100,7 +107,7 @@ if metals:
         name    = m.get('name', '')
         grade   = m.get('grade', '')
         value   = t.get('value', None)
-        date    = t.get('date', '--')
+        date_s  = t.get('date', '--')
         chg_val = t.get('change_val', None)
         chg_pct = t.get('change_pct', None)
         val_str = str(round(value, 2)) + ' USD/kg' if value is not None else 'N/A'
@@ -115,7 +122,7 @@ if metals:
         html += '<div style="border-left:4px solid #2b6cb0;padding:8px 12px;margin:8px 0;background:' + bg + '">'
         html += '<strong>' + name + '</strong>'
         html += '&nbsp;&nbsp;<span style="font-size:18px;font-weight:bold;color:#1a365d">' + val_str + '</span>'
-        html += '<br><small style="color:#888">등급: ' + grade + ' | 기준일: ' + date + '</small>'
+        html += '<br><small style="color:#888">등급: ' + grade + ' | 기준일: ' + date_s + '</small>'
         html += '<br><span style="color:' + color + ';font-weight:bold">' + chg_str + '</span>'
         html += '</div>'
 else:
@@ -123,7 +130,7 @@ else:
 
 # 논문/특허 섹션 (수요일만)
 if is_wednesday:
-    html += '<h2 style="color:#6b46c1;margin-top:24px">&#x1F4C4; 새 논문 ' + str(len(new_papers)) + '건</h2>'
+    html += '<h2 style="color:#6b46c1;margin-top:24px">&#x1F4C4; 이번 주 새 논문 ' + str(len(new_papers)) + '건</h2>'
     if new_papers:
         for p in new_papers:
             html += '<div style="border-left:4px solid #6b46c1;padding:8px 12px;margin:8px 0;background:#faf5ff">'
@@ -133,9 +140,9 @@ if is_wednesday:
             html += '<br><small style="color:#999">' + p.get('abstract','')[:150] + '...</small>'
             html += '</div>'
     else:
-        html += '<p style="color:#aaa">이번 달 새 논문 없음</p>'
+        html += '<p style="color:#aaa">이번 주 새 논문 없음</p>'
 
-    html += '<h2 style="color:#c53030;margin-top:24px">&#x1F510; 새 특허 ' + str(len(new_patents)) + '건</h2>'
+    html += '<h2 style="color:#c53030;margin-top:24px">&#x1F510; 이번 주 새 특허 ' + str(len(new_patents)) + '건</h2>'
     if new_patents:
         for p in new_patents:
             html += '<div style="border-left:4px solid #c53030;padding:8px 12px;margin:8px 0;background:#fff5f5">'
@@ -145,7 +152,7 @@ if is_wednesday:
             html += '<br><small style="color:#999">' + p.get('abstract','')[:150] + '...</small>'
             html += '</div>'
     else:
-        html += '<p style="color:#aaa">이번 달 새 특허 없음</p>'
+        html += '<p style="color:#aaa">이번 주 새 특허 없음</p>'
 
 # 바로가기 버튼
 html += '<div style="margin-top:24px;text-align:center">'
