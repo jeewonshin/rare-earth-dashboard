@@ -38,6 +38,13 @@ METALS = [
         "crtr":   "802",
         "spcfct": "99",
     },
+    {
+        "name":   "창연 (Bi)",
+        "grade":  "99.99%min FOB China",
+        "code":   "MNRL0020",
+        "crtr":   "789",
+        "spcfct": "99.99",
+    },
 ]
 
 def fetch_metal(metal):
