@@ -1,12 +1,12 @@
 {
-  "updated": "2026-03-26 02:22",
+  "updated": "2026-03-26 02:51",
   "source": "arXiv + CrossRef",
   "new_count": 1,
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
-      "date": "2026-05",
+      "date": "2026-03-26",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -15,7 +15,7 @@
     {
       "title": "Unravelling the limit of the coercivity enhancement in PrAl grain boundary diffusion processed Nd‒La‒Ce‒Fe‒B magnets",
       "authors": "Wang Chen, Hansheng Chen, Jiaying Jin et al.",
-      "date": "2026-04",
+      "date": "2026-03-26",
       "url": "https://doi.org/10.1016/j.jmst.2025.05.039",
       "abstract": "",
       "source": "CrossRef (Journal of Materials Science &amp; Technology)",
@@ -28,7 +28,7 @@
       "url": "https://doi.org/10.3390/ma19050916",
       "abstract": "This study addresses the issue of rare earth (RE) resource wastage caused by the aggregation of the commonly used diffusion source, Dy, at the triangular grain boundary region during grain boundary di...",
       "source": "CrossRef (Materials)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Temperature-dependent grain boundary diffusion behavior of Nd-Dy-Al alloy in sintered Nd-Fe-B magnet",
@@ -166,21 +166,21 @@
       "is_new": false
     },
     {
+      "title": "Magnetic properties and microstructures of HDDR-treated (Nd,Ce)–Fe–B magnet powders",
+      "authors": "Ryo Shimbo, Takashi Horikawa, Masao Yamazaki et al.",
+      "date": "2025-03-01",
+      "url": "https://doi.org/10.1063/9.0000894",
+      "abstract": "In recent years, to reduce manufacturing costs and decrease the rare-earth supply/demand imbalance in the Nd–Fe–B magnet market, (Nd,Ce)–Fe–B magnets, in which Nd is replaced by Ce, have gained signif...",
+      "source": "CrossRef (AIP Advances)",
+      "is_new": true
+    },
+    {
       "title": "Modeling of Hot Deformation Behavior of the Nd-Fe-B Permanent Magnet and Its Application in Forming of Magnetic Ring",
       "authors": "Junyou Yang, Jun Li, Shaoxun Liu et al.",
       "date": "2025-03",
       "url": "https://doi.org/10.1109/tmag.2025.3527030",
       "abstract": "",
       "source": "CrossRef (IEEE Transactions on Magnetics)",
-      "is_new": false
-    },
-    {
-      "title": "Effect of Nd-Ho-Al-Ga diffusion on coercivity and thermal stability of hot-deformed PrNd-Fe-B magnets",
-      "authors": "Yuhang Cui, Xu Tang, Renjie Chen et al.",
-      "date": "2025-03",
-      "url": "https://doi.org/10.1016/j.jre.2024.01.019",
-      "abstract": "",
-      "source": "CrossRef (Journal of Rare Earths)",
       "is_new": false
     },
     {
