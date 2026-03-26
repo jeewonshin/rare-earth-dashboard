@@ -26,7 +26,7 @@ CROSSREF_QUERY = (
     '"hot deform" OR "hot press" OR "Ce substituted" OR "grain boundary diffusion"'
 )
 
-MUST_KEYWORDS   = ['permanent magnet', 'nd-fe-b', 'ndfeb', 'rare earth magnet']
+MUST_KEYWORDS   = ['permanent magnet', 'nd', 'neodymium', 'rare earth magnet']
 DETAIL_KEYWORDS = ['hot deform', 'hot-deform', 'hot press', 'ce substitut', 'ce-substitut', 'cerium substitut', 'grain boundary diffusion']
 
 arxiv_papers    = []
