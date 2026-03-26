@@ -1,7 +1,7 @@
 {
-  "updated": "2026-03-26 02:51",
+  "updated": "2026-03-26 05:08",
   "source": "arXiv + CrossRef",
-  "new_count": 1,
+  "new_count": 3,
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
@@ -10,7 +10,7 @@
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Unravelling the limit of the coercivity enhancement in PrAl grain boundary diffusion processed Nd‒La‒Ce‒Fe‒B magnets",
@@ -19,7 +19,7 @@
       "url": "https://doi.org/10.1016/j.jmst.2025.05.039",
       "abstract": "",
       "source": "CrossRef (Journal of Materials Science &amp; Technology)",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Effect of Ti Doping on the Grain Boundary Phases in Sintered Nd-Ce-Fe-B and Its Influence on the Diffusion Behavior of Heavy Rare Earth Dy",
@@ -166,15 +166,6 @@
       "is_new": false
     },
     {
-      "title": "Magnetic properties and microstructures of HDDR-treated (Nd,Ce)–Fe–B magnet powders",
-      "authors": "Ryo Shimbo, Takashi Horikawa, Masao Yamazaki et al.",
-      "date": "2025-03-01",
-      "url": "https://doi.org/10.1063/9.0000894",
-      "abstract": "In recent years, to reduce manufacturing costs and decrease the rare-earth supply/demand imbalance in the Nd–Fe–B magnet market, (Nd,Ce)–Fe–B magnets, in which Nd is replaced by Ce, have gained signif...",
-      "source": "CrossRef (AIP Advances)",
-      "is_new": true
-    },
-    {
       "title": "Modeling of Hot Deformation Behavior of the Nd-Fe-B Permanent Magnet and Its Application in Forming of Magnetic Ring",
       "authors": "Junyou Yang, Jun Li, Shaoxun Liu et al.",
       "date": "2025-03",
@@ -182,6 +173,15 @@
       "abstract": "",
       "source": "CrossRef (IEEE Transactions on Magnetics)",
       "is_new": false
+    },
+    {
+      "title": "Effect of Nd-Ho-Al-Ga diffusion on coercivity and thermal stability of hot-deformed PrNd-Fe-B magnets",
+      "authors": "Yuhang Cui, Xu Tang, Renjie Chen et al.",
+      "date": "2025-03",
+      "url": "https://doi.org/10.1016/j.jre.2024.01.019",
+      "abstract": "",
+      "source": "CrossRef (Journal of Rare Earths)",
+      "is_new": true
     },
     {
       "title": "Giant magnetic and optical anisotropy in cerium-substituted M-type strontium hexaferrite driven by 4$f$ electrons",
