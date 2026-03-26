@@ -26,23 +26,30 @@ CROSSREF_QUERY = (
     '"hot deform" OR "hot press" OR "Ce substituted" OR "grain boundary diffusion"'
 )
 
-MUST_KEYWORDS   = ['permanent magnet', 'nd', 'neodymium', 'rare earth magnet']
+MUST_KEYWORDS   = ['permanent magnet', 'nd-fe-b', 'ndfeb', 'rare earth magnet']
 DETAIL_KEYWORDS = ['hot deform', 'hot-deform', 'hot press', 'ce substitut', 'ce-substitut', 'cerium substitut', 'grain boundary diffusion']
 
 arxiv_papers    = []
 crossref_papers = []
 seen_titles     = set()
 
-# ★ 기존 papers.json 로드 → 기존 URL 목록 저장
-existing_urls = set()
+# ★ 기존 papers.json 로드 → url -> first_seen 매핑 저장
+existing_first_seen = {}
 if os.path.exists('data/papers.json'):
     try:
         with open('data/papers.json', 'r', encoding='utf-8') as f:
             old_data = json.load(f)
-            existing_urls = {p.get('url', '') for p in old_data.get('items', [])}
+            for p in old_data.get('items', []):
+                url = p.get('url', '')
+                if url and p.get('first_seen'):
+                    existing_first_seen[url] = p['first_seen']
+        existing_urls = set(existing_first_seen.keys())
         print(f'  기존 논문 {len(existing_urls)}건 로드 완료')
     except Exception as e:
+        existing_urls = set()
         print(f'  기존 데이터 로드 실패 (첫 실행 시 정상): {e}')
+else:
+    existing_urls = set()
 
 
 # ── arXiv API ──────────────────────────────────────────────────────────────
@@ -203,17 +210,28 @@ papers.sort(key=lambda x: x['date'], reverse=True)
 
 print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
 
-# ★ is_new: 이전 papers.json에 없던 URL이면 True
+# ★ first_seen 기록 + is_new 판단 (first_seen 기준 7일 이내면 NEW)
+today_str  = datetime.now().strftime('%Y-%m-%d')
+today_date = datetime.now().date()
 
-today_str = datetime.now().strftime('%Y-%m-%d')
 for p in papers:
-    url_is_new  = p.get('url', '') not in existing_urls   # 진짜 새 논문
-    date_is_new = p.get('date', '')[:10] >= today_str     # 오늘 날짜 (미래→대체된 것)
-    p['is_new'] = url_is_new or date_is_new
+    url = p.get('url', '')
+    if url in existing_first_seen:
+        # 기존 논문 → first_seen 유지
+        p['first_seen'] = existing_first_seen[url]
+    else:
+        # 새 논문 → first_seen = 오늘
+        p['first_seen'] = today_str
 
+    # first_seen 기준 7일 이내면 NEW
+    try:
+        first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
+        p['is_new'] = (today_date - first_seen_date).days <= 7
+    except Exception:
+        p['is_new'] = True
 
 new_count = sum(1 for p in papers if p['is_new'])
-print(f'신규 논문 (이전 대비 새로운 것): {new_count}건 / 전체: {len(papers)}건')
+print(f'신규 논문 (first_seen 기준 7일 이내): {new_count}건 / 전체: {len(papers)}건')
 
 output = {
     'updated':   datetime.now().strftime('%Y-%m-%d %H:%M'),
