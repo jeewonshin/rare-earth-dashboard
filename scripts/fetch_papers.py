@@ -176,7 +176,7 @@ try:
         except Exception:
             pass
 
-        authors_raw = item.get('author', [])
+        authors_raw = item.get('author', [])        
         authors_str = ', '.join(
             (a.get('given', '') + ' ' + a.get('family', '')).strip()
             for a in authors_raw[:3]
@@ -220,8 +220,12 @@ for p in papers:
         # 기존 논문 → first_seen 유지
         p['first_seen'] = existing_first_seen[url]
     else:
-        # 새 논문 → first_seen = 오늘
-        p['first_seen'] = today_str
+        if not existing_first_seen:
+            # 첫 실행 (papers.json 없음) → 논문 실제 날짜 사용
+            p['first_seen'] = p.get('date', today_str)[:10]
+        else:
+            # 이후 실행 → 오늘 날짜 (진짜 새 논문)
+            p['first_seen'] = today_str
 
     # first_seen 기준 7일 이내면 NEW
     try:
