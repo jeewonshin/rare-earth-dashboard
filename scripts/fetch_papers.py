@@ -5,7 +5,7 @@ import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 
-print('논문 수집 시작 (arXiv + CrossRef)...')Q
+print('논문 수집 시작 (arXiv + CrossRef)...')
 
 os.makedirs('data', exist_ok=True)
 
@@ -214,7 +214,7 @@ papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
 
 print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
 
-# ★ first_seen 기록 + is_new 판단 (first_seen 기준 7일 이내면 NEW)
+# ★ first_seen 기록 + is_new 판단 (first_seen 기준 30일 이내면 NEW)
 today_str  = datetime.now().strftime('%Y-%m-%d')
 today_date = datetime.now().date()
 
@@ -231,15 +231,15 @@ for p in papers:
             # 이후 실행 → 오늘 날짜 (진짜 새 논문)
             p['first_seen'] = today_str
 
-    # first_seen 기준 7일 이내면 NEW
+    # ★ first_seen 기준 30일 이내면 NEW (웹 표시용)
     try:
         first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
-        p['is_new'] = (today_date - first_seen_date).days <= 7
+        p['is_new'] = (today_date - first_seen_date).days <= 30
     except Exception:
         p['is_new'] = True
 
 new_count = sum(1 for p in papers if p['is_new'])
-print(f'신규 논문 (first_seen 기준 7일 이내): {new_count}건 / 전체: {len(papers)}건')
+print(f'신규 논문 (first_seen 기준 30일 이내): {new_count}건 / 전체: {len(papers)}건')
 
 output = {
     'updated':   datetime.now().strftime('%Y-%m-%d %H:%M'),
