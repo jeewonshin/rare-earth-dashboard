@@ -1,7 +1,7 @@
 {
-  "updated": "2026-03-26 02:03",
+  "updated": "2026-03-26 02:19",
   "source": "arXiv + CrossRef",
-  "new_count": 0,
+  "new_count": 1,
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
@@ -13,12 +13,39 @@
       "is_new": false
     },
     {
+      "title": "Unravelling the limit of the coercivity enhancement in PrAl grain boundary diffusion processed Nd‒La‒Ce‒Fe‒B magnets",
+      "authors": "Wang Chen, Hansheng Chen, Jiaying Jin et al.",
+      "date": "2026-04",
+      "url": "https://doi.org/10.1016/j.jmst.2025.05.039",
+      "abstract": "",
+      "source": "CrossRef (Journal of Materials Science &amp; Technology)",
+      "is_new": false
+    },
+    {
+      "title": "Effect of Ti Doping on the Grain Boundary Phases in Sintered Nd-Ce-Fe-B and Its Influence on the Diffusion Behavior of Heavy Rare Earth Dy",
+      "authors": "Lisheng Ye, Huanmao Yao, Quan Fang et al.",
+      "date": "2026-02-27",
+      "url": "https://doi.org/10.3390/ma19050916",
+      "abstract": "This study addresses the issue of rare earth (RE) resource wastage caused by the aggregation of the commonly used diffusion source, Dy, at the triangular grain boundary region during grain boundary di...",
+      "source": "CrossRef (Materials)",
+      "is_new": true
+    },
+    {
       "title": "Temperature-dependent grain boundary diffusion behavior of Nd-Dy-Al alloy in sintered Nd-Fe-B magnet",
       "authors": "Mingpeng Kou, Thi Mai Nguyen, Qing Feng et al.",
       "date": "2026-01",
       "url": "https://doi.org/10.1016/j.materresbull.2025.113670",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
+      "is_new": false
+    },
+    {
+      "title": "A tailored two-step process enabling high efficiency light rare earth diffusion in Ce-rich Nd–Ce–Fe–B magnet",
+      "authors": "Qing Feng, Shuainan Xu, Deliang Zhang et al.",
+      "date": "2025-12-29",
+      "url": "https://doi.org/10.1063/5.0309661",
+      "abstract": "Developing a grain boundary diffusion process for Ce-rich Nd–Ce–Fe–B magnets by light rare earth remains a challenge. The underlying mechanism that limits the coercivity enhancement of Nd–Ce–Fe–B magn...",
+      "source": "CrossRef (Applied Physics Letters)",
       "is_new": false
     },
     {
@@ -53,6 +80,15 @@
       "authors": "Jiaxin Lu, Kai Wang, Fangyu Gan et al.",
       "date": "2025-10",
       "url": "https://doi.org/10.1016/j.jmmm.2025.173464",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "is_new": false
+    },
+    {
+      "title": "Achieving high coercivity and remanence in Nd-La-Ce-Fe-B magnets through microstructure regulation during grain boundary diffusion process",
+      "authors": "Chenxu Kong, Fugang Chen, Jie Wang et al.",
+      "date": "2025-10",
+      "url": "https://doi.org/10.1016/j.jmmm.2025.173404",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "is_new": false
@@ -145,42 +181,6 @@
       "url": "https://doi.org/10.1016/j.jre.2024.01.019",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
-      "is_new": false
-    },
-    {
-      "title": "Utility and influence mechanism of densification modulation on grain boundary diffusion in NdFeB magnets",
-      "authors": "San'gen Luo, Munan Yang, Shuwei Zhong et al.",
-      "date": "2025-03",
-      "url": "https://doi.org/10.1016/j.jre.2024.02.011",
-      "abstract": "",
-      "source": "CrossRef (Journal of Rare Earths)",
-      "is_new": false
-    },
-    {
-      "title": "A novel two-step grain boundary diffusion process using TaF5 and Pr70Cu15Al10Ga5 for realizing high-coercivity in Nd-Fe-B-sintered magnets without use of heavy rare-earth",
-      "authors": "Seol-mi Lee, Ganghwi Kim, Ki-Suk Lee et al.",
-      "date": "2025-02",
-      "url": "https://doi.org/10.1016/j.actamat.2024.120660",
-      "abstract": "",
-      "source": "CrossRef (Acta Materialia)",
-      "is_new": false
-    },
-    {
-      "title": "Heavy rare earth-free high resistivity and coercivity Nd-Fe-B hot-deformed magnet developed by Pr-Cu diffusion and CaF2-LiF eutectic addition",
-      "authors": "Z.H. Kautsar, H. Sepehri-Amin, Xin Tang et al.",
-      "date": "2025-01",
-      "url": "https://doi.org/10.1016/j.jallcom.2024.177738",
-      "abstract": "",
-      "source": "CrossRef (Journal of Alloys and Compounds)",
-      "is_new": false
-    },
-    {
-      "title": "Misorientation statistics across hot-deformed Nd<sub>2</sub>Fe<sub>14</sub>B permanent magnet boundaries and the potential correlation with magnetic properties",
-      "authors": "Qian Li, Yuan Teng",
-      "date": "2025",
-      "url": "https://doi.org/10.1039/d5ra00545k",
-      "abstract": "The preferred misorientation angles of nanocrystalline Nd–Fe–B magnets were analyzed for grain boundary plane distribution using a five parameter analysis method....",
-      "source": "CrossRef (RSC Advances)",
       "is_new": false
     },
     {
