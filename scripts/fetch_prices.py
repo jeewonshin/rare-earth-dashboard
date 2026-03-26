@@ -25,18 +25,18 @@ METALS = [
         "spcfct": "99.5",
     },
     {
-        "name":   "망간 (Mn)",
-        "grade":  "75%min FOB China",
-        "code":   "MNRL0004",
-        "crtr":   "815",
-        "spcfct": "75",
-    },
-    {
         "name":   "세륨 (Ce)",
         "grade":  "99%min FOB China",
         "code":   "MNRL1002",
         "crtr":   "802",
         "spcfct": "99",
+    },
+    {
+        "name":   "망간 (Mn)",
+        "grade":  "75%min FOB China",
+        "code":   "MNRL0004",
+        "crtr":   "815",
+        "spcfct": "75",
     },
     {
         "name":   "창연 (Bi)",
