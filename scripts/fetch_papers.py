@@ -5,7 +5,7 @@ import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 
-print('논문 수집 시작 (arXiv + CrossRef)...')
+print('논문 수집 시작 (arXiv + CrossRef)...')Q
 
 os.makedirs('data', exist_ok=True)
 
@@ -97,12 +97,13 @@ try:
         if title not in seen_titles:
             seen_titles.add(title)
             arxiv_papers.append({
-                'title':    title,
-                'authors':  ', '.join(authors[:3]) + (' et al.' if len(authors) > 3 else ''),
-                'date':     date_raw,
-                'url':      url,
-                'abstract': abstract[:200] + '...',
-                'source':   'arXiv',
+                'title':     title,
+                'authors':   ', '.join(authors[:3]) + (' et al.' if len(authors) > 3 else ''),
+                'date':      date_raw,
+                'sort_date': date_raw,  # arXiv는 미래 날짜 없으므로 동일
+                'url':       url,
+                'abstract':  abstract[:200] + '...',
+                'source':    'arXiv',
             })
 
     print(f'  arXiv {len(arxiv_papers)}건 수집')
@@ -159,7 +160,7 @@ try:
             if not (has_must_in_title and has_detail_in_title):
                 continue
 
-        # ★ 날짜 처리: accepted 우선 → published → 미래면 오늘로 대체
+        # ★ 날짜 처리: accepted 우선 → published
         accepted_parts = item.get('accepted', {}).get('date-parts', [[]])[0]
         pub_parts      = item.get('published', {}).get('date-parts', [['']])[0]
 
@@ -168,15 +169,17 @@ try:
         else:
             date_str = '-'.join(str(x).zfill(2) for x in pub_parts if x) or ''
 
-        # 미래 날짜면 오늘로 대체
+        # ★ 미래 날짜면 sort_date만 오늘로 대체, date는 원본 유지 (표시용)
         try:
             check_str = date_str[:7] if len(date_str) >= 7 else date_str
             if datetime.strptime(check_str, '%Y-%m').date() > today:
-                date_str = today.strftime('%Y-%m-%d')
+                sort_date = today.strftime('%Y-%m-%d')
+            else:
+                sort_date = date_str
         except Exception:
-            pass
+            sort_date = date_str
 
-        authors_raw = item.get('author', [])        
+        authors_raw = item.get('author', [])
         authors_str = ', '.join(
             (a.get('given', '') + ' ' + a.get('family', '')).strip()
             for a in authors_raw[:3]
@@ -187,12 +190,13 @@ try:
 
         seen_titles.add(title)
         crossref_papers.append({
-            'title':    title,
-            'authors':  authors_str,
-            'date':     date_str,
-            'url':      url,
-            'abstract': abstract_clean[:200] + '...' if abstract_clean.strip() else '',
-            'source':   'CrossRef (' + journal + ')' if journal else 'CrossRef',
+            'title':     title,
+            'authors':   authors_str,
+            'date':      date_str,   # 원본 날짜 (화면 표시용)
+            'sort_date': sort_date,  # 정렬용 (미래면 오늘로 대체)
+            'url':       url,
+            'abstract':  abstract_clean[:200] + '...' if abstract_clean.strip() else '',
+            'source':    'CrossRef (' + journal + ')' if journal else 'CrossRef',
         })
 
     print(f'  CrossRef {len(crossref_papers)}건 수집')
@@ -202,11 +206,11 @@ except Exception as e:
 
 
 # ── 합치기: arXiv 상위 10건 + CrossRef 상위 20건 ───────────────────────────
-arxiv_papers.sort(key=lambda x: x['date'],    reverse=True)
-crossref_papers.sort(key=lambda x: x['date'], reverse=True)
+arxiv_papers.sort(key=lambda x: x.get('sort_date', x['date']),    reverse=True)
+crossref_papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
 
 papers = arxiv_papers[:10] + crossref_papers[:20]
-papers.sort(key=lambda x: x['date'], reverse=True)
+papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
 
 print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
 
@@ -221,8 +225,8 @@ for p in papers:
         p['first_seen'] = existing_first_seen[url]
     else:
         if not existing_first_seen:
-            # 첫 실행 (papers.json 없음) → 논문 실제 날짜 사용
-            p['first_seen'] = p.get('date', today_str)[:10]
+            # 첫 실행 → sort_date 기준으로 세팅 (미래 논문은 오늘, 오래된 건 실제 날짜)
+            p['first_seen'] = p.get('sort_date', p.get('date', today_str))[:10]
         else:
             # 이후 실행 → 오늘 날짜 (진짜 새 논문)
             p['first_seen'] = today_str
