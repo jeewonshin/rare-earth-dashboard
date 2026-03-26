@@ -31,16 +31,16 @@ try:
 except Exception as e:
     print(f'prices.json 로드 실패: {e}')
 
-# 논문 데이터 로드 (7일 이내)
+# 논문 데이터 로드 (is_new + first_seen 7일 이내)
 new_papers = []
 try:
     with open('data/papers.json', 'r', encoding='utf-8') as f:
         papers_data = json.load(f)
     new_papers = [
         p for p in papers_data.get('items', [])
-         if p.get('is_new', False)          # ← fetch_papers.py에서 세팅한 is_new 사용
+        if p.get('is_new') and p.get('first_seen', '') >= week_ago
     ]
-    print(f'새 논문 (이전 대비 신규): {len(new_papers)}건')
+    print(f'새 논문 (7일 이내 신규): {len(new_papers)}건')
 except Exception as e:
     print(f'papers.json 로드 실패: {e}')
 
