@@ -38,9 +38,9 @@ try:
         papers_data = json.load(f)
     new_papers = [
         p for p in papers_data.get('items', [])
-        if p.get('date', '') >= week_ago
+         if p.get('is_new', False)          # ← fetch_papers.py에서 세팅한 is_new 사용
     ]
-    print(f'새 논문 (7일 이내): {len(new_papers)}건')
+    print(f'새 논문 (이전 대비 신규): {len(new_papers)}건')
 except Exception as e:
     print(f'papers.json 로드 실패: {e}')
 
