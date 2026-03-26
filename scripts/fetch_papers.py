@@ -29,8 +29,9 @@ CROSSREF_QUERY = (
 MUST_KEYWORDS   = ['permanent magnet', 'nd-fe-b', 'ndfeb', 'rare earth magnet']
 DETAIL_KEYWORDS = ['hot deform', 'hot-deform', 'hot press', 'ce substitut', 'ce-substitut', 'cerium substitut', 'grain boundary diffusion']
 
-papers      = []
-seen_titles = set()
+arxiv_papers    = []
+crossref_papers = []
+seen_titles     = set()
 
 
 # arXiv API
@@ -42,7 +43,7 @@ try:
         params={
             'search_query': ARXIV_QUERY,
             'start':        0,
-            'max_results':  50,
+            'max_results':  100,
             'sortBy':       'submittedDate',
             'sortOrder':    'descending',
         },
@@ -59,6 +60,15 @@ try:
         authors  = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
         abstract = entry.find('atom:summary',   ns).text.strip().replace('\n', ' ')
 
+        # 날짜 필터: 5년 이내만
+        try:
+            pub_dt   = datetime.strptime(date_raw, '%Y-%m-%d').date()
+            days_old = (datetime.now().date() - pub_dt).days
+            if days_old > 365 * 5:
+                continue
+        except Exception:
+            pass
+
         text_lower = (title + ' ' + abstract).lower()
         has_must   = any(k in text_lower for k in MUST_KEYWORDS)
         has_detail = any(k in text_lower for k in DETAIL_KEYWORDS)
@@ -68,7 +78,7 @@ try:
 
         if title not in seen_titles:
             seen_titles.add(title)
-            papers.append({
+            arxiv_papers.append({
                 'title':    title,
                 'authors':  ', '.join(authors[:3]) + (' et al.' if len(authors) > 3 else ''),
                 'date':     date_raw,
@@ -77,7 +87,7 @@ try:
                 'source':   'arXiv',
             })
 
-    print(f'  arXiv {len(papers)}건 수집')
+    print(f'  arXiv {len(arxiv_papers)}건 수집')
 
 except Exception as e:
     print(f'  arXiv 실패: {e}')
@@ -85,8 +95,6 @@ except Exception as e:
 
 # CrossRef API
 print('  [2/2] CrossRef 수집 중...')
-
-crossref_count = 0
 
 try:
     from_date = (datetime.now() - timedelta(days=365*5)).strftime('%Y-%m-%d')
@@ -137,7 +145,7 @@ try:
         url      = item.get('URL', '#')
 
         seen_titles.add(title)
-        papers.append({
+        crossref_papers.append({
             'title':    title,
             'authors':  authors_str,
             'date':     date_str,
@@ -145,17 +153,23 @@ try:
             'abstract': abstract_clean[:200] + '...',
             'source':   'CrossRef (' + journal + ')' if journal else 'CrossRef',
         })
-        crossref_count += 1
 
-    print(f'  CrossRef {crossref_count}건 수집')
+    print(f'  CrossRef {len(crossref_papers)}건 수집')
 
 except Exception as e:
     print(f'  CrossRef 실패: {e}')
 
 
-papers.sort(key=lambda x: x['date'], reverse=True)
-papers = papers[:20]
+# arXiv 상위 10건 + CrossRef 상위 10건 합치기
+arxiv_papers.sort(key=lambda x: x['date'],    reverse=True)
+crossref_papers.sort(key=lambda x: x['date'], reverse=True)
 
+papers = arxiv_papers[:10] + crossref_papers[:10]
+papers.sort(key=lambda x: x['date'], reverse=True)
+
+print(f'  arXiv 상위 10건 + CrossRef 상위 10건 = 총 {len(papers)}건')
+
+# 30일 이내면 NEW
 today = datetime.now().date()
 for p in papers:
     try:
@@ -165,7 +179,7 @@ for p in papers:
         p['is_new'] = False
 
 new_count = sum(1 for p in papers if p['is_new'])
-print(f'신규 논문 (7일 이내): {new_count}건 / 전체: {len(papers)}건')
+print(f'신규 논문 (30일 이내): {new_count}건 / 전체: {len(papers)}건')
 
 output = {
     'updated':   datetime.now().strftime('%Y-%m-%d %H:%M'),
