@@ -11,7 +11,7 @@ os.makedirs('data', exist_ok=True)
 
 ARXIV_QUERY = (
     '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR ti:"NdFeB" OR ti:"rare earth magnet"'
-    ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")'
+    ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")' 
     ' AND '
     '(ti:"hot deform" OR ti:"hot-deform" OR ti:"hot press"'
     ' OR ti:"Ce substitut" OR ti:"Ce-substitut" OR ti:"cerium substitut"'
@@ -104,9 +104,8 @@ try:
         params={
             'query':  CROSSREF_QUERY,
             'filter': 'from-pub-date:' + from_date + ',type:journal-article',
-            'rows':   50,
-            'sort':   'published',
-            'order':  'desc',
+            'rows':   200,          # 50 → 200으로 확대
+            'sort':   'relevance',  # published → relevance로 변경
             'select': 'title,author,published,URL,abstract,container-title',
         },
         headers={'User-Agent': 'RareEarthDashboard/1.0 (research tool)'},
@@ -126,12 +125,22 @@ try:
         abstract_raw   = item.get('abstract', '')
         abstract_clean = re.sub(r'<[^>]+>', '', abstract_raw)
 
-        text_lower = (title + ' ' + abstract_clean).lower()
-        has_must   = any(k in text_lower for k in MUST_KEYWORDS)
-        has_detail = any(k in text_lower for k in DETAIL_KEYWORDS)
+        title_lower    = title.lower()
+        text_lower     = (title + ' ' + abstract_clean).lower()
+        has_must       = any(k in text_lower for k in MUST_KEYWORDS)
+        has_detail     = any(k in text_lower for k in DETAIL_KEYWORDS)
 
-        if not (has_must and has_detail):
-            continue
+        # ★ 수정된 필터링 로직
+        # abstract가 있으면 기존과 동일하게 must+detail 둘 다 요구
+        # abstract가 없으면 (제목만 있는 경우) must 키워드만 있어도 통과 + 제목에 detail 키워드 체크
+        if abstract_clean.strip():
+            if not (has_must and has_detail):
+                continue
+        else:
+            has_must_in_title   = any(k in title_lower for k in MUST_KEYWORDS)
+            has_detail_in_title = any(k in title_lower for k in DETAIL_KEYWORDS)
+            if not (has_must_in_title and has_detail_in_title):
+                continue
 
         authors_raw = item.get('author', [])
         authors_str = ', '.join(
@@ -150,7 +159,7 @@ try:
             'authors':  authors_str,
             'date':     date_str,
             'url':      url,
-            'abstract': abstract_clean[:200] + '...',
+            'abstract': abstract_clean[:200] + '...' if abstract_clean.strip() else '',
             'source':   'CrossRef (' + journal + ')' if journal else 'CrossRef',
         })
 
@@ -160,14 +169,14 @@ except Exception as e:
     print(f'  CrossRef 실패: {e}')
 
 
-# arXiv 상위 10건 + CrossRef 상위 10건 합치기
+# arXiv 상위 10건 + CrossRef 상위 20건 합치기
 arxiv_papers.sort(key=lambda x: x['date'],    reverse=True)
 crossref_papers.sort(key=lambda x: x['date'], reverse=True)
 
-papers = arxiv_papers[:10] + crossref_papers[:10]
+papers = arxiv_papers[:10] + crossref_papers[:20]  # CrossRef 10 → 20건으로 확대
 papers.sort(key=lambda x: x['date'], reverse=True)
 
-print(f'  arXiv 상위 10건 + CrossRef 상위 10건 = 총 {len(papers)}건')
+print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
 
 # 30일 이내면 NEW
 today = datetime.now().date()
