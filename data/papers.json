@@ -1,7 +1,7 @@
 {
-  "updated": "2026-03-26 05:08",
+  "updated": "2026-03-26 06:03",
   "source": "arXiv + CrossRef",
-  "new_count": 3,
+  "new_count": 2,
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
@@ -181,7 +181,7 @@
       "url": "https://doi.org/10.1016/j.jre.2024.01.019",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Giant magnetic and optical anisotropy in cerium-substituted M-type strontium hexaferrite driven by 4$f$ electrons",
