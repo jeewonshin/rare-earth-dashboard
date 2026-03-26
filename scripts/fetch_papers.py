@@ -204,8 +204,13 @@ papers.sort(key=lambda x: x['date'], reverse=True)
 print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
 
 # ★ is_new: 이전 papers.json에 없던 URL이면 True
+
+today_str = datetime.now().strftime('%Y-%m-%d')
 for p in papers:
-    p['is_new'] = p.get('url', '') not in existing_urls
+    url_is_new  = p.get('url', '') not in existing_urls   # 진짜 새 논문
+    date_is_new = p.get('date', '')[:10] >= today_str     # 오늘 날짜 (미래→대체된 것)
+    p['is_new'] = url_is_new or date_is_new
+
 
 new_count = sum(1 for p in papers if p['is_new'])
 print(f'신규 논문 (이전 대비 새로운 것): {new_count}건 / 전체: {len(papers)}건')
