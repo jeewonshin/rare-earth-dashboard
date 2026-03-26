@@ -11,7 +11,7 @@ os.makedirs('data', exist_ok=True)
 
 ARXIV_QUERY = (
     '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR ti:"NdFeB" OR ti:"rare earth magnet"'
-    ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")' 
+    ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")'
     ' AND '
     '(ti:"hot deform" OR ti:"hot-deform" OR ti:"hot press"'
     ' OR ti:"Ce substitut" OR ti:"Ce-substitut" OR ti:"cerium substitut"'
@@ -33,8 +33,19 @@ arxiv_papers    = []
 crossref_papers = []
 seen_titles     = set()
 
+# ★ 기존 papers.json 로드 → 기존 URL 목록 저장
+existing_urls = set()
+if os.path.exists('data/papers.json'):
+    try:
+        with open('data/papers.json', 'r', encoding='utf-8') as f:
+            old_data = json.load(f)
+            existing_urls = {p.get('url', '') for p in old_data.get('items', [])}
+        print(f'  기존 논문 {len(existing_urls)}건 로드 완료')
+    except Exception as e:
+        print(f'  기존 데이터 로드 실패 (첫 실행 시 정상): {e}')
 
-# arXiv API
+
+# ── arXiv API ──────────────────────────────────────────────────────────────
 print('  [1/2] arXiv 수집 중...')
 
 try:
@@ -93,20 +104,21 @@ except Exception as e:
     print(f'  arXiv 실패: {e}')
 
 
-# CrossRef API
+# ── CrossRef API ───────────────────────────────────────────────────────────
 print('  [2/2] CrossRef 수집 중...')
 
 try:
     from_date = (datetime.now() - timedelta(days=365*5)).strftime('%Y-%m-%d')
+    today     = datetime.now().date()
 
     res = requests.get(
         'https://api.crossref.org/works',
         params={
             'query':  CROSSREF_QUERY,
             'filter': 'from-pub-date:' + from_date + ',type:journal-article',
-            'rows':   200,          # 50 → 200으로 확대
-            'sort':   'relevance',  # published → relevance로 변경
-            'select': 'title,author,published,URL,abstract,container-title',
+            'rows':   200,
+            'sort':   'relevance',
+            'select': 'title,author,published,accepted,URL,abstract,container-title',
         },
         headers={'User-Agent': 'RareEarthDashboard/1.0 (research tool)'},
         timeout=20
@@ -125,14 +137,12 @@ try:
         abstract_raw   = item.get('abstract', '')
         abstract_clean = re.sub(r'<[^>]+>', '', abstract_raw)
 
-        title_lower    = title.lower()
-        text_lower     = (title + ' ' + abstract_clean).lower()
-        has_must       = any(k in text_lower for k in MUST_KEYWORDS)
-        has_detail     = any(k in text_lower for k in DETAIL_KEYWORDS)
+        title_lower = title.lower()
+        text_lower  = (title + ' ' + abstract_clean).lower()
+        has_must    = any(k in text_lower for k in MUST_KEYWORDS)
+        has_detail  = any(k in text_lower for k in DETAIL_KEYWORDS)
 
-        # ★ 수정된 필터링 로직
-        # abstract가 있으면 기존과 동일하게 must+detail 둘 다 요구
-        # abstract가 없으면 (제목만 있는 경우) must 키워드만 있어도 통과 + 제목에 detail 키워드 체크
+        # abstract 유무에 따라 필터링 완화
         if abstract_clean.strip():
             if not (has_must and has_detail):
                 continue
@@ -142,16 +152,31 @@ try:
             if not (has_must_in_title and has_detail_in_title):
                 continue
 
+        # ★ 날짜 처리: accepted 우선 → published → 미래면 오늘로 대체
+        accepted_parts = item.get('accepted', {}).get('date-parts', [[]])[0]
+        pub_parts      = item.get('published', {}).get('date-parts', [['']])[0]
+
+        if accepted_parts:
+            date_str = '-'.join(str(x).zfill(2) for x in accepted_parts if x) or ''
+        else:
+            date_str = '-'.join(str(x).zfill(2) for x in pub_parts if x) or ''
+
+        # 미래 날짜면 오늘로 대체
+        try:
+            check_str = date_str[:7] if len(date_str) >= 7 else date_str
+            if datetime.strptime(check_str, '%Y-%m').date() > today:
+                date_str = today.strftime('%Y-%m-%d')
+        except Exception:
+            pass
+
         authors_raw = item.get('author', [])
         authors_str = ', '.join(
-            (a.get('given','') + ' ' + a.get('family','')).strip()
+            (a.get('given', '') + ' ' + a.get('family', '')).strip()
             for a in authors_raw[:3]
         ) + (' et al.' if len(authors_raw) > 3 else '')
 
-        pub      = item.get('published', {}).get('date-parts', [['']])[0]
-        date_str = '-'.join(str(x).zfill(2) for x in pub if x) or ''
-        journal  = item.get('container-title', [''])[0]
-        url      = item.get('URL', '#')
+        journal = item.get('container-title', [''])[0]
+        url     = item.get('URL', '#')
 
         seen_titles.add(title)
         crossref_papers.append({
@@ -169,26 +194,21 @@ except Exception as e:
     print(f'  CrossRef 실패: {e}')
 
 
-# arXiv 상위 10건 + CrossRef 상위 20건 합치기
+# ── 합치기: arXiv 상위 10건 + CrossRef 상위 20건 ───────────────────────────
 arxiv_papers.sort(key=lambda x: x['date'],    reverse=True)
 crossref_papers.sort(key=lambda x: x['date'], reverse=True)
 
-papers = arxiv_papers[:10] + crossref_papers[:20]  # CrossRef 10 → 20건으로 확대
+papers = arxiv_papers[:10] + crossref_papers[:20]
 papers.sort(key=lambda x: x['date'], reverse=True)
 
 print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
 
-# 30일 이내면 NEW
-today = datetime.now().date()
+# ★ is_new: 이전 papers.json에 없던 URL이면 True
 for p in papers:
-    try:
-        pub_date    = datetime.strptime(p['date'][:10], '%Y-%m-%d').date()
-        p['is_new'] = (today - pub_date).days <= 30
-    except Exception:
-        p['is_new'] = False
+    p['is_new'] = p.get('url', '') not in existing_urls
 
 new_count = sum(1 for p in papers if p['is_new'])
-print(f'신규 논문 (30일 이내): {new_count}건 / 전체: {len(papers)}건')
+print(f'신규 논문 (이전 대비 새로운 것): {new_count}건 / 전체: {len(papers)}건')
 
 output = {
     'updated':   datetime.now().strftime('%Y-%m-%d %H:%M'),
