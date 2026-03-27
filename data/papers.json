@@ -1,7 +1,7 @@
 {
-  "updated": "2026-03-27 02:14",
+  "updated": "2026-03-27 02:56",
   "source": "arXiv + CrossRef",
-  "new_count": 15,
+  "new_count": 1,
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
@@ -18,12 +18,12 @@
       "title": "Temperature-dependent grain boundary diffusion behavior of Nd-Dy-Al alloy in sintered Nd-Fe-B magnet",
       "authors": "Mingpeng Kou, Thi Mai Nguyen, Qing Feng et al.",
       "date": "2026-01",
-      "sort_date": "2026-01",
+      "sort_date": "2026-01-01",
       "url": "https://doi.org/10.1016/j.materresbull.2025.113670",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
-      "first_seen": "2026-01",
-      "is_new": true
+      "first_seen": "2026-01-01",
+      "is_new": false
     },
     {
       "title": "Chemical Heterogeneity and Intergranular Phases: Governing Tb Grain Boundary Diffusion in Nd–La–Ce–Fe–B Rare Earth Permanent Magnets",
@@ -51,56 +51,56 @@
       "title": "Amorphous precursor strategy enables high-performance Ce-substituted Nd-Fe-B hot-deformed magnets",
       "authors": "Feifei Li, Ying Liu, Renquan Wang et al.",
       "date": "2025-12",
-      "sort_date": "2025-12",
+      "sort_date": "2025-12-01",
       "url": "https://doi.org/10.1016/j.jre.2025.12.002",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
-      "first_seen": "2025-12",
-      "is_new": true
+      "first_seen": "2025-12-01",
+      "is_new": false
     },
     {
       "title": "Effect of sputtering-coated Al–Cu alloy on magnetic properties and microstructure of grain boundary diffusion-sintered Nd-Fe-B permanent magnet",
       "authors": "Jiaxin Lu, Kai Wang, Fangyu Gan et al.",
       "date": "2025-10",
-      "sort_date": "2025-10",
+      "sort_date": "2025-10-01",
       "url": "https://doi.org/10.1016/j.jmmm.2025.173464",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
-      "first_seen": "2025-10",
-      "is_new": true
+      "first_seen": "2025-10-01",
+      "is_new": false
     },
     {
       "title": "Analysis of structural differences in hot deformed Nd-Fe-B magnets——From the perspective of grain boundary plane distribution",
       "authors": "Qian Li, Hanxiao Zhou, Yuan Teng",
       "date": "2025-08",
-      "sort_date": "2025-08",
+      "sort_date": "2025-08-01",
       "url": "https://doi.org/10.1016/j.matchar.2025.115222",
       "abstract": "",
       "source": "CrossRef (Materials Characterization)",
-      "first_seen": "2025-08",
-      "is_new": true
+      "first_seen": "2025-08-01",
+      "is_new": false
     },
     {
       "title": "Effect of pre-treatment on magnetic properties of Nd-Fe-B permanent magnet during grain boundary diffusion process",
       "authors": "Hyun Bin Joo, Seong Min Choi, Se Rin Jeong et al.",
       "date": "2025-07",
-      "sort_date": "2025-07",
+      "sort_date": "2025-07-01",
       "url": "https://doi.org/10.1177/00325899251345414",
       "abstract": "In this study, a pre-treatment process was introduced into the grain boundary diffusion process (GBDP) to improve the diffusion efficiency of the source materials into permanent magnets during GBDP us...",
       "source": "CrossRef (Powder Metallurgy)",
-      "first_seen": "2025-07",
-      "is_new": true
+      "first_seen": "2025-07-01",
+      "is_new": false
     },
     {
       "title": "Distribution of grain boundary plane orientation texture in hot deformed Nd-Fe-B magnets and its texture enhancement mechanism",
       "authors": "Qian Li, Yuan Teng",
       "date": "2025-07",
-      "sort_date": "2025-07",
+      "sort_date": "2025-07-01",
       "url": "https://doi.org/10.1016/j.jallcom.2025.181692",
       "abstract": "",
       "source": "CrossRef (Journal of Alloys and Compounds)",
-      "first_seen": "2025-07",
-      "is_new": true
+      "first_seen": "2025-07-01",
+      "is_new": false
     },
     {
       "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
@@ -128,23 +128,23 @@
       "title": "Optimizing Ce-doped Nd-Fe-B magnets for high-efficient grain boundary diffusion of Tb-Fe alloy",
       "authors": "Xuhang Zhang, Chaochao Zeng, Xuefeng Liao et al.",
       "date": "2025-05",
-      "sort_date": "2025-05",
+      "sort_date": "2025-05-01",
       "url": "https://doi.org/10.1016/j.materresbull.2025.113302",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
-      "first_seen": "2025-05",
-      "is_new": true
+      "first_seen": "2025-05-01",
+      "is_new": false
     },
     {
       "title": "Mechanism of grain boundary diffusion process of Nd-Fe-B sintered magnets using terbium heptoxide (Tb4O7) diffusion source",
       "authors": "P.S. Akhil, H. Nakamura, Uma Maheswara Rao Seelam",
       "date": "2025-04",
-      "sort_date": "2025-04",
+      "sort_date": "2025-04-01",
       "url": "https://doi.org/10.1016/j.jre.2025.04.012",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
-      "first_seen": "2025-04",
-      "is_new": true
+      "first_seen": "2025-04-01",
+      "is_new": false
     },
     {
       "title": "Field Assisted Sintering in the Direct Recycling of Hot Deformed Nd-Fe-B Magnet Scrap",
@@ -161,67 +161,67 @@
       "title": "Modeling of Hot Deformation Behavior of the Nd-Fe-B Permanent Magnet and Its Application in Forming of Magnetic Ring",
       "authors": "Junyou Yang, Jun Li, Shaoxun Liu et al.",
       "date": "2025-03",
-      "sort_date": "2025-03",
+      "sort_date": "2025-03-01",
       "url": "https://doi.org/10.1109/tmag.2025.3527030",
       "abstract": "",
       "source": "CrossRef (IEEE Transactions on Magnetics)",
-      "first_seen": "2025-03",
-      "is_new": true
+      "first_seen": "2025-03-01",
+      "is_new": false
     },
     {
       "title": "Effect of Nd-Ho-Al-Ga diffusion on coercivity and thermal stability of hot-deformed PrNd-Fe-B magnets",
       "authors": "Yuhang Cui, Xu Tang, Renjie Chen et al.",
       "date": "2025-03",
-      "sort_date": "2025-03",
+      "sort_date": "2025-03-01",
       "url": "https://doi.org/10.1016/j.jre.2024.01.019",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
-      "first_seen": "2025-03",
-      "is_new": true
+      "first_seen": "2025-03-01",
+      "is_new": false
     },
     {
       "title": "Utility and influence mechanism of densification modulation on grain boundary diffusion in NdFeB magnets",
       "authors": "San'gen Luo, Munan Yang, Shuwei Zhong et al.",
       "date": "2025-03",
-      "sort_date": "2025-03",
+      "sort_date": "2025-03-01",
       "url": "https://doi.org/10.1016/j.jre.2024.02.011",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
-      "first_seen": "2025-03",
-      "is_new": true
+      "first_seen": "2025-03-01",
+      "is_new": false
     },
     {
       "title": "A novel two-step grain boundary diffusion process using TaF5 and Pr70Cu15Al10Ga5 for realizing high-coercivity in Nd-Fe-B-sintered magnets without use of heavy rare-earth",
       "authors": "Seol-mi Lee, Ganghwi Kim, Ki-Suk Lee et al.",
       "date": "2025-02",
-      "sort_date": "2025-02",
+      "sort_date": "2025-02-01",
       "url": "https://doi.org/10.1016/j.actamat.2024.120660",
       "abstract": "",
       "source": "CrossRef (Acta Materialia)",
-      "first_seen": "2025-02",
-      "is_new": true
-    },
-    {
-      "title": "Heavy rare earth-free high resistivity and coercivity Nd-Fe-B hot-deformed magnet developed by Pr-Cu diffusion and CaF2-LiF eutectic addition",
-      "authors": "Z.H. Kautsar, H. Sepehri-Amin, Xin Tang et al.",
-      "date": "2025-01",
-      "sort_date": "2025-01",
-      "url": "https://doi.org/10.1016/j.jallcom.2024.177738",
-      "abstract": "",
-      "source": "CrossRef (Journal of Alloys and Compounds)",
-      "first_seen": "2025-01",
-      "is_new": true
+      "first_seen": "2025-02-01",
+      "is_new": false
     },
     {
       "title": "Misorientation statistics across hot-deformed Nd<sub>2</sub>Fe<sub>14</sub>B permanent magnet boundaries and the potential correlation with magnetic properties",
       "authors": "Qian Li, Yuan Teng",
       "date": "2025",
-      "sort_date": "2025",
+      "sort_date": "2025-01-01",
       "url": "https://doi.org/10.1039/d5ra00545k",
       "abstract": "The preferred misorientation angles of nanocrystalline Nd–Fe–B magnets were analyzed for grain boundary plane distribution using a five parameter analysis method....",
       "source": "CrossRef (RSC Advances)",
-      "first_seen": "2025",
-      "is_new": true
+      "first_seen": "2025-01-01",
+      "is_new": false
+    },
+    {
+      "title": "Heavy rare earth-free high resistivity and coercivity Nd-Fe-B hot-deformed magnet developed by Pr-Cu diffusion and CaF2-LiF eutectic addition",
+      "authors": "Z.H. Kautsar, H. Sepehri-Amin, Xin Tang et al.",
+      "date": "2025-01",
+      "sort_date": "2025-01-01",
+      "url": "https://doi.org/10.1016/j.jallcom.2024.177738",
+      "abstract": "",
+      "source": "CrossRef (Journal of Alloys and Compounds)",
+      "first_seen": "2025-01-01",
+      "is_new": false
     },
     {
       "title": "Giant magnetic and optical anisotropy in cerium-substituted M-type strontium hexaferrite driven by 4$f$ electrons",
