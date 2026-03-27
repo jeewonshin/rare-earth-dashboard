@@ -9,6 +9,25 @@ print('논문 수집 시작 (arXiv + CrossRef)...')
 
 os.makedirs('data', exist_ok=True)
 
+
+def normalize_date(date_str, fallback=''):
+    """날짜 문자열을 YYYY-MM-DD로 정규화. 월만 있으면 -01, 연도만 있으면 -01-01 추가"""
+    if not date_str:
+        return fallback
+    date_str = str(date_str).strip()
+    try:
+        if re.match(r'^\d{4}-\d{2}-\d{2}$', date_str):
+            return date_str
+        elif re.match(r'^\d{4}-\d{2}$', date_str):
+            return date_str + '-01'
+        elif re.match(r'^\d{4}$', date_str):
+            return date_str + '-01-01'
+        else:
+            return date_str
+    except Exception:
+        return fallback
+
+
 ARXIV_QUERY = (
     '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR ti:"NdFeB" OR ti:"rare earth magnet"'
     ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")'
@@ -33,7 +52,7 @@ arxiv_papers    = []
 crossref_papers = []
 seen_titles     = set()
 
-# ★ 기존 papers.json 로드 → existing_urls (전체) + existing_first_seen (first_seen 있는 것만)
+# ★ 기존 papers.json 로드 → url -> first_seen 매핑 저장
 existing_urls       = set()
 existing_first_seen = {}
 if os.path.exists('data/papers.json'):
@@ -43,9 +62,9 @@ if os.path.exists('data/papers.json'):
             for p in old_data.get('items', []):
                 url = p.get('url', '')
                 if url:
-                    existing_urls.add(url)                      # URL은 무조건 저장
+                    existing_urls.add(url)
                 if url and p.get('first_seen'):
-                    existing_first_seen[url] = p['first_seen']  # first_seen 있는 것만
+                    existing_first_seen[url] = p['first_seen']
         print(f'  기존 논문 {len(existing_urls)}건 로드 완료 (first_seen 보유: {len(existing_first_seen)}건)')
     except Exception as e:
         print(f'  기존 데이터 로드 실패 (첫 실행 시 정상): {e}')
@@ -168,15 +187,15 @@ try:
         else:
             date_str = '-'.join(str(x).zfill(2) for x in pub_parts if x) or ''
 
-        # ★ 미래 날짜면 sort_date만 오늘로 대체, date는 원본 유지 (표시용)
+        # ★ 미래 날짜면 sort_date만 오늘로 대체, date는 원본 유지
         try:
-            check_str = date_str[:7] if len(date_str) >= 7 else date_str
+            check_str = normalize_date(date_str)[:7]
             if datetime.strptime(check_str, '%Y-%m').date() > today:
                 sort_date = today.strftime('%Y-%m-%d')
             else:
-                sort_date = date_str
+                sort_date = normalize_date(date_str)
         except Exception:
-            sort_date = date_str
+            sort_date = normalize_date(date_str)
 
         authors_raw = item.get('author', [])
         authors_str = ', '.join(
@@ -191,8 +210,8 @@ try:
         crossref_papers.append({
             'title':     title,
             'authors':   authors_str,
-            'date':      date_str,   # 원본 날짜 (화면 표시용)
-            'sort_date': sort_date,  # 정렬용 (미래면 오늘로 대체)
+            'date':      date_str,            # 원본 날짜 (화면 표시용)
+            'sort_date': sort_date,           # 정렬용 (정규화 + 미래면 오늘)
             'url':       url,
             'abstract':  abstract_clean[:200] + '...' if abstract_clean.strip() else '',
             'source':    'CrossRef (' + journal + ')' if journal else 'CrossRef',
@@ -219,18 +238,17 @@ today_date = datetime.now().date()
 
 for p in papers:
     url = p.get('url', '')
-
     if url in existing_first_seen:
-        # 케이스 1: 기존 논문 + first_seen 있음 → 유지
-        p['first_seen'] = existing_first_seen[url]
+        # 케이스 1: 기존 논문 + first_seen 있음 → 정규화해서 유지
+        p['first_seen'] = normalize_date(existing_first_seen[url], today_str)
     elif url in existing_urls:
-        # 케이스 2: 기존 논문인데 first_seen 없음 (이전 버전 데이터) → 논문 날짜 사용
-        p['first_seen'] = p.get('sort_date', p.get('date', today_str))[:10]
+        # 케이스 2: 기존 논문인데 first_seen 없음 (이전 버전) → 논문 날짜 사용
+        p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
     elif not existing_urls:
-        # 케이스 3: 진짜 첫 실행 (papers.json 자체가 없었음) → 논문 날짜 사용
-        p['first_seen'] = p.get('sort_date', p.get('date', today_str))[:10]
+        # 케이스 3: 진짜 첫 실행 → 논문 날짜 사용
+        p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
     else:
-        # 케이스 4: 이후 실행에서 진짜 새 논문 → 오늘 날짜
+        # 케이스 4: 진짜 새 논문 → 오늘 날짜
         p['first_seen'] = today_str
 
     # first_seen 기준 30일 이내면 NEW (웹 표시용)
@@ -238,7 +256,7 @@ for p in papers:
         first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
         p['is_new'] = (today_date - first_seen_date).days <= 30
     except Exception:
-        p['is_new'] = True
+        p['is_new'] = False  # 파싱 실패 시 NEW 아님으로 처리
 
 new_count = sum(1 for p in papers if p['is_new'])
 print(f'신규 논문 (first_seen 기준 30일 이내): {new_count}건 / 전체: {len(papers)}건')
