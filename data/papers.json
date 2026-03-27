@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-27 02:56",
+  "updated": "2026-03-27 06:04",
   "source": "arXiv + CrossRef",
   "new_count": 1,
   "items": [
@@ -221,17 +221,6 @@
       "abstract": "",
       "source": "CrossRef (Journal of Alloys and Compounds)",
       "first_seen": "2025-01-01",
-      "is_new": false
-    },
-    {
-      "title": "Giant magnetic and optical anisotropy in cerium-substituted M-type strontium hexaferrite driven by 4$f$ electrons",
-      "authors": "Churna Bhandari, Durga Paudyal",
-      "date": "2023-08-08",
-      "sort_date": "2023-08-08",
-      "url": "http://arxiv.org/abs/2308.04594v2",
-      "abstract": "By performing density functional calculations, we find a giant magnetocrystalline anisotropy (MCA) constant in abundant element cerium (Ce) substituted M-type hexaferrite, in the energetically favorab...",
-      "source": "arXiv",
-      "first_seen": "2023-08-08",
       "is_new": false
     }
   ]
