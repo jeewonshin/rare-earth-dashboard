@@ -1,13 +1,13 @@
 {
-  "updated": "2026-03-27 06:04",
+  "updated": "2026-03-28 05:41",
   "source": "arXiv + CrossRef",
-  "new_count": 1,
+  "new_count": 2,
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-03-27",
+      "sort_date": "2026-03-28",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -222,6 +222,17 @@
       "source": "CrossRef (Journal of Alloys and Compounds)",
       "first_seen": "2025-01-01",
       "is_new": false
+    },
+    {
+      "title": "Giant magnetic and optical anisotropy in cerium-substituted M-type strontium hexaferrite driven by 4$f$ electrons",
+      "authors": "Churna Bhandari, Durga Paudyal",
+      "date": "2023-08-08",
+      "sort_date": "2023-08-08",
+      "url": "http://arxiv.org/abs/2308.04594v2",
+      "abstract": "By performing density functional calculations, we find a giant magnetocrystalline anisotropy (MCA) constant in abundant element cerium (Ce) substituted M-type hexaferrite, in the energetically favorab...",
+      "source": "arXiv",
+      "first_seen": "2026-03-28",
+      "is_new": true
     }
   ]
 }
