@@ -1,16 +1,22 @@
 {
-  "updated": "2026-03-29 06:03",
+  "updated": "2026-03-30 00:36",
   "source": "arXiv + CrossRef",
   "new_count": 1,
+  "categories": [
+    "NdFeB",
+    "MnBi",
+    "NdFeB_Recycling"
+  ],
   "items": [
     {
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-03-29",
+      "sort_date": "2026-03-30",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
+      "category": "NdFeB",
       "first_seen": "2026-03-27",
       "is_new": true
     },
@@ -22,6 +28,7 @@
       "url": "https://doi.org/10.1016/j.materresbull.2025.113670",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
+      "category": "NdFeB",
       "first_seen": "2026-01-01",
       "is_new": false
     },
@@ -33,6 +40,7 @@
       "url": "https://doi.org/10.1002/adfm.202517520",
       "abstract": "ABSTRACT\n                  \n                    Unraveling the effects of chemical heterogeneity and intergranular phases on heavy rare earth (Dy/Tb) diffusion is crucial for developing high‐performan...",
       "source": "CrossRef (Advanced Functional Materials)",
+      "category": "NdFeB",
       "first_seen": "2025-12-18",
       "is_new": false
     },
@@ -44,6 +52,7 @@
       "url": "https://doi.org/10.1007/s10853-025-11721-9",
       "abstract": "",
       "source": "CrossRef (Journal of Materials Science)",
+      "category": "NdFeB",
       "first_seen": "2025-12-03",
       "is_new": false
     },
@@ -55,6 +64,7 @@
       "url": "https://doi.org/10.1016/j.jre.2025.12.002",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
+      "category": "NdFeB",
       "first_seen": "2025-12-01",
       "is_new": false
     },
@@ -66,6 +76,7 @@
       "url": "https://doi.org/10.1016/j.jmmm.2025.173464",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "NdFeB",
       "first_seen": "2025-10-01",
       "is_new": false
     },
@@ -77,6 +88,7 @@
       "url": "https://doi.org/10.1016/j.matchar.2025.115222",
       "abstract": "",
       "source": "CrossRef (Materials Characterization)",
+      "category": "NdFeB",
       "first_seen": "2025-08-01",
       "is_new": false
     },
@@ -88,6 +100,7 @@
       "url": "https://doi.org/10.1177/00325899251345414",
       "abstract": "In this study, a pre-treatment process was introduced into the grain boundary diffusion process (GBDP) to improve the diffusion efficiency of the source materials into permanent magnets during GBDP us...",
       "source": "CrossRef (Powder Metallurgy)",
+      "category": "NdFeB",
       "first_seen": "2025-07-01",
       "is_new": false
     },
@@ -99,6 +112,7 @@
       "url": "https://doi.org/10.1016/j.jallcom.2025.181692",
       "abstract": "",
       "source": "CrossRef (Journal of Alloys and Compounds)",
+      "category": "NdFeB",
       "first_seen": "2025-07-01",
       "is_new": false
     },
@@ -110,6 +124,7 @@
       "url": "https://doi.org/10.3724/s1004-0277.20250001",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
+      "category": "NdFeB",
       "first_seen": "2025-06-01",
       "is_new": false
     },
@@ -121,6 +136,7 @@
       "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
+      "category": "NdFeB",
       "first_seen": "2025-06-01",
       "is_new": false
     },
@@ -132,6 +148,7 @@
       "url": "https://doi.org/10.1016/j.materresbull.2025.113302",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
+      "category": "NdFeB",
       "first_seen": "2025-05-01",
       "is_new": false
     },
@@ -143,6 +160,7 @@
       "url": "https://doi.org/10.1016/j.jre.2025.04.012",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
+      "category": "NdFeB",
       "first_seen": "2025-04-01",
       "is_new": false
     },
@@ -154,6 +172,7 @@
       "url": "https://doi.org/10.2497/jjspm.14e-t16-02",
       "abstract": "",
       "source": "CrossRef (Journal of the Japan Society of Powder and Powder Metallurgy)",
+      "category": "NdFeB",
       "first_seen": "2025-03-15",
       "is_new": false
     },
@@ -165,6 +184,7 @@
       "url": "https://doi.org/10.1109/tmag.2025.3527030",
       "abstract": "",
       "source": "CrossRef (IEEE Transactions on Magnetics)",
+      "category": "NdFeB",
       "first_seen": "2025-03-01",
       "is_new": false
     },
@@ -176,6 +196,7 @@
       "url": "https://doi.org/10.1016/j.jre.2024.01.019",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
+      "category": "NdFeB",
       "first_seen": "2025-03-01",
       "is_new": false
     },
@@ -187,6 +208,7 @@
       "url": "https://doi.org/10.1016/j.jre.2024.02.011",
       "abstract": "",
       "source": "CrossRef (Journal of Rare Earths)",
+      "category": "NdFeB",
       "first_seen": "2025-03-01",
       "is_new": false
     },
@@ -198,6 +220,7 @@
       "url": "https://doi.org/10.1016/j.actamat.2024.120660",
       "abstract": "",
       "source": "CrossRef (Acta Materialia)",
+      "category": "NdFeB",
       "first_seen": "2025-02-01",
       "is_new": false
     },
@@ -209,6 +232,7 @@
       "url": "https://doi.org/10.1039/d5ra00545k",
       "abstract": "The preferred misorientation angles of nanocrystalline Nd–Fe–B magnets were analyzed for grain boundary plane distribution using a five parameter analysis method....",
       "source": "CrossRef (RSC Advances)",
+      "category": "NdFeB",
       "first_seen": "2025-01-01",
       "is_new": false
     },
@@ -220,6 +244,7 @@
       "url": "https://doi.org/10.1016/j.jallcom.2024.177738",
       "abstract": "",
       "source": "CrossRef (Journal of Alloys and Compounds)",
+      "category": "NdFeB",
       "first_seen": "2025-01-01",
       "is_new": false
     }
