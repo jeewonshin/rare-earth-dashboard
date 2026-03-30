@@ -37,6 +37,7 @@ METALS = [
         "code":   "MNRL0004",
         "crtr":   "815",
         "spcfct": "75",
+        "unit":   "USD/mt",          # ← Mn도 mt 단위
     },
     {
         "name":   "창연 (Bi)",
@@ -44,11 +45,14 @@ METALS = [
         "code":   "MNRL0020",
         "crtr":   "789",
         "spcfct": "99.99",
+        "unit":   "USD/mt",          # ← Bi는 mt 단위
     },
 ]
 
 def fetch_metal(metal):
     """KOMIS에서 특정 광종의 차트 데이터를 가져옵니다."""
+    unit = metal.get("unit", "USD/kg")   # ← 광종별 단위 (기본 USD/kg)
+
     params = {
         "mnrkndUnqRadioCd":       metal["code"],
         "srchMnrkndUnqCd":        metal["code"],
@@ -96,7 +100,7 @@ def fetch_metal(metal):
         "today": {
             "date":       today_date or "",
             "value":      today_price,
-            "unit":       "USD/kg",
+            "unit":       unit,          # ← 광종별 단위 적용
             "change_val": change_val,
             "change_pct": change_pct,
         },
@@ -112,13 +116,14 @@ for metal in METALS:
     try:
         data = fetch_metal(metal)
         results.append(data)
-        print(f"  ✅ {data['today']['value']} USD/kg ({len(data['history'])}건)")
+        print(f"  ✅ {data['today']['value']} {data['today']['unit']} ({len(data['history'])}건)")
     except Exception as e:
         print(f"  ❌ 실패: {e}")
         results.append({
             "name":    metal["name"],
             "grade":   metal["grade"],
-            "today":   {"date": "", "value": None, "unit": "USD/kg",
+            "today":   {"date": "", "value": None,
+                        "unit": metal.get("unit", "USD/kg"),
                         "change_val": None, "change_pct": None},
             "history": [],
         })
