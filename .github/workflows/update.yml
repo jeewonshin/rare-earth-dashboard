@@ -38,6 +38,9 @@ jobs:
         env:
           KIPRIS_API_KEY: ${{ secrets.KIPRIS_API_KEY }}
 
+      - name: 뉴스 수집
+        run: python scripts/fetch_news.py
+
       - name: 알림 메일 발송
         run: python scripts/send_notify.py
         env:
