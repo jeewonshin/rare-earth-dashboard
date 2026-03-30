@@ -1,7 +1,7 @@
 {
-  "updated": "2026-03-30 00:36",
+  "updated": "2026-03-30 02:40",
   "source": "arXiv + CrossRef",
-  "new_count": 1,
+  "new_count": 23,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -21,6 +21,54 @@
       "is_new": true
     },
     {
+      "title": "A nonlinear discrete-time compartmental model for rare earth e-waste recycling",
+      "authors": "Manish Kanojia",
+      "date": "2026-04",
+      "sort_date": "2026-03-30",
+      "url": "https://doi.org/10.1016/j.wasman.2026.115478",
+      "abstract": "",
+      "source": "CrossRef (Waste Management)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "EV battery recycling economics and rare earth element recovery for sustainable resource management",
+      "authors": "Raajasekar Mathiyalagan, Jayakrishna Kandasamy",
+      "date": "2026-03-09",
+      "sort_date": "2026-03-09",
+      "url": "https://doi.org/10.1007/s43621-026-02662-7",
+      "abstract": "",
+      "source": "CrossRef (Discover Sustainability)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Micromagnetic study on the effect of grain size distribution in hot-deformed Nd–Fe–B magnets",
+      "authors": "Hyon Song Ryang, Chol Song Kim, Ju-Hyok Kim et al.",
+      "date": "2026-02-01",
+      "sort_date": "2026-02-01",
+      "url": "https://doi.org/10.1063/5.0287227",
+      "abstract": "Hot deformation is a potential technique to fabricate anisotropic rare earth permanent magnets required for high-performance electric motors. The magnetic properties of hot-deformed Nd–Fe–B magnets ar...",
+      "source": "CrossRef (AIP Advances)",
+      "category": "NdFeB",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
+      "authors": "Soroush Rahmati",
+      "date": "2026-02",
+      "sort_date": "2026-02-01",
+      "url": "https://doi.org/10.1016/j.jece.2025.120983",
+      "abstract": "",
+      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
       "title": "Temperature-dependent grain boundary diffusion behavior of Nd-Dy-Al alloy in sintered Nd-Fe-B magnet",
       "authors": "Mingpeng Kou, Thi Mai Nguyen, Qing Feng et al.",
       "date": "2026-01",
@@ -33,16 +81,16 @@
       "is_new": false
     },
     {
-      "title": "Chemical Heterogeneity and Intergranular Phases: Governing Tb Grain Boundary Diffusion in Nd–La–Ce–Fe–B Rare Earth Permanent Magnets",
-      "authors": "Hao Chen, Shanshun Zha, Meng Zheng et al.",
-      "date": "2025-12-18",
-      "sort_date": "2025-12-18",
-      "url": "https://doi.org/10.1002/adfm.202517520",
-      "abstract": "ABSTRACT\n                  \n                    Unraveling the effects of chemical heterogeneity and intergranular phases on heavy rare earth (Dy/Tb) diffusion is crucial for developing high‐performan...",
-      "source": "CrossRef (Advanced Functional Materials)",
-      "category": "NdFeB",
-      "first_seen": "2025-12-18",
-      "is_new": false
+      "title": "Review on Rare Earth Permanent Magnet Recycling Technology",
+      "authors": "Dongsoo Kim, Jungshin Kang",
+      "date": "2025-12-31",
+      "sort_date": "2025-12-31",
+      "url": "https://doi.org/10.7844/kirr.2025.34.6.14",
+      "abstract": "",
+      "source": "CrossRef (Resources Recycling)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
     },
     {
       "title": "Grain boundary diffusion of dysprosium using DyF3 dip-coating method to enhance the magnetic properties of sintered Nd-Fe-B magnet",
@@ -69,6 +117,18 @@
       "is_new": false
     },
     {
+      "title": "Effect of Dy alloying and grain boundary diffusion on the corrosion behavior and magnetic stability of sintered NdFeB magnets in a hot-humid environment",
+      "authors": "Yue Chang, Kuankuan Zhang, Jian He et al.",
+      "date": "2025-11",
+      "sort_date": "2025-11-01",
+      "url": "https://doi.org/10.1016/j.surfin.2025.107881",
+      "abstract": "",
+      "source": "CrossRef (Surfaces and Interfaces)",
+      "category": "NdFeB",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
       "title": "Effect of sputtering-coated Al–Cu alloy on magnetic properties and microstructure of grain boundary diffusion-sintered Nd-Fe-B permanent magnet",
       "authors": "Jiaxin Lu, Kai Wang, Fangyu Gan et al.",
       "date": "2025-10",
@@ -79,6 +139,42 @@
       "category": "NdFeB",
       "first_seen": "2025-10-01",
       "is_new": false
+    },
+    {
+      "title": "Sustainable production of rare earth elements by recycling NdFeB magnets through sulfation chemistry assisted water leaching process",
+      "authors": "Junjie Shi, Dong Chen, Qixuan Jiang et al.",
+      "date": "2025-10",
+      "sort_date": "2025-10-01",
+      "url": "https://doi.org/10.1016/j.mineng.2025.109538",
+      "abstract": "",
+      "source": "CrossRef (Minerals Engineering)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Environmental aspects of rare-earth elements life cycle",
+      "authors": "Olga Prituzhalova, Ilya Zhovanik, Yuliya Zhovanik",
+      "date": "2025-09-30",
+      "sort_date": "2025-09-30",
+      "url": "https://doi.org/10.15862/10nzor325",
+      "abstract": "In the Russian Federation, it is planned to increase industrial capacities for the extraction and use of rare earth metals, which requires consideration of emerging environmental risks. The article is...",
+      "source": "CrossRef (Russian Journal of Resources, Conservation and Recycling)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Extraction of Rare Earth Elements from Organic Acid Leachate Using Formo-Phenolic-like Resins",
+      "authors": "Evan Lelong, Julien Couturier, Clément Levard et al.",
+      "date": "2025-08-17",
+      "sort_date": "2025-08-17",
+      "url": "https://doi.org/10.3390/recycling10040165",
+      "abstract": "Formo-phenolic-like resins were synthesized by replacing phenol with phloroglucinol, a biobased and biocompatible compound, and using different aldehydes, such as biomass-derived furaldehyde and glyox...",
+      "source": "CrossRef (Recycling)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
     },
     {
       "title": "Analysis of structural differences in hot deformed Nd-Fe-B magnets——From the perspective of grain boundary plane distribution",
@@ -93,16 +189,28 @@
       "is_new": false
     },
     {
-      "title": "Effect of pre-treatment on magnetic properties of Nd-Fe-B permanent magnet during grain boundary diffusion process",
-      "authors": "Hyun Bin Joo, Seong Min Choi, Se Rin Jeong et al.",
-      "date": "2025-07",
-      "sort_date": "2025-07-01",
-      "url": "https://doi.org/10.1177/00325899251345414",
-      "abstract": "In this study, a pre-treatment process was introduced into the grain boundary diffusion process (GBDP) to improve the diffusion efficiency of the source materials into permanent magnets during GBDP us...",
-      "source": "CrossRef (Powder Metallurgy)",
-      "category": "NdFeB",
-      "first_seen": "2025-07-01",
-      "is_new": false
+      "title": "Innovative sulfation strategy for efficient recovery of rare earth elements from spent fluorescent lamp powder",
+      "authors": "Hossein Shalchian, Pietro Romano, Soroush Rahmati et al.",
+      "date": "2025-08",
+      "sort_date": "2025-08-01",
+      "url": "https://doi.org/10.1016/j.resconrec.2025.108495",
+      "abstract": "",
+      "source": "CrossRef (Resources, Conservation and Recycling)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "A Cross-Disciplinary Review of Rare Earth Elements: Deposit Types, Mineralogy, Machine Learning, Environmental Impact, and Recycling",
+      "authors": "Mustafa Rezaei, Gabriela Sanchez-Lecuona, Omid Abdolazimi",
+      "date": "2025-07-09",
+      "sort_date": "2025-07-09",
+      "url": "https://doi.org/10.3390/min15070720",
+      "abstract": "Rare-earth elements (REEs), including lanthanides, scandium, and yttrium, are important for advanced technologies such as renewable energy systems, electronics, medical diagnostics, and precision agri...",
+      "source": "CrossRef (Minerals)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
     },
     {
       "title": "Distribution of grain boundary plane orientation texture in hot deformed Nd-Fe-B magnets and its texture enhancement mechanism",
@@ -112,6 +220,18 @@
       "url": "https://doi.org/10.1016/j.jallcom.2025.181692",
       "abstract": "",
       "source": "CrossRef (Journal of Alloys and Compounds)",
+      "category": "NdFeB",
+      "first_seen": "2025-07-01",
+      "is_new": false
+    },
+    {
+      "title": "Effect of pre-treatment on magnetic properties of Nd-Fe-B permanent magnet during grain boundary diffusion process",
+      "authors": "Hyun Bin Joo, Seong Min Choi, Se Rin Jeong et al.",
+      "date": "2025-07",
+      "sort_date": "2025-07-01",
+      "url": "https://doi.org/10.1177/00325899251345414",
+      "abstract": "In this study, a pre-treatment process was introduced into the grain boundary diffusion process (GBDP) to improve the diffusion efficiency of the source materials into permanent magnets during GBDP us...",
+      "source": "CrossRef (Powder Metallurgy)",
       "category": "NdFeB",
       "first_seen": "2025-07-01",
       "is_new": false
@@ -141,6 +261,18 @@
       "is_new": false
     },
     {
+      "title": "Research on Short Process Recycling Technology of Bonded NdFeB Magnet Waste",
+      "authors": "Pei-pei XUE, Pei-hong ZHU, Min LIU et al.",
+      "date": "2025-06-01",
+      "sort_date": "2025-06-01",
+      "url": "https://doi.org/10.3724/s1004-0277.202503009",
+      "abstract": "",
+      "source": "CrossRef (Chinese Rare Earths)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
       "title": "Optimizing Ce-doped Nd-Fe-B magnets for high-efficient grain boundary diffusion of Tb-Fe alloy",
       "authors": "Xuhang Zhang, Chaochao Zeng, Xuefeng Liao et al.",
       "date": "2025-05",
@@ -153,76 +285,16 @@
       "is_new": false
     },
     {
-      "title": "Mechanism of grain boundary diffusion process of Nd-Fe-B sintered magnets using terbium heptoxide (Tb4O7) diffusion source",
-      "authors": "P.S. Akhil, H. Nakamura, Uma Maheswara Rao Seelam",
+      "title": "Grain-Boundary Structures and Evolution in an Nd-Fe-B Sintered Magnet",
+      "authors": "Anhua Li, Yanru Li, Haibo Feng et al.",
       "date": "2025-04",
       "sort_date": "2025-04-01",
-      "url": "https://doi.org/10.1016/j.jre.2025.04.012",
-      "abstract": "",
-      "source": "CrossRef (Journal of Rare Earths)",
-      "category": "NdFeB",
-      "first_seen": "2025-04-01",
-      "is_new": false
-    },
-    {
-      "title": "Field Assisted Sintering in the Direct Recycling of Hot Deformed Nd-Fe-B Magnet Scrap",
-      "authors": "Monica Keszler, Felix Grosswendt, Anna-Caroline Assmann et al.",
-      "date": "2025-03-15",
-      "sort_date": "2025-03-15",
-      "url": "https://doi.org/10.2497/jjspm.14e-t16-02",
-      "abstract": "",
-      "source": "CrossRef (Journal of the Japan Society of Powder and Powder Metallurgy)",
-      "category": "NdFeB",
-      "first_seen": "2025-03-15",
-      "is_new": false
-    },
-    {
-      "title": "Modeling of Hot Deformation Behavior of the Nd-Fe-B Permanent Magnet and Its Application in Forming of Magnetic Ring",
-      "authors": "Junyou Yang, Jun Li, Shaoxun Liu et al.",
-      "date": "2025-03",
-      "sort_date": "2025-03-01",
-      "url": "https://doi.org/10.1109/tmag.2025.3527030",
+      "url": "https://doi.org/10.1109/tmag.2025.3543812",
       "abstract": "",
       "source": "CrossRef (IEEE Transactions on Magnetics)",
       "category": "NdFeB",
-      "first_seen": "2025-03-01",
-      "is_new": false
-    },
-    {
-      "title": "Effect of Nd-Ho-Al-Ga diffusion on coercivity and thermal stability of hot-deformed PrNd-Fe-B magnets",
-      "authors": "Yuhang Cui, Xu Tang, Renjie Chen et al.",
-      "date": "2025-03",
-      "sort_date": "2025-03-01",
-      "url": "https://doi.org/10.1016/j.jre.2024.01.019",
-      "abstract": "",
-      "source": "CrossRef (Journal of Rare Earths)",
-      "category": "NdFeB",
-      "first_seen": "2025-03-01",
-      "is_new": false
-    },
-    {
-      "title": "Utility and influence mechanism of densification modulation on grain boundary diffusion in NdFeB magnets",
-      "authors": "San'gen Luo, Munan Yang, Shuwei Zhong et al.",
-      "date": "2025-03",
-      "sort_date": "2025-03-01",
-      "url": "https://doi.org/10.1016/j.jre.2024.02.011",
-      "abstract": "",
-      "source": "CrossRef (Journal of Rare Earths)",
-      "category": "NdFeB",
-      "first_seen": "2025-03-01",
-      "is_new": false
-    },
-    {
-      "title": "A novel two-step grain boundary diffusion process using TaF5 and Pr70Cu15Al10Ga5 for realizing high-coercivity in Nd-Fe-B-sintered magnets without use of heavy rare-earth",
-      "authors": "Seol-mi Lee, Ganghwi Kim, Ki-Suk Lee et al.",
-      "date": "2025-02",
-      "sort_date": "2025-02-01",
-      "url": "https://doi.org/10.1016/j.actamat.2024.120660",
-      "abstract": "",
-      "source": "CrossRef (Acta Materialia)",
-      "category": "NdFeB",
-      "first_seen": "2025-02-01",
-      "is_new": false
+      "first_seen": "2026-03-30",
+      "is_new": true
     },
     {
       "title": "Misorientation statistics across hot-deformed Nd<sub>2</sub>Fe<sub>14</sub>B permanent magnet boundaries and the potential correlation with magnetic properties",
@@ -237,16 +309,112 @@
       "is_new": false
     },
     {
-      "title": "Heavy rare earth-free high resistivity and coercivity Nd-Fe-B hot-deformed magnet developed by Pr-Cu diffusion and CaF2-LiF eutectic addition",
-      "authors": "Z.H. Kautsar, H. Sepehri-Amin, Xin Tang et al.",
-      "date": "2025-01",
-      "sort_date": "2025-01-01",
-      "url": "https://doi.org/10.1016/j.jallcom.2024.177738",
+      "title": "Thermal hysteresis in the structural, magnetic and transport properties of hard magnetic MnBi films",
+      "authors": "José Vergara, Cristina Favieres, Vicente Madurga",
+      "date": "2024-11",
+      "sort_date": "2024-11-01",
+      "url": "https://doi.org/10.1016/j.jmmm.2024.172505",
       "abstract": "",
-      "source": "CrossRef (Journal of Alloys and Compounds)",
-      "category": "NdFeB",
-      "first_seen": "2025-01-01",
-      "is_new": false
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Transformation of in-plane to out-of-plane anisotropy in MnBi alloy for permanent magnet application: a First-principles study",
+      "authors": "Khoveto Vero, J. P. Borah",
+      "date": "2024-08-16",
+      "sort_date": "2024-08-16",
+      "url": "https://doi.org/10.1038/s41598-024-69908-0",
+      "abstract": "",
+      "source": "CrossRef (Scientific Reports)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Oxygen adsorption on pristine MnBi and Ta-capped MnBi thin-films: Ab-initio study of structural and electronic properties, and magnetic anisotropy",
+      "authors": "U.F. Moukila Mberi Ndombo, B.R. Malonda-Boungou, H.B. Mabiala-Poaty et al.",
+      "date": "2024-03",
+      "sort_date": "2024-03-01",
+      "url": "https://doi.org/10.1016/j.jmmm.2024.171915",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Magnetocrystalline anisotropy of interstitially and substitutionally Sn-doped MnBi for high temperature permanent magnet applications",
+      "authors": "Minyeong Choi, Yang-Ki Hong, Hoyun Won et al.",
+      "date": "2023-10-01",
+      "sort_date": "2023-10-01",
+      "url": "https://doi.org/10.1063/5.0166930",
+      "abstract": "First-principles calculations were performed to calculate the electronic structures of low temperature phase (LTP) MnBi (Mn50Bi50) and substitutionally and interstitially Sn-doped MnBi [Mn50Bi25Sn25, ...",
+      "source": "CrossRef (AIP Advances)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "A core–shell magnet Mn<sub>70</sub>Bi<sub>30</sub> grown at seeds in magnetic fields and its impacts on its spin-dynamics, Curie point and other tailored properties",
+      "authors": "Sanjeev Kumar Sharma, Debabrata Pradhan, Shanker Ram",
+      "date": "2023-06-01",
+      "sort_date": "2023-06-01",
+      "url": "https://doi.org/10.1088/1361-6528/acd34c",
+      "abstract": "Abstract\n               The MnBi alloys is a model series of rare-Earth free magnets for surge of technologies of small parts of automobiles, power generators, medical tools, memory systems, and many ...",
+      "source": "CrossRef (Nanotechnology)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Engineering microstructure to improve coercivity of bulk MnBi magnet",
+      "authors": "Wei Tang, Gaoyuan Ouyang, Xubo Liu et al.",
+      "date": "2022-12",
+      "sort_date": "2022-12-01",
+      "url": "https://doi.org/10.1016/j.jmmm.2022.169912",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Influence of Bi Content on the Temperature of the Formation of the Hard Magnetic MnBi Phase: Simultaneous Irreversible Drop of Resistance",
+      "authors": "José Vergara, Cristina Favieres, Vicente Madurga",
+      "date": "2022-07-29",
+      "sort_date": "2022-07-29",
+      "url": "https://doi.org/10.3390/magnetochemistry8080082",
+      "abstract": "Pulsed laser-deposited (PLD) MnBi films were fabricated by alternating deposition of Mn and Bi layers. In order to obtain the ferromagnetic MnBi phase, heat treatments were performed on the samples. S...",
+      "source": "CrossRef (Magnetochemistry)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Magnetic domain configurations of pulsed laser deposited MnBi hard magnetic films",
+      "authors": "J. Vergara, C. Favieres, V. Madurga",
+      "date": "2022-07",
+      "sort_date": "2022-07-01",
+      "url": "https://doi.org/10.1016/j.jmmm.2022.169316",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Microstructure and Magnetic Properties of Fe-doped MnBi Permanent Magnet Alloys",
+      "authors": "Yuan-Hao Tu, Qiong Wu, Hong-Liang Ge et al.",
+      "date": "2021-06-30",
+      "sort_date": "2021-06-30",
+      "url": "https://doi.org/10.4283/jmag.2021.26.2.188",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetics)",
+      "category": "MnBi",
+      "first_seen": "2026-03-30",
+      "is_new": true
     }
   ]
 }
