@@ -27,7 +27,6 @@ CATEGORIES = {
 
 
 def classify_category(title, abstract=""):
-    """title + abstract 기반으로 카테고리 분류"""
     text = (title + " " + abstract).lower()
     scores = {cat: 0 for cat in CATEGORIES}
     for cat, keywords in CATEGORIES.items():
@@ -43,7 +42,7 @@ def detect_lang(title):
     return "ko" if re.search(r"[가-힣]", title) else "en"
 
 
-# ── RSS 피드 (구글 뉴스 - 영문 + 한국어 키워드) ───────────────────────────
+# ── RSS 피드 ──────────────────────────────────────────────────────────────
 RSS_FEEDS = [
     # 영문 검색
     "https://news.google.com/rss/search?q=NdFeB+magnet&hl=en&gl=US&ceid=US:en",
@@ -67,7 +66,6 @@ RELEVANCE_KEYWORDS = [
 
 
 def is_relevant(title):
-    """관련 키워드 포함 여부 확인"""
     return any(kw.lower() in title.lower() for kw in RELEVANCE_KEYWORDS)
 
 
@@ -113,17 +111,17 @@ def parse_rss(url):
             if not title_m or not link_m:
                 continue
 
-            title = re.sub(r"<[^>]+>", "", title_m.group(1)).strip()
-            title = re.sub(r"<!\[CDATA\[(.*?)\]\]>", r"\1", title).strip()
-            link  = link_m.group(1).strip()
+            title   = re.sub(r"<[^>]+>", "", title_m.group(1)).strip()
+            title   = re.sub(r"<!\[CDATA\[(.*?)\]\]>", r"", title).strip()
+            link    = link_m.group(1).strip()
             pub_raw = pub_m.group(1).strip() if pub_m else ""
-            src   = re.sub(r"<[^>]+>", "", src_m.group(1)).strip() if src_m else "Google News"
+            src     = re.sub(r"<[^>]+>", "", src_m.group(1)).strip() if src_m else "Google News"
 
             results.append({
                 "title":    title,
                 "url":      link,
-                "pub_date": parse_pub_date(pub_raw),   # ← 실제 기사 날짜
-                "date":     pub_raw,                    # ← 원본 보관
+                "pub_date": parse_pub_date(pub_raw),  # ← 실제 기사 날짜 YYYY-MM-DD
+                "date":     pub_raw,                   # ← 원본 보관
                 "source":   src,
             })
 
@@ -147,11 +145,15 @@ def main():
                 old_list = json.load(f)
             for n in old_list:
                 url = n.get("url", "")
-                if url:
-                    # source_lang 없는 기존 데이터 보완
-                    if not n.get("source_lang"):
-                        n["source_lang"] = detect_lang(n.get("title", ""))
-                    existing[url] = n
+                if not url:
+                    continue
+                # source_lang 없는 기존 데이터 보완
+                if not n.get("source_lang"):
+                    n["source_lang"] = detect_lang(n.get("title", ""))
+                # ★ pub_date 없는 기존 데이터 보완 → date 필드에서 파싱
+                if not n.get("pub_date") and n.get("date"):
+                    n["pub_date"] = parse_pub_date(n["date"])
+                existing[url] = n
             print(f"  기존 뉴스 {len(existing)}건 로드 완료")
         except Exception as e:
             print(f"  기존 데이터 로드 실패 (첫 실행 시 정상): {e}")
@@ -176,7 +178,7 @@ def main():
                 else:
                     new_en += 1
 
-    # ── 카테고리/source_lang 없는 기존 뉴스 보완 ─────────────────────────
+    # ── category / source_lang 없는 기존 뉴스 보완 ────────────────────────
     for item in existing.values():
         if not item.get("category"):
             item["category"] = classify_category(item.get("title", ""))
