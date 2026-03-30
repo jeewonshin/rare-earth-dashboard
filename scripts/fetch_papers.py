@@ -1,318 +1,142 @@
 import requests
 import json
 import os
-import re
-import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import datetime
 
-print('논문 수집 시작 (arXiv + CrossRef)...')
+print("📡 KOMIS 희토류 가격 수집 중...")
 
-os.makedirs('data', exist_ok=True)
+URL = "https://www.komis.or.kr/Komis/RsrcPrice/ajax/getChartData"
 
-
-def normalize_date(date_str, fallback=''):
-    """날짜 문자열을 YYYY-MM-DD로 정규화. 월만 있으면 -01, 연도만 있으면 -01-01 추가"""
-    if not date_str:
-        return fallback
-    date_str = str(date_str).strip()
-    try:
-        if re.match(r'^\d{4}-\d{2}-\d{2}$', date_str):
-            return date_str
-        elif re.match(r'^\d{4}-\d{2}$', date_str):
-            return date_str + '-01'
-        elif re.match(r'^\d{4}$', date_str):
-            return date_str + '-01-01'
-        else:
-            return date_str
-    except Exception:
-        return fallback
-
-
-# ── 카테고리 정의 ─────────────────────────────────────────────────────────
-CATEGORIES = {
-    "NdFeB": [
-        "Nd-Fe-B", "NdFeB", "neodymium iron boron", "neodymium magnet",
-        "sintered magnet", "hot deformation", "hot deform", "hot press",
-        "grain boundary diffusion", "HPMS", "Ce substitution", "Ce substitut",
-        "Dy substitution", "coercivity", "permanent magnet"
-    ],
-    "MnBi": [
-        "MnBi", "manganese bismuth", "MnBi magnet",
-        "hard magnetic MnBi", "low temperature phase MnBi", "LTP-MnBi"
-    ],
-    "NdFeB_Recycling": [
-        "NdFeB recycling", "NdFeB recycle", "rare earth recycling",
-        "magnet recycling", "HDDR", "hydrogen decrepitation",
-        "rare earth recovery", "end-of-life magnet", "urban mining",
-        "demagnetization", "remagnetization"
-    ]
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
+    "Accept": "application/json, text/plain, */*",
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "X-Requested-With": "XMLHttpRequest",
 }
 
+# ── 수집할 광종 목록 ───────────────────────────────────────
+METALS = [
+    {
+        "name":   "네오디뮴 (Nd)",
+        "grade":  "99.5%min FOB China",
+        "code":   "MNRL1001",
+        "crtr":   "757",
+        "spcfct": "99.5",
+    },
+    {
+        "name":   "세륨 (Ce)",
+        "grade":  "99%min FOB China",
+        "code":   "MNRL1002",
+        "crtr":   "802",
+        "spcfct": "99",
+    },
+    {
+        "name":   "망간 (Mn)",
+        "grade":  "75%min FOB China",
+        "code":   "MNRL0004",
+        "crtr":   "815",
+        "spcfct": "75",
+    },
+    {
+        "name":   "창연 (Bi)",
+        "grade":  "99.99%min FOB China",
+        "code":   "MNRL0020",
+        "crtr":   "789",
+        "spcfct": "99.99",
+        "unit":   "USD/mt",          # ← Bi는 mt 단위
+    },
+]
 
-def classify_category(title, abstract=""):
-    """title + abstract 기반으로 카테고리 분류. 매칭 없으면 '기타' 반환"""
-    text = (title + " " + abstract).lower()
-    scores = {cat: 0 for cat in CATEGORIES}
-    for cat, keywords in CATEGORIES.items():
-        for kw in keywords:
-            if kw.lower() in text:
-                scores[cat] += 1
-    best = max(scores, key=scores.get)
-    return best if scores[best] > 0 else "기타"
+def fetch_metal(metal):
+    """KOMIS에서 특정 광종의 차트 데이터를 가져옵니다."""
+    unit = metal.get("unit", "USD/kg")   # ← 광종별 단위 (기본 USD/kg)
 
+    params = {
+        "mnrkndUnqRadioCd":       metal["code"],
+        "srchMnrkndUnqCd":        metal["code"],
+        "srchPrcCrtr":            metal["crtr"],
+        "spcfct":                 metal["spcfct"],
+        "srchAvgOpt":             "DAY",
+        "srchField":              "year",
+        "srchStartDate":          "2024",
+        "srchEndDate":            str(datetime.now().year),
+        "srchCompareMnrkndUnqCd": "",
+        "srchComparePrcCrtr":     "",
+        "lmeInvt":                "Y",
+        "HP000":                  "HP002",
+    }
 
-ARXIV_QUERY = (
-    '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR ti:"NdFeB" OR ti:"rare earth magnet"'
-    ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")'
-    ' AND '
-    '(ti:"hot deform" OR ti:"hot-deform" OR ti:"hot press"'
-    ' OR ti:"Ce substitut" OR ti:"Ce-substitut" OR ti:"cerium substitut"'
-    ' OR ti:"grain boundary diffusion"'
-    ' OR abs:"hot deform" OR abs:"hot-deform" OR abs:"hot press"'
-    ' OR abs:"Ce substitut" OR abs:"Ce-substitut" OR abs:"cerium substitut"'
-    ' OR abs:"grain boundary diffusion")'
-)
+    res = requests.post(URL, data=params, headers=HEADERS, timeout=20)
+    res.raise_for_status()
+    raw = res.json()
 
-CROSSREF_QUERY = (
-    '"permanent magnet" OR "Nd-Fe-B" OR "NdFeB" OR "rare earth magnet" '
-    '"hot deform" OR "hot press" OR "Ce substituted" OR "grain boundary diffusion"'
-)
+    # xaxis / series[0].data 파싱
+    xaxis  = raw["data"]["xaxis"]
+    yaxis  = raw["data"]["series"][0]["data"]
 
-MUST_KEYWORDS   = ['permanent magnet', 'nd-fe-b', 'ndfeb', 'rare earth magnet']
-DETAIL_KEYWORDS = ['hot deform', 'hot-deform', 'hot press', 'ce substitut', 'ce-substitut', 'cerium substitut', 'grain boundary diffusion']
-
-arxiv_papers    = []
-crossref_papers = []
-seen_titles     = set()
-
-# ★ 기존 papers.json 로드 → url -> first_seen 매핑 저장
-existing_urls       = set()
-existing_first_seen = {}
-if os.path.exists('data/papers.json'):
-    try:
-        with open('data/papers.json', 'r', encoding='utf-8') as f:
-            old_data = json.load(f)
-            for p in old_data.get('items', []):
-                url = p.get('url', '')
-                if url:
-                    existing_urls.add(url)
-                if url and p.get('first_seen'):
-                    existing_first_seen[url] = p['first_seen']
-        print(f'  기존 논문 {len(existing_urls)}건 로드 완료 (first_seen 보유: {len(existing_first_seen)}건)')
-    except Exception as e:
-        print(f'  기존 데이터 로드 실패 (첫 실행 시 정상): {e}')
-
-
-# ── arXiv API ──────────────────────────────────────────────────────────────
-print('  [1/2] arXiv 수집 중...')
-
-try:
-    res = requests.get(
-        'https://export.arxiv.org/api/query',
-        params={
-            'search_query': ARXIV_QUERY,
-            'start':        0,
-            'max_results':  100,
-            'sortBy':       'submittedDate',
-            'sortOrder':    'descending',
-        },
-        timeout=20
-    )
-
-    ns   = {'atom': 'http://www.w3.org/2005/Atom'}
-    root = ET.fromstring(res.text)
-
-    for entry in root.findall('atom:entry', ns):
-        title    = entry.find('atom:title',     ns).text.strip().replace('\n', ' ')
-        url      = entry.find('atom:id',        ns).text.strip()
-        date_raw = entry.find('atom:published', ns).text.strip()[:10]
-        authors  = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
-        abstract = entry.find('atom:summary',   ns).text.strip().replace('\n', ' ')
-
-        # 날짜 필터: 5년 이내만
+    history = []
+    for d, v in zip(xaxis, yaxis):
         try:
-            pub_dt   = datetime.strptime(date_raw, '%Y-%m-%d').date()
-            days_old = (datetime.now().date() - pub_dt).days
-            if days_old > 365 * 5:
-                continue
-        except Exception:
+            if v is not None and v != "" and v != "-":
+                history.append({"date": str(d).strip(), "value": float(v)})
+        except:
             pass
 
-        text_lower = (title + ' ' + abstract).lower()
-        has_must   = any(k in text_lower for k in MUST_KEYWORDS)
-        has_detail = any(k in text_lower for k in DETAIL_KEYWORDS)
+    # 오늘 가격 / 등락
+    today_price = today_date = change_val = change_pct = None
+    if history:
+        today_price = history[-1]["value"]
+        today_date  = history[-1]["date"]
+        if len(history) >= 2:
+            prev       = history[-2]["value"]
+            change_val = round(today_price - prev, 4)
+            change_pct = round((change_val / prev) * 100, 2) if prev else 0
 
-        if not (has_must and has_detail):
-            continue
-
-        if title not in seen_titles:
-            seen_titles.add(title)
-            arxiv_papers.append({
-                'title':     title,
-                'authors':   ', '.join(authors[:3]) + (' et al.' if len(authors) > 3 else ''),
-                'date':      date_raw,
-                'sort_date': date_raw,
-                'url':       url,
-                'abstract':  abstract[:200] + '...',
-                'source':    'arXiv',
-                'category':  classify_category(title, abstract),   # ← 카테고리 추가
-            })
-
-    print(f'  arXiv {len(arxiv_papers)}건 수집')
-
-except Exception as e:
-    print(f'  arXiv 실패: {e}')
-
-
-# ── CrossRef API ───────────────────────────────────────────────────────────
-print('  [2/2] CrossRef 수집 중...')
-
-try:
-    from_date = (datetime.now() - timedelta(days=365*5)).strftime('%Y-%m-%d')
-    today     = datetime.now().date()
-
-    res = requests.get(
-        'https://api.crossref.org/works',
-        params={
-            'query':  CROSSREF_QUERY,
-            'filter': 'from-pub-date:' + from_date + ',type:journal-article',
-            'rows':   200,
-            'sort':   'relevance',
-            'select': 'title,author,published,accepted,URL,abstract,container-title',
+    return {
+        "name":       metal["name"],
+        "grade":      metal["grade"],
+        "today": {
+            "date":       today_date or "",
+            "value":      today_price,
+            "unit":       unit,          # ← 광종별 단위 적용
+            "change_val": change_val,
+            "change_pct": change_pct,
         },
-        headers={'User-Agent': 'RareEarthDashboard/1.0 (research tool)'},
-        timeout=20
-    )
+        "history": history,
+    }
 
-    items = res.json().get('message', {}).get('items', [])
 
-    for item in items:
-        title_list = item.get('title', [])
-        if not title_list:
-            continue
-        title = title_list[0].strip()
-        if title in seen_titles:
-            continue
+# ── 메인 실행 ──────────────────────────────────────────────
+results = []
 
-        abstract_raw   = item.get('abstract', '')
-        abstract_clean = re.sub(r'<[^>]+>', '', abstract_raw)
-
-        title_lower = title.lower()
-        text_lower  = (title + ' ' + abstract_clean).lower()
-        has_must    = any(k in text_lower for k in MUST_KEYWORDS)
-        has_detail  = any(k in text_lower for k in DETAIL_KEYWORDS)
-
-        # abstract 유무에 따라 필터링 완화
-        if abstract_clean.strip():
-            if not (has_must and has_detail):
-                continue
-        else:
-            has_must_in_title   = any(k in title_lower for k in MUST_KEYWORDS)
-            has_detail_in_title = any(k in title_lower for k in DETAIL_KEYWORDS)
-            if not (has_must_in_title and has_detail_in_title):
-                continue
-
-        # ★ 날짜 처리: accepted 우선 → published
-        accepted_parts = item.get('accepted', {}).get('date-parts', [[]])[0]
-        pub_parts      = item.get('published', {}).get('date-parts', [['']])[0]
-
-        if accepted_parts:
-            date_str = '-'.join(str(x).zfill(2) for x in accepted_parts if x) or ''
-        else:
-            date_str = '-'.join(str(x).zfill(2) for x in pub_parts if x) or ''
-
-        # ★ 미래 날짜면 sort_date만 오늘로 대체, date는 원본 유지
-        try:
-            check_str = normalize_date(date_str)[:7]
-            if datetime.strptime(check_str, '%Y-%m').date() > today:
-                sort_date = today.strftime('%Y-%m-%d')
-            else:
-                sort_date = normalize_date(date_str)
-        except Exception:
-            sort_date = normalize_date(date_str)
-
-        authors_raw = item.get('author', [])
-        authors_str = ', '.join(
-            (a.get('given', '') + ' ' + a.get('family', '')).strip()
-            for a in authors_raw[:3]
-        ) + (' et al.' if len(authors_raw) > 3 else '')
-
-        journal = item.get('container-title', [''])[0]
-        url     = item.get('URL', '#')
-
-        seen_titles.add(title)
-        crossref_papers.append({
-            'title':     title,
-            'authors':   authors_str,
-            'date':      date_str,            # 원본 날짜 (화면 표시용)
-            'sort_date': sort_date,           # 정렬용 (정규화 + 미래면 오늘)
-            'url':       url,
-            'abstract':  abstract_clean[:200] + '...' if abstract_clean.strip() else '',
-            'source':    'CrossRef (' + journal + ')' if journal else 'CrossRef',
-            'category':  classify_category(title, abstract_clean),   # ← 카테고리 추가
+for metal in METALS:
+    print(f"\n  수집 중: {metal['name']}")
+    try:
+        data = fetch_metal(metal)
+        results.append(data)
+        print(f"  ✅ {data['today']['value']} {data['today']['unit']} ({len(data['history'])}건)")  # ← 단위 동적 출력
+    except Exception as e:
+        print(f"  ❌ 실패: {e}")
+        results.append({
+            "name":    metal["name"],
+            "grade":   metal["grade"],
+            "today":   {"date": "", "value": None,
+                        "unit": metal.get("unit", "USD/kg"),   # ← 실패 시에도 올바른 단위
+                        "change_val": None, "change_pct": None},
+            "history": [],
         })
 
-    print(f'  CrossRef {len(crossref_papers)}건 수집')
-
-except Exception as e:
-    print(f'  CrossRef 실패: {e}')
-
-
-# ── 합치기: arXiv 상위 10건 + CrossRef 상위 20건 ───────────────────────────
-arxiv_papers.sort(key=lambda x: x.get('sort_date', x['date']),    reverse=True)
-crossref_papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
-
-papers = arxiv_papers[:10] + crossref_papers[:20]
-papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
-
-print(f'  arXiv 상위 10건 + CrossRef 상위 20건 = 총 {len(papers)}건')
-
-# ★ first_seen 기록 + is_new 판단 (first_seen 기준 30일 이내면 NEW)
-today_str  = datetime.now().strftime('%Y-%m-%d')
-today_date = datetime.now().date()
-
-for p in papers:
-    url = p.get('url', '')
-    if url in existing_first_seen:
-        # 케이스 1: 기존 논문 + first_seen 있음 → 정규화해서 유지
-        p['first_seen'] = normalize_date(existing_first_seen[url], today_str)
-    elif url in existing_urls:
-        # 케이스 2: 기존 논문인데 first_seen 없음 (이전 버전) → 논문 날짜 사용
-        p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
-    elif not existing_urls:
-        # 케이스 3: 진짜 첫 실행 → 논문 날짜 사용
-        p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
-    else:
-        # 케이스 4: 진짜 새 논문 → 오늘 날짜
-        p['first_seen'] = today_str
-
-    # first_seen 기준 30일 이내면 NEW (웹 표시용)
-    try:
-        first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
-        p['is_new'] = (today_date - first_seen_date).days <= 30
-    except Exception:
-        p['is_new'] = False  # 파싱 실패 시 NEW 아님으로 처리
-
-new_count = sum(1 for p in papers if p['is_new'])
-print(f'신규 논문 (first_seen 기준 30일 이내): {new_count}건 / 전체: {len(papers)}건')
-
-# ── 카테고리별 통계 출력 ───────────────────────────────────────────────────
-cat_counts = {}
-for p in papers:
-    cat = p.get('category', '기타')
-    cat_counts[cat] = cat_counts.get(cat, 0) + 1
-for cat, cnt in cat_counts.items():
-    print(f'  [{cat}] {cnt}건')
+os.makedirs("data", exist_ok=True)
 
 output = {
-    'updated':    datetime.now().strftime('%Y-%m-%d %H:%M'),
-    'source':     'arXiv + CrossRef',
-    'new_count':  new_count,
-    'categories': list(CATEGORIES.keys()),   # ← 카테고리 목록 추가
-    'items':      papers,
+    "updated":    datetime.now().strftime("%Y-%m-%d %H:%M"),
+    "source":     "KOMIS (한국자원정보서비스)",
+    "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
+    "metals":     results,
 }
 
-with open('data/papers.json', 'w', encoding='utf-8') as f:
+with open("data/prices.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print('data/papers.json 저장 완료!')
+print(f"\n✅ 저장 완료! ({len(results)}종)")
