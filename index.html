@@ -9,22 +9,53 @@
     body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; padding: 24px; }
     h1 { color: #1a365d; text-align: center; font-size: 26px; margin-bottom: 4px; }
     .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 28px; }
+
     .section-title {
       font-size: 15px; font-weight: bold; color: #2b6cb0;
       margin: 28px 0 12px 0; border-left: 4px solid #2b6cb0; padding-left: 10px;
     }
+
+    /* 가격 그리드 */
     .price-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
-    .card { background: white; border-radius: 14px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+
+    /* 카드 */
+    .card {
+      background: white; border-radius: 14px; padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
     .card h2 {
-      color: #2b6cb0; font-size: 15px; border-bottom: 2px solid #ebf8ff;
+      color: #2b6cb0; font-size: 14px; border-bottom: 2px solid #ebf8ff;
       padding-bottom: 10px; margin-bottom: 14px;
       display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     }
-    .price-big    { font-size: 36px; font-weight: bold; color: #1a365d; line-height: 1.1; }
-    .price-unit   { font-size: 14px; color: #888; font-weight: normal; }
+
+    /* 3열 그리드 */
+    .content-3col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .col-card {
+      background: white; border-radius: 14px; padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      max-height: 620px; overflow-y: auto;
+    }
+    .col-card h2 {
+      color: #2b6cb0; font-size: 14px; border-bottom: 2px solid #ebf8ff;
+      padding-bottom: 10px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      position: sticky; top: 0; background: white; z-index: 1;
+    }
+
+    /* 가격 카드 전용 */
+    .price-big    { font-size: 32px; font-weight: bold; color: #1a365d; line-height: 1.1; }
+    .price-unit   { font-size: 13px; color: #888; font-weight: normal; }
     .price-grade  { color: #888; font-size: 12px; margin-top: 4px; }
     .price-change { font-weight: bold; font-size: 14px; margin-top: 4px; }
     .price-date   { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+    /* 아이템 */
     .item { border-bottom: 1px solid #eee; padding: 10px 0; font-size: 13px; }
     .item:last-child { border-bottom: none; }
     .item a {
@@ -34,33 +65,55 @@
     .item a:hover  { text-decoration: underline; }
     .item .meta    { color: #777; font-size: 12px; margin-bottom: 2px; }
     .item .snippet { color: #999; font-size: 12px; line-height: 1.4; }
-    .updated { font-size: 11px; color: #bbb; text-align: right; margin-top: 14px; }
+
+    .updated { font-size: 11px; color: #bbb; text-align: right; margin-top: 10px; }
     .loading { color: #aaa; font-size: 13px; padding: 8px 0; }
+
+    /* 태그 */
     .tag { font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: bold; display: inline-block; margin-bottom: 3px; }
-    .tag-new { background: #fef3c7; color: #b45309; font-size: 10px; padding: 1px 6px; border-radius: 6px; font-weight: bold; margin-left: 4px; }
+    .tag-new       { background: #fef3c7; color: #b45309; font-size: 10px; padding: 1px 6px; border-radius: 6px; font-weight: bold; margin-left: 4px; }
     .tag-arxiv     { background: #faf5ff; color: #6b46c1; }
     .tag-crossref  { background: #f0fff4; color: #276749; }
     .tag-kipris    { background: #fff5f5; color: #c53030; }
-    .tag-news      { background: #fff5f5; color: #c53030; }
     .tag-ndfeb     { background: #ebf8ff; color: #2b6cb0; }
     .tag-mnbi      { background: #faf5ff; color: #6b46c1; }
     .tag-recycling { background: #f0fff4; color: #276749; }
     .tag-other     { background: #f7fafc; color: #718096; }
     .tag-ko        { background: #fff0f0; color: #c53030; }
     .tag-en        { background: #ebf8ff; color: #2b6cb0; }
-    .badge-new { background: #f6e05e; color: #744210; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
-    .tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
-    .tab-btn { padding: 7px 18px; border-radius: 20px; border: none; background: #e2e8f0; color: #4a5568; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    .tab-btn.active            { background: #2b6cb0; color: white; }
-    .tab-btn:hover:not(.active){ background: #bee3f8; color: #2b6cb0; }
-    .sub-tab-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-    .sub-tab-btn { padding: 4px 14px; border-radius: 14px; border: 1px solid #e2e8f0; background: #f7fafc; color: #4a5568; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    .sub-tab-btn.active            { background: #2b6cb0; color: white; border-color: #2b6cb0; }
-    .sub-tab-btn:hover:not(.active){ background: #bee3f8; color: #2b6cb0; }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+    .badge-new     { background: #f6e05e; color: #744210; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
+
+    /* 카테고리 메인 탭 */
+    .cat-tab-bar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .cat-tab-btn {
+      padding: 9px 24px; border-radius: 22px; border: none;
+      background: #e2e8f0; color: #4a5568;
+      font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    .cat-tab-btn:hover:not(.active) { opacity: 0.85; }
+    .cat-tab-btn[data-cat="NdFeB"].active          { background: #2b6cb0; color: white; }
+    .cat-tab-btn[data-cat="MnBi"].active            { background: #6b46c1; color: white; }
+    .cat-tab-btn[data-cat="NdFeB_Recycling"].active { background: #276749; color: white; }
+    .cat-tab-btn[data-cat="기타"].active             { background: #718096; color: white; }
+
+    /* 탭 패널 */
     .cat-panel { display: none; }
     .cat-panel.active { display: block; }
+
+    /* 뉴스 국내/해외 헤더 */
+    .news-header-ko {
+      background: #fff5f5; border-left: 3px solid #fc8181;
+      padding: 5px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: bold; color: #c53030;
+      margin: 8px 0 6px;
+    }
+    .news-header-en {
+      background: #ebf8ff; border-left: 3px solid #63b3ed;
+      padding: 5px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: bold; color: #2b6cb0;
+      margin: 8px 0 6px;
+    }
+    .news-divider { border: none; border-top: 1px dashed #e2e8f0; margin: 10px 0; }
   </style>
 </head>
 <body>
@@ -78,103 +131,112 @@
   </div>
   <div class="updated" id="price-updated"></div>
 
-  <!-- 논문 · 특허 · 뉴스 섹션 -->
-  <div class="section-title">📄 논문 · 🔐 특허 · 📰 뉴스</div>
+  <!-- 소재별 연구 동향 -->
+  <div class="section-title">🔬 소재별 연구 동향</div>
 
-  <!-- 메인 탭 버튼 -->
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab(event,'papers')">📄 논문</button>
-    <button class="tab-btn"        onclick="switchTab(event,'patents')">🔐 특허</button>
-    <button class="tab-btn"        onclick="switchTab(event,'news')">📰 뉴스</button>
+  <!-- 카테고리 탭 버튼 -->
+  <div class="cat-tab-bar">
+    <button class="cat-tab-btn active" data-cat="NdFeB"           onclick="switchCat(this,'NdFeB')">🔵 NdFeB</button>
+    <button class="cat-tab-btn"        data-cat="MnBi"            onclick="switchCat(this,'MnBi')">🟣 MnBi</button>
+    <button class="cat-tab-btn"        data-cat="NdFeB_Recycling" onclick="switchCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
+    <button class="cat-tab-btn"        data-cat="기타"             onclick="switchCat(this,'기타')">⚪ 기타</button>
   </div>
 
-  <!-- 논문 탭 패널 -->
-  <div id="tab-papers" class="tab-panel active">
-    <div class="card">
-      <h2>📄 최신 논문 (arXiv + CrossRef) <span id="new-badge"></span></h2>
-      <div class="sub-tab-bar" id="paper-cat-bar">
-        <button class="sub-tab-btn active" onclick="switchPaperCat(this,'NdFeB')">🔵 NdFeB</button>
-        <button class="sub-tab-btn"        onclick="switchPaperCat(this,'MnBi')">🟣 MnBi</button>
-        <button class="sub-tab-btn"        onclick="switchPaperCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
-        <button class="sub-tab-btn"        onclick="switchPaperCat(this,'기타')">⚪ 기타</button>
+  <!-- NdFeB 패널 -->
+  <div id="tab-NdFeB" class="cat-panel active">
+    <div class="content-3col">
+      <div class="col-card">
+        <h2>📄 논문 <span id="badge-papers-NdFeB"></span></h2>
+        <div id="col-papers-NdFeB"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-papers-NdFeB"></div>
       </div>
-      <div id="cat-papers-NdFeB"          class="cat-panel active"><p class="loading">로딩 중...</p></div>
-      <div id="cat-papers-MnBi"           class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-papers-NdFeB_Recycling" class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-papers-기타"            class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div class="updated" id="paper-updated"></div>
+      <div class="col-card">
+        <h2>🔐 특허 <span id="badge-patents-NdFeB"></span></h2>
+        <div id="col-patents-NdFeB"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-patents-NdFeB"></div>
+      </div>
+      <div class="col-card">
+        <h2>📰 뉴스 <span id="badge-news-NdFeB"></span></h2>
+        <div id="col-news-NdFeB"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-news-NdFeB"></div>
+      </div>
     </div>
   </div>
 
-  <!-- 특허 탭 패널 -->
-  <div id="tab-patents" class="tab-panel">
-    <div class="card">
-      <h2>🔐 최신 특허 (KIPRIS) <span id="patent-badge"></span></h2>
-      <div class="sub-tab-bar" id="patent-cat-bar">
-        <button class="sub-tab-btn active" onclick="switchPatentCat(this,'NdFeB')">🔵 NdFeB</button>
-        <button class="sub-tab-btn"        onclick="switchPatentCat(this,'MnBi')">🟣 MnBi</button>
-        <button class="sub-tab-btn"        onclick="switchPatentCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
-        <button class="sub-tab-btn"        onclick="switchPatentCat(this,'기타')">⚪ 기타</button>
+  <!-- MnBi 패널 -->
+  <div id="tab-MnBi" class="cat-panel">
+    <div class="content-3col">
+      <div class="col-card">
+        <h2>📄 논문 <span id="badge-papers-MnBi"></span></h2>
+        <div id="col-papers-MnBi"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-papers-MnBi"></div>
       </div>
-      <div id="cat-patents-NdFeB"           class="cat-panel active"><p class="loading">로딩 중...</p></div>
-      <div id="cat-patents-MnBi"            class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-patents-NdFeB_Recycling" class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-patents-기타"             class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div class="updated" id="patent-updated"></div>
+      <div class="col-card">
+        <h2>🔐 특허 <span id="badge-patents-MnBi"></span></h2>
+        <div id="col-patents-MnBi"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-patents-MnBi"></div>
+      </div>
+      <div class="col-card">
+        <h2>📰 뉴스 <span id="badge-news-MnBi"></span></h2>
+        <div id="col-news-MnBi"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-news-MnBi"></div>
+      </div>
     </div>
   </div>
 
-  <!-- 뉴스 탭 패널 -->
-  <div id="tab-news" class="tab-panel">
-    <div class="card">
-      <h2>📰 최신 뉴스 (Google News + 네이버) <span id="news-badge"></span></h2>
-      <div class="sub-tab-bar" id="news-cat-bar">
-        <button class="sub-tab-btn active" onclick="switchNewsCat(this,'all')">📋 전체</button>
-        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'NdFeB')">🔵 NdFeB</button>
-        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'MnBi')">🟣 MnBi</button>
-        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
-        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'기타')">⚪ 기타</button>
+  <!-- Recycling 패널 -->
+  <div id="tab-NdFeB_Recycling" class="cat-panel">
+    <div class="content-3col">
+      <div class="col-card">
+        <h2>📄 논문 <span id="badge-papers-NdFeB_Recycling"></span></h2>
+        <div id="col-papers-NdFeB_Recycling"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-papers-NdFeB_Recycling"></div>
       </div>
-      <div id="cat-news-all"             class="cat-panel active"><p class="loading">로딩 중...</p></div>
-      <div id="cat-news-NdFeB"           class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-news-MnBi"            class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-news-NdFeB_Recycling" class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div id="cat-news-기타"             class="cat-panel"><p class="loading">로딩 중...</p></div>
-      <div class="updated" id="news-updated"></div>
+      <div class="col-card">
+        <h2>🔐 특허 <span id="badge-patents-NdFeB_Recycling"></span></h2>
+        <div id="col-patents-NdFeB_Recycling"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-patents-NdFeB_Recycling"></div>
+      </div>
+      <div class="col-card">
+        <h2>📰 뉴스 <span id="badge-news-NdFeB_Recycling"></span></h2>
+        <div id="col-news-NdFeB_Recycling"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-news-NdFeB_Recycling"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기타 패널 -->
+  <div id="tab-기타" class="cat-panel">
+    <div class="content-3col">
+      <div class="col-card">
+        <h2>📄 논문 <span id="badge-papers-기타"></span></h2>
+        <div id="col-papers-기타"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-papers-기타"></div>
+      </div>
+      <div class="col-card">
+        <h2>🔐 특허 <span id="badge-patents-기타"></span></h2>
+        <div id="col-patents-기타"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-patents-기타"></div>
+      </div>
+      <div class="col-card">
+        <h2>📰 뉴스 <span id="badge-news-기타"></span></h2>
+        <div id="col-news-기타"><p class="loading">로딩 중...</p></div>
+        <div class="updated" id="updated-news-기타"></div>
+      </div>
     </div>
   </div>
 
   <script>
+    const CATS = ['NdFeB', 'MnBi', 'NdFeB_Recycling', '기타'];
+
     // ================================================
     // 탭 전환
     // ================================================
-    function switchTab(e, name) {
-      ['papers','patents','news'].forEach(t =>
-        document.getElementById('tab-' + t).classList.remove('active'));
-      document.querySelectorAll('.tab-bar .tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('tab-' + name).classList.add('active');
-      e.currentTarget.classList.add('active');
-    }
-    function switchPaperCat(btn, cat) {
-      document.querySelectorAll('#paper-cat-bar .sub-tab-btn').forEach(b => b.classList.remove('active'));
+    function switchCat(btn, cat) {
+      CATS.forEach(c => document.getElementById('tab-' + c).classList.remove('active'));
+      document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + cat).classList.add('active');
       btn.classList.add('active');
-      ['NdFeB','MnBi','NdFeB_Recycling','기타'].forEach(c =>
-        document.getElementById('cat-papers-' + c).classList.remove('active'));
-      document.getElementById('cat-papers-' + cat).classList.add('active');
-    }
-    function switchPatentCat(btn, cat) {
-      document.querySelectorAll('#patent-cat-bar .sub-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      ['NdFeB','MnBi','NdFeB_Recycling','기타'].forEach(c =>
-        document.getElementById('cat-patents-' + c).classList.remove('active'));
-      document.getElementById('cat-patents-' + cat).classList.add('active');
-    }
-    function switchNewsCat(btn, cat) {
-      document.querySelectorAll('#news-cat-bar .sub-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      ['all','NdFeB','MnBi','NdFeB_Recycling','기타'].forEach(c =>
-        document.getElementById('cat-news-' + c).classList.remove('active'));
-      document.getElementById('cat-news-' + cat).classList.add('active');
     }
 
     // ================================================
@@ -221,20 +283,15 @@
       ctx.lineTo(xOf(vals.length - 1), H - pad.bottom);
       ctx.lineTo(xOf(0), H - pad.bottom);
       ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
+      ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(vals[0]));
       vals.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
-      ctx.strokeStyle = '#2b6cb0';
-      ctx.lineWidth   = 1.5;
-      ctx.stroke();
+      ctx.strokeStyle = '#2b6cb0'; ctx.lineWidth = 1.5; ctx.stroke();
       ctx.beginPath();
       ctx.arc(xOf(vals.length - 1), yOf(vals[vals.length - 1]), 3, 0, Math.PI * 2);
-      ctx.fillStyle = '#2b6cb0';
-      ctx.fill();
-      ctx.fillStyle = '#aaa';
-      ctx.font = '10px sans-serif';
+      ctx.fillStyle = '#2b6cb0'; ctx.fill();
+      ctx.fillStyle = '#aaa'; ctx.font = '10px sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(maxV.toFixed(1), pad.left - 3, pad.top + 9);
       ctx.fillText(minV.toFixed(1), pad.left - 3, H - pad.bottom - 2);
@@ -284,57 +341,28 @@
       });
 
     // ================================================
-    // 논문 카드
+    // 논문 HTML
     // ================================================
     function paperHTML(p) {
       const srcClass = p.source === 'arXiv' ? 'tag-arxiv' : 'tag-crossref';
       const newTag   = p.is_new ? `<span class="tag-new">🆕 NEW</span>` : '';
       return `
         <div class="item">
-          <span class="tag ${srcClass}">${p.source}</span>
-          ${catTag(p.category)}${newTag}
+          <span class="tag ${srcClass}">${p.source}</span>${newTag}
           <a href="${p.url}" target="_blank">${p.title}</a>
           <div class="meta">${p.authors} · ${p.date}</div>
           <div class="snippet">${p.abstract}</div>
         </div>`;
     }
-    fetch('data/papers.json')
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById('paper-updated').textContent =
-          '출처: ' + data.source + ' | 업데이트: ' + data.updated;
-        if (data.new_count > 0) {
-          document.getElementById('new-badge').innerHTML =
-            `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
-        }
-        const cats = ['NdFeB','MnBi','NdFeB_Recycling','기타'];
-        const groups = {};
-        cats.forEach(c => groups[c] = []);
-        data.items.forEach(p => {
-          const c = p.category && groups[p.category] !== undefined ? p.category : '기타';
-          groups[c].push(p);
-        });
-        cats.forEach(cat => {
-          document.getElementById('cat-papers-' + cat).innerHTML =
-            groups[cat].length > 0
-              ? groups[cat].map(paperHTML).join('')
-              : '<p class="loading">해당 카테고리 논문 없음</p>';
-        });
-      })
-      .catch(() => {
-        document.getElementById('cat-papers-NdFeB').innerHTML =
-          '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
-      });
 
     // ================================================
-    // 특허 카드
+    // 특허 HTML
     // ================================================
     function patentHTML(p) {
       const newTag = p.is_new ? `<span class="tag-new">🆕 NEW</span>` : '';
       return `
         <div class="item">
-          <span class="tag tag-kipris">KIPRIS</span>
-          ${catTag(p.category)}${newTag}
+          <span class="tag tag-kipris">KIPRIS</span>${newTag}
           <a href="${p.url}" target="_blank">${p.title}</a>
           <div class="meta">
             ${p.applicant} · 출원일: ${p.app_date}
@@ -343,36 +371,9 @@
           <div class="snippet">${p.abstract || '초록 없음'}</div>
         </div>`;
     }
-    fetch('data/patents.json')
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById('patent-updated').textContent =
-          '출처: ' + data.source + ' | 업데이트: ' + data.updated;
-        if (data.new_count > 0) {
-          document.getElementById('patent-badge').innerHTML =
-            `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
-        }
-        const cats = ['NdFeB','MnBi','NdFeB_Recycling','기타'];
-        const groups = {};
-        cats.forEach(c => groups[c] = []);
-        data.items.forEach(p => {
-          const c = p.category && groups[p.category] !== undefined ? p.category : '기타';
-          groups[c].push(p);
-        });
-        cats.forEach(cat => {
-          document.getElementById('cat-patents-' + cat).innerHTML =
-            groups[cat].length > 0
-              ? groups[cat].map(patentHTML).join('')
-              : '<p class="loading">해당 카테고리 특허 없음</p>';
-        });
-      })
-      .catch(() => {
-        document.getElementById('cat-patents-NdFeB').innerHTML =
-          '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
-      });
 
     // ================================================
-    // 뉴스 카드
+    // 뉴스 HTML + 국내/해외 분리 렌더링
     // ================================================
     function newsHTML(n) {
       const langTag = n.source_lang === 'ko'
@@ -381,55 +382,94 @@
       return `
         <div class="item">
           ${langTag}
-          ${catTag(n.category)}
           <a href="${n.url}" target="_blank">${n.title}</a>
           <div class="meta">${n.source} · ${n.first_seen || n.date || ''}</div>
         </div>`;
     }
 
     function renderNewsSection(items) {
-      if (!items || items.length === 0) {
+      if (!items || items.length === 0)
         return '<p class="loading">해당 카테고리 뉴스 없음</p>';
-      }
       const ko = items.filter(n => n.source_lang === 'ko');
       const en = items.filter(n => n.source_lang !== 'ko');
       let html = '';
       if (ko.length > 0) {
-        html += `<div style="background:#fff5f5;border-left:3px solid #fc8181;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:bold;color:#c53030;margin-bottom:8px;">🇰🇷 국내 뉴스 (${ko.length}건)</div>`;
+        html += `<div class="news-header-ko">🇰🇷 국내 뉴스 (${ko.length}건)</div>`;
         html += ko.map(newsHTML).join('');
       }
-      if (ko.length > 0 && en.length > 0) {
-        html += '<hr style="border:none;border-top:1px dashed #e2e8f0;margin:14px 0;">';
-      }
+      if (ko.length > 0 && en.length > 0)
+        html += '<hr class="news-divider">';
       if (en.length > 0) {
-        html += `<div style="background:#ebf8ff;border-left:3px solid #63b3ed;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:bold;color:#2b6cb0;margin-bottom:8px;">🌍 해외 뉴스 (${en.length}건)</div>`;
+        html += `<div class="news-header-en">🌍 해외 뉴스 (${en.length}건)</div>`;
         html += en.map(newsHTML).join('');
       }
       return html || '<p class="loading">뉴스 없음</p>';
     }
 
-    fetch('data/news.json')
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById('news-updated').textContent =
-          '출처: Google News + 네이버 뉴스 | 업데이트: ' + (data[0]?.first_seen || '-');
-        document.getElementById('news-badge').innerHTML =
-          `<span class="badge-new">📰 ${data.length}건</span>`;
-        document.getElementById('cat-news-all').innerHTML = renderNewsSection(data);
-        document.getElementById('cat-news-NdFeB').innerHTML =
-          renderNewsSection(data.filter(n => n.category === 'NdFeB'));
-        document.getElementById('cat-news-MnBi').innerHTML =
-          renderNewsSection(data.filter(n => n.category === 'MnBi'));
-        document.getElementById('cat-news-NdFeB_Recycling').innerHTML =
-          renderNewsSection(data.filter(n => n.category === 'NdFeB_Recycling'));
-        document.getElementById('cat-news-기타').innerHTML =
-          renderNewsSection(data.filter(n => n.category === '기타' || !n.category));
-      })
-      .catch(() => {
-        document.getElementById('cat-news-all').innerHTML =
-          '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
+    // ================================================
+    // 데이터 로드 (Promise.all 동시 로드)
+    // ================================================
+    function groupByCat(items) {
+      const groups = { NdFeB: [], MnBi: [], NdFeB_Recycling: [], '기타': [] };
+      items.forEach(item => {
+        const c = groups[item.category] !== undefined ? item.category : '기타';
+        groups[c].push(item);
       });
+      return groups;
+    }
 
+    Promise.all([
+      fetch('data/papers.json').then(r => r.json()).catch(() => null),
+      fetch('data/patents.json').then(r => r.json()).catch(() => null),
+      fetch('data/news.json').then(r => r.json()).catch(() => null),
+    ]).then(([papers, patents, news]) => {
+
+      // ── 논문 ──
+      if (papers) {
+        const groups = groupByCat(papers.items || []);
+        CATS.forEach(cat => {
+          const items = groups[cat] || [];
+          document.getElementById('col-papers-' + cat).innerHTML =
+            items.length > 0 ? items.map(paperHTML).join('') : '<p class="loading">해당 카테고리 논문 없음</p>';
+          const newCnt = items.filter(p => p.is_new).length;
+          if (newCnt > 0)
+            document.getElementById('badge-papers-' + cat).innerHTML =
+              `<span class="badge-new">🆕 ${newCnt} NEW</span>`;
+          document.getElementById('updated-papers-' + cat).textContent =
+            '업데이트: ' + papers.updated;
+        });
+      }
+
+      // ── 특허 ──
+      if (patents) {
+        const groups = groupByCat(patents.items || []);
+        CATS.forEach(cat => {
+          const items = groups[cat] || [];
+          document.getElementById('col-patents-' + cat).innerHTML =
+            items.length > 0 ? items.map(patentHTML).join('') : '<p class="loading">해당 카테고리 특허 없음</p>';
+          const newCnt = items.filter(p => p.is_new).length;
+          if (newCnt > 0)
+            document.getElementById('badge-patents-' + cat).innerHTML =
+              `<span class="badge-new">🆕 ${newCnt} NEW</span>`;
+          document.getElementById('updated-patents-' + cat).textContent =
+            '업데이트: ' + patents.updated;
+        });
+      }
+
+      // ── 뉴스 ──
+      if (news) {
+        const groups = groupByCat(news);
+        CATS.forEach(cat => {
+          const items = groups[cat] || [];
+          document.getElementById('col-news-' + cat).innerHTML = renderNewsSection(items);
+          document.getElementById('badge-news-' + cat).innerHTML =
+            `<span class="badge-new">📰 ${items.length}건</span>`;
+          document.getElementById('updated-news-' + cat).textContent =
+            '출처: Google News + 네이버 뉴스';
+        });
+      }
+
+    });
   </script>
 </body>
 </html>
