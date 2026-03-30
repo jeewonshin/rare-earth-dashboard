@@ -43,13 +43,6 @@
       gap: 16px;
     }
 
-    /* 논문/특허 2개 */
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
     .card {
       background: white;
       border-radius: 14px;
@@ -70,18 +63,13 @@
     }
 
     /* 가격 카드 */
-    .price-big {
-      font-size: 36px;
-      font-weight: bold;
-      color: #1a365d;
-      line-height: 1.1;
-    }
+    .price-big    { font-size: 36px; font-weight: bold; color: #1a365d; line-height: 1.1; }
     .price-unit   { font-size: 14px; color: #888; font-weight: normal; }
     .price-grade  { color: #888; font-size: 12px; margin-top: 4px; }
     .price-change { font-weight: bold; font-size: 14px; margin-top: 4px; }
     .price-date   { font-size: 11px; color: #aaa; margin-top: 2px; }
 
-    /* 논문/특허 아이템 */
+    /* 논문/특허/뉴스 아이템 */
     .item {
       border-bottom: 1px solid #eee;
       padding: 10px 0;
@@ -99,31 +87,6 @@
     .item a:hover  { text-decoration: underline; }
     .item .meta    { color: #777; font-size: 12px; margin-bottom: 2px; }
     .item .snippet { color: #999; font-size: 12px; line-height: 1.4; }
-
-    /* NEW 섹션 박스 */
-    .new-section-header {
-      background: #fffbeb;
-      border: 1px solid #f6e05e;
-      border-radius: 8px;
-      padding: 7px 12px;
-      margin-bottom: 10px;
-      font-size: 12px;
-      font-weight: bold;
-      color: #b7791f;
-    }
-
-    .old-section-header {
-      font-size: 12px;
-      font-weight: bold;
-      color: #718096;
-      margin-bottom: 8px;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px dashed #e2e8f0;
-      margin: 14px 0;
-    }
 
     .updated {
       font-size: 11px;
@@ -152,9 +115,15 @@
       font-weight: bold;
       margin-left: 4px;
     }
-    .tag-arxiv    { background: #faf5ff; color: #6b46c1; }
-    .tag-crossref { background: #f0fff4; color: #276749; }
-    .tag-kipris   { background: #fff5f5; color: #c53030; } /* ← 추가 */
+    .tag-arxiv     { background: #faf5ff; color: #6b46c1; }
+    .tag-crossref  { background: #f0fff4; color: #276749; }
+    .tag-kipris    { background: #fff5f5; color: #c53030; }
+    .tag-news      { background: #fff5f5; color: #c53030; }
+    .tag-ndfeb     { background: #ebf8ff; color: #2b6cb0; }
+    .tag-mnbi      { background: #faf5ff; color: #6b46c1; }
+    .tag-recycling { background: #f0fff4; color: #276749; }
+    .tag-other     { background: #f7fafc; color: #718096; }
+
     .badge-new {
       background: #f6e05e;
       color: #744210;
@@ -163,6 +132,55 @@
       border-radius: 10px;
       font-weight: bold;
     }
+
+    /* ── 메인 탭 ── */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      padding: 7px 18px;
+      border-radius: 20px;
+      border: none;
+      background: #e2e8f0;
+      color: #4a5568;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active           { background: #2b6cb0; color: white; }
+    .tab-btn:hover:not(.active){ background: #bee3f8; color: #2b6cb0; }
+
+    /* ── 카테고리 서브탭 ── */
+    .sub-tab-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .sub-tab-btn {
+      padding: 4px 14px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f7fafc;
+      color: #4a5568;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .sub-tab-btn.active            { background: #2b6cb0; color: white; border-color: #2b6cb0; }
+    .sub-tab-btn:hover:not(.active){ background: #bee3f8; color: #2b6cb0; }
+
+    /* 탭 패널 */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 카테고리 패널 */
+    .cat-panel { display: none; }
+    .cat-panel.active { display: block; }
   </style>
 </head>
 <body>
@@ -180,73 +198,153 @@
   </div>
   <div class="updated" id="price-updated"></div>
 
-  <!-- 논문 / 특허 섹션 -->
-  <div class="section-title">📄 최신 논문 & 🔐 특허</div>
-  <div class="content-grid">
+  <!-- 논문 · 특허 · 뉴스 섹션 -->
+  <div class="section-title">📄 논문 · 🔐 특허 · 📰 뉴스</div>
 
-    <!-- 논문 카드 -->
+  <!-- 메인 탭 버튼 -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('papers')">📄 논문</button>
+    <button class="tab-btn"        onclick="switchTab('patents')">🔐 특허</button>
+    <button class="tab-btn"        onclick="switchTab('news')">📰 뉴스</button>
+  </div>
+
+  <!-- ── 논문 탭 패널 ── -->
+  <div id="tab-papers" class="tab-panel active">
     <div class="card">
       <h2>
         📄 최신 논문 (arXiv + CrossRef)
         <span id="new-badge"></span>
       </h2>
 
-      <!-- 🆕 신규 섹션 -->
-      <div class="new-section-header">
-        🆕 이번 달 새 논문 <span id="new-count"></span>
-      </div>
-      <div id="papers-new">
-        <p class="loading">로딩 중...</p>
+      <!-- 논문 카테고리 서브탭 -->
+      <div class="sub-tab-bar" id="paper-cat-bar">
+        <button class="sub-tab-btn active" onclick="switchPaperCat(this,'NdFeB')">🔵 NdFeB</button>
+        <button class="sub-tab-btn"        onclick="switchPaperCat(this,'MnBi')">🟣 MnBi</button>
+        <button class="sub-tab-btn"        onclick="switchPaperCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
+        <button class="sub-tab-btn"        onclick="switchPaperCat(this,'기타')">⚪ 기타</button>
       </div>
 
-      <!-- 구분선 -->
-      <hr class="divider" id="papers-divider" style="display:none">
-
-      <!-- 이전 논문 섹션 -->
-      <div id="papers-old-section" style="display:none">
-        <div class="old-section-header">📋 이전 논문</div>
-        <div id="papers-old"></div>
-      </div>
+      <div id="cat-papers-NdFeB"         class="cat-panel active"><p class="loading">로딩 중...</p></div>
+      <div id="cat-papers-MnBi"          class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-papers-NdFeB_Recycling" class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-papers-기타"           class="cat-panel"><p class="loading">로딩 중...</p></div>
 
       <div class="updated" id="paper-updated"></div>
     </div>
+  </div>
 
-    <!-- 특허 카드 -->
+  <!-- ── 특허 탭 패널 ── -->
+  <div id="tab-patents" class="tab-panel">
     <div class="card">
       <h2>
         🔐 최신 특허 (KIPRIS)
         <span id="patent-badge"></span>
       </h2>
 
-      <!-- 🆕 신규 섹션 -->
-      <div class="new-section-header">
-        🆕 이번 달 새 특허 <span id="patent-new-count"></span>
-      </div>
-      <div id="patents-new">
-        <p class="loading">로딩 중...</p>
+      <!-- 특허 카테고리 서브탭 -->
+      <div class="sub-tab-bar" id="patent-cat-bar">
+        <button class="sub-tab-btn active" onclick="switchPatentCat(this,'NdFeB')">🔵 NdFeB</button>
+        <button class="sub-tab-btn"        onclick="switchPatentCat(this,'MnBi')">🟣 MnBi</button>
+        <button class="sub-tab-btn"        onclick="switchPatentCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
+        <button class="sub-tab-btn"        onclick="switchPatentCat(this,'기타')">⚪ 기타</button>
       </div>
 
-      <!-- 구분선 -->
-      <hr class="divider" id="patents-divider" style="display:none">
-
-      <!-- 이전 특허 섹션 -->
-      <div id="patents-old-section" style="display:none">
-        <div class="old-section-header">📋 이전 특허</div>
-        <div id="patents-old"></div>
-      </div>
+      <div id="cat-patents-NdFeB"           class="cat-panel active"><p class="loading">로딩 중...</p></div>
+      <div id="cat-patents-MnBi"            class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-patents-NdFeB_Recycling" class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-patents-기타"             class="cat-panel"><p class="loading">로딩 중...</p></div>
 
       <div class="updated" id="patent-updated"></div>
     </div>
+  </div>
 
+  <!-- ── 뉴스 탭 패널 ── -->
+  <div id="tab-news" class="tab-panel">
+    <div class="card">
+      <h2>
+        📰 최신 뉴스 (Google News)
+        <span id="news-badge"></span>
+      </h2>
+
+      <!-- 뉴스 카테고리 서브탭 -->
+      <div class="sub-tab-bar" id="news-cat-bar">
+        <button class="sub-tab-btn active" onclick="switchNewsCat(this,'all')">📋 전체</button>
+        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'NdFeB')">🔵 NdFeB</button>
+        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'MnBi')">🟣 MnBi</button>
+        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
+        <button class="sub-tab-btn"        onclick="switchNewsCat(this,'기타')">⚪ 기타</button>
+      </div>
+
+      <div id="cat-news-all"            class="cat-panel active"><p class="loading">로딩 중...</p></div>
+      <div id="cat-news-NdFeB"          class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-news-MnBi"           class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-news-NdFeB_Recycling" class="cat-panel"><p class="loading">로딩 중...</p></div>
+      <div id="cat-news-기타"            class="cat-panel"><p class="loading">로딩 중...</p></div>
+
+      <div class="updated" id="news-updated"></div>
+    </div>
   </div>
 
   <script>
+    // ================================================
+    // 탭 전환 함수
+    // ================================================
+    function switchTab(name) {
+      ['papers','patents','news'].forEach(t => {
+        document.getElementById('tab-' + t).classList.remove('active');
+      });
+      document.querySelectorAll('.tab-bar .tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    function switchPaperCat(btn, cat) {
+      document.querySelectorAll('#paper-cat-bar .sub-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['NdFeB','MnBi','NdFeB_Recycling','기타'].forEach(c => {
+        document.getElementById('cat-papers-' + c).classList.remove('active');
+      });
+      document.getElementById('cat-papers-' + cat).classList.add('active');
+    }
+
+    function switchPatentCat(btn, cat) {
+      document.querySelectorAll('#patent-cat-bar .sub-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['NdFeB','MnBi','NdFeB_Recycling','기타'].forEach(c => {
+        document.getElementById('cat-patents-' + c).classList.remove('active');
+      });
+      document.getElementById('cat-patents-' + cat).classList.add('active');
+    }
+
+    function switchNewsCat(btn, cat) {
+      document.querySelectorAll('#news-cat-bar .sub-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['all','NdFeB','MnBi','NdFeB_Recycling','기타'].forEach(c => {
+        document.getElementById('cat-news-' + c).classList.remove('active');
+      });
+      document.getElementById('cat-news-' + cat).classList.add('active');
+    }
+
+    // ================================================
+    // 카테고리 태그 헬퍼
+    // ================================================
+    function catTag(cat) {
+      const map = {
+        'NdFeB':           ['tag-ndfeb',     'NdFeB'],
+        'MnBi':            ['tag-mnbi',      'MnBi'],
+        'NdFeB_Recycling': ['tag-recycling', 'Recycling'],
+        '기타':             ['tag-other',     '기타'],
+      };
+      const [cls, label] = map[cat] || ['tag-other', cat || '기타'];
+      return `<span class="tag ${cls}">${label}</span>`;
+    }
+
     // ================================================
     // 차트 그리기 함수
     // ================================================
     function drawChart(canvasId, history) {
       if (!history || history.length < 2) return;
-      const canvas  = document.getElementById(canvasId);
+      const canvas = document.getElementById(canvasId);
       if (!canvas) return;
       canvas.width  = canvas.parentElement.clientWidth;
       canvas.height = 110;
@@ -335,8 +433,7 @@
         }).join('');
 
         setTimeout(() => {
-          data.metals.forEach((m, idx) =>
-            drawChart(`chart-${idx}`, m.history));
+          data.metals.forEach((m, idx) => drawChart(`chart-${idx}`, m.history));
         }, 100);
       })
       .catch(() => {
@@ -349,12 +446,12 @@
     // ================================================
     function paperHTML(p) {
       const isArxiv  = p.source === 'arXiv';
-      const tagClass = isArxiv ? 'tag-arxiv' : 'tag-crossref';
-      const newTag   = p.is_new
-        ? `<span class="tag-new">🆕 NEW</span>` : '';
+      const srcClass = isArxiv ? 'tag-arxiv' : 'tag-crossref';
+      const newTag   = p.is_new ? `<span class="tag-new">🆕 NEW</span>` : '';
       return `
         <div class="item">
-          <span class="tag ${tagClass}">${p.source}</span>${newTag}
+          <span class="tag ${srcClass}">${p.source}</span>
+          ${catTag(p.category)}${newTag}
           <a href="${p.url}" target="_blank">${p.title}</a>
           <div class="meta">${p.authors} · ${p.date}</div>
           <div class="snippet">${p.abstract}</div>
@@ -367,30 +464,29 @@
         document.getElementById('paper-updated').textContent =
           '출처: ' + data.source + ' | 업데이트: ' + data.updated;
 
-        const newPapers = data.items.filter(p => p.is_new);
-        const oldPapers = data.items.filter(p => !p.is_new);
-
         if (data.new_count > 0) {
           document.getElementById('new-badge').innerHTML =
             `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
         }
 
-        document.getElementById('new-count').textContent =
-          `(${newPapers.length}건)`;
-        document.getElementById('papers-new').innerHTML =
-          newPapers.length > 0
-            ? newPapers.map(paperHTML).join('')
-            : '<p class="loading" style="color:#b7791f">이번 달 새 논문 없음</p>';
+        const cats = ['NdFeB','MnBi','NdFeB_Recycling','기타'];
+        const groups = {};
+        cats.forEach(c => groups[c] = []);
 
-        if (oldPapers.length > 0) {
-          document.getElementById('papers-divider').style.display     = 'block';
-          document.getElementById('papers-old-section').style.display = 'block';
-          document.getElementById('papers-old').innerHTML =
-            oldPapers.map(paperHTML).join('');
-        }
+        data.items.forEach(p => {
+          const c = p.category && groups[p.category] !== undefined ? p.category : '기타';
+          groups[c].push(p);
+        });
+
+        cats.forEach(cat => {
+          const el = document.getElementById('cat-papers-' + cat);
+          el.innerHTML = groups[cat].length > 0
+            ? groups[cat].map(paperHTML).join('')
+            : '<p class="loading">해당 카테고리 논문 없음</p>';
+        });
       })
       .catch(() => {
-        document.getElementById('papers-new').innerHTML =
+        document.getElementById('cat-papers-NdFeB').innerHTML =
           '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
       });
 
@@ -398,11 +494,11 @@
     // 특허 카드
     // ================================================
     function patentHTML(p) {
-      const newTag = p.is_new
-        ? `<span class="tag-new">🆕 NEW</span>` : '';
+      const newTag = p.is_new ? `<span class="tag-new">🆕 NEW</span>` : '';
       return `
         <div class="item">
-          <span class="tag tag-kipris">KIPRIS</span>${newTag}
+          <span class="tag tag-kipris">KIPRIS</span>
+          ${catTag(p.category)}${newTag}
           <a href="${p.url}" target="_blank">${p.title}</a>
           <div class="meta">
             ${p.applicant} · 출원일: ${p.app_date}
@@ -418,30 +514,79 @@
         document.getElementById('patent-updated').textContent =
           '출처: ' + data.source + ' | 업데이트: ' + data.updated;
 
-        const newPatents = data.items.filter(p => p.is_new);
-        const oldPatents = data.items.filter(p => !p.is_new);
-
         if (data.new_count > 0) {
           document.getElementById('patent-badge').innerHTML =
             `<span class="badge-new">🆕 ${data.new_count} NEW</span>`;
         }
 
-        document.getElementById('patent-new-count').textContent =
-          `(${newPatents.length}건)`;
-        document.getElementById('patents-new').innerHTML =
-          newPatents.length > 0
-            ? newPatents.map(patentHTML).join('')
-            : '<p class="loading" style="color:#b7791f">이번 달 새 특허 없음</p>';
+        const cats = ['NdFeB','MnBi','NdFeB_Recycling','기타'];
+        const groups = {};
+        cats.forEach(c => groups[c] = []);
 
-        if (oldPatents.length > 0) {
-          document.getElementById('patents-divider').style.display     = 'block';
-          document.getElementById('patents-old-section').style.display = 'block';
-          document.getElementById('patents-old').innerHTML =
-            oldPatents.map(patentHTML).join('');
-        }
+        data.items.forEach(p => {
+          const c = p.category && groups[p.category] !== undefined ? p.category : '기타';
+          groups[c].push(p);
+        });
+
+        cats.forEach(cat => {
+          const el = document.getElementById('cat-patents-' + cat);
+          el.innerHTML = groups[cat].length > 0
+            ? groups[cat].map(patentHTML).join('')
+            : '<p class="loading">해당 카테고리 특허 없음</p>';
+        });
       })
       .catch(() => {
-        document.getElementById('patents-new').innerHTML =
+        document.getElementById('cat-patents-NdFeB').innerHTML =
+          '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
+      });
+
+    // ================================================
+    // 뉴스 카드
+    // ================================================
+    function newsHTML(n) {
+      return `
+        <div class="item">
+          <span class="tag tag-news">뉴스</span>
+          ${catTag(n.category)}
+          <a href="${n.url}" target="_blank">${n.title}</a>
+          <div class="meta">${n.source} · ${n.first_seen || n.date || ''}</div>
+        </div>`;
+    }
+
+    fetch('data/news.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('news-updated').textContent =
+          '출처: Google News RSS | 업데이트: ' + (data[0]?.first_seen || '-');
+
+        document.getElementById('news-badge').innerHTML =
+          `<span class="badge-new">📰 ${data.length}건</span>`;
+
+        // 전체
+        document.getElementById('cat-news-all').innerHTML =
+          data.length > 0
+            ? data.map(newsHTML).join('')
+            : '<p class="loading">뉴스 없음</p>';
+
+        // 카테고리별
+        const cats = ['NdFeB','MnBi','NdFeB_Recycling','기타'];
+        const groups = {};
+        cats.forEach(c => groups[c] = []);
+
+        data.forEach(n => {
+          const c = n.category && groups[n.category] !== undefined ? n.category : '기타';
+          groups[c].push(n);
+        });
+
+        cats.forEach(cat => {
+          const el = document.getElementById('cat-news-' + cat);
+          el.innerHTML = groups[cat].length > 0
+            ? groups[cat].map(newsHTML).join('')
+            : '<p class="loading">해당 카테고리 뉴스 없음</p>';
+        });
+      })
+      .catch(() => {
+        document.getElementById('cat-news-all').innerHTML =
           '<p class="loading">데이터 없음 (Actions 실행 후 표시됩니다)</p>';
       });
 
