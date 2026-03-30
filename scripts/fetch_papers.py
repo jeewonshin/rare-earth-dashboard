@@ -329,7 +329,10 @@ for p in all_papers:
     elif not existing_urls:
         p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
     else:
-        p['first_seen'] = today_str
+        p['first_seen'] = normalize_date(
+        p.get('sort_date', p.get('date', today_str)), today_str
+    )
+
 
     try:
         first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
