@@ -28,6 +28,39 @@ def normalize_date(date_str, fallback=''):
         return fallback
 
 
+# ── 카테고리 정의 ─────────────────────────────────────────────────────────
+CATEGORIES = {
+    "NdFeB": [
+        "Nd-Fe-B", "NdFeB", "neodymium iron boron", "neodymium magnet",
+        "sintered magnet", "hot deformation", "hot deform", "hot press",
+        "grain boundary diffusion", "HPMS", "Ce substitution", "Ce substitut",
+        "Dy substitution", "coercivity", "permanent magnet"
+    ],
+    "MnBi": [
+        "MnBi", "manganese bismuth", "MnBi magnet",
+        "hard magnetic MnBi", "low temperature phase MnBi", "LTP-MnBi"
+    ],
+    "NdFeB_Recycling": [
+        "NdFeB recycling", "NdFeB recycle", "rare earth recycling",
+        "magnet recycling", "HDDR", "hydrogen decrepitation",
+        "rare earth recovery", "end-of-life magnet", "urban mining",
+        "demagnetization", "remagnetization"
+    ]
+}
+
+
+def classify_category(title, abstract=""):
+    """title + abstract 기반으로 카테고리 분류. 매칭 없으면 '기타' 반환"""
+    text = (title + " " + abstract).lower()
+    scores = {cat: 0 for cat in CATEGORIES}
+    for cat, keywords in CATEGORIES.items():
+        for kw in keywords:
+            if kw.lower() in text:
+                scores[cat] += 1
+    best = max(scores, key=scores.get)
+    return best if scores[best] > 0 else "기타"
+
+
 ARXIV_QUERY = (
     '(ti:"permanent magnet" OR ti:"Nd-Fe-B" OR ti:"NdFeB" OR ti:"rare earth magnet"'
     ' OR abs:"permanent magnet" OR abs:"Nd-Fe-B" OR abs:"NdFeB" OR abs:"rare earth magnet")'
@@ -122,6 +155,7 @@ try:
                 'url':       url,
                 'abstract':  abstract[:200] + '...',
                 'source':    'arXiv',
+                'category':  classify_category(title, abstract),   # ← 카테고리 추가
             })
 
     print(f'  arXiv {len(arxiv_papers)}건 수집')
@@ -215,6 +249,7 @@ try:
             'url':       url,
             'abstract':  abstract_clean[:200] + '...' if abstract_clean.strip() else '',
             'source':    'CrossRef (' + journal + ')' if journal else 'CrossRef',
+            'category':  classify_category(title, abstract_clean),   # ← 카테고리 추가
         })
 
     print(f'  CrossRef {len(crossref_papers)}건 수집')
@@ -261,11 +296,20 @@ for p in papers:
 new_count = sum(1 for p in papers if p['is_new'])
 print(f'신규 논문 (first_seen 기준 30일 이내): {new_count}건 / 전체: {len(papers)}건')
 
+# ── 카테고리별 통계 출력 ───────────────────────────────────────────────────
+cat_counts = {}
+for p in papers:
+    cat = p.get('category', '기타')
+    cat_counts[cat] = cat_counts.get(cat, 0) + 1
+for cat, cnt in cat_counts.items():
+    print(f'  [{cat}] {cnt}건')
+
 output = {
-    'updated':   datetime.now().strftime('%Y-%m-%d %H:%M'),
-    'source':    'arXiv + CrossRef',
-    'new_count': new_count,
-    'items':     papers,
+    'updated':    datetime.now().strftime('%Y-%m-%d %H:%M'),
+    'source':     'arXiv + CrossRef',
+    'new_count':  new_count,
+    'categories': list(CATEGORIES.keys()),   # ← 카테고리 목록 추가
+    'items':      papers,
 }
 
 with open('data/papers.json', 'w', encoding='utf-8') as f:
