@@ -9,7 +9,42 @@ print("KIPRIS 특허 수집 중...")
 
 os.makedirs("data", exist_ok=True)
 
-API_KEY = os.environ.get("KIPRIS_API_KEY", "")
+# ── 카테고리 정의 (논문과 동일 기준 + 한국어 키워드 추가) ──────────────────
+CATEGORIES = {
+    "NdFeB": [
+        "Nd-Fe-B", "NdFeB", "neodymium iron boron", "neodymium magnet",
+        "sintered magnet", "hot deformation", "hot deform", "hot press",
+        "grain boundary diffusion", "HPMS", "Ce substitution", "Ce substitut",
+        "Dy substitution", "coercivity", "permanent magnet",
+        "네오디뮴", "소결자석", "열간변형", "열간성형", "입계확산", "영구자석"
+    ],
+    "MnBi": [
+        "MnBi", "manganese bismuth", "MnBi magnet",
+        "hard magnetic MnBi", "low temperature phase MnBi", "LTP-MnBi",
+        "망간비스무스", "망간 비스무트"
+    ],
+    "NdFeB_Recycling": [
+        "NdFeB recycling", "NdFeB recycle", "rare earth recycling",
+        "magnet recycling", "HDDR", "hydrogen decrepitation",
+        "rare earth recovery", "end-of-life magnet", "urban mining",
+        "재활용", "회수", "재생", "수소분쇄"
+    ]
+}
+
+
+def classify_category(title, abstract=""):
+    """title + abstract 기반으로 카테고리 분류. 매칭 없으면 '기타' 반환"""
+    text = (title + " " + abstract).lower()
+    scores = {cat: 0 for cat in CATEGORIES}
+    for cat, keywords in CATEGORIES.items():
+        for kw in keywords:
+            if kw.lower() in text:
+                scores[cat] += 1
+    best = max(scores, key=scores.get)
+    return best if scores[best] > 0 else "기타"
+
+
+API_KEY  = os.environ.get("KIPRIS_API_KEY", "")
 BASE_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
 SEARCH_QUERIES = [
@@ -25,9 +60,7 @@ SEARCH_QUERIES = [
     "permanent magnet Rare Earth",
 ]
 MUST_TITLE = ["영구자석", "영구 자석", "permanent magnet"]
-
-MUST_ND = ["ndfeb", "nd-fe-b", "네오디뮴", "neodymium"]
-
+MUST_ND    = ["ndfeb", "nd-fe-b", "네오디뮴", "neodymium"]
 DETAIL_ANY = [
     "열간변형", "열간성형", "열간가압", "열간소성",
     "열간 변형", "열간 성형", "열간 가압",
@@ -37,7 +70,7 @@ DETAIL_ANY = [
     "희토류", "rare earth",
 ]
 
-patents = []
+patents  = []
 seen_ids = set()
 
 
@@ -50,20 +83,20 @@ for query in SEARCH_QUERIES:
     print(f"  검색어: {query}")
     try:
         params = {
-            "word": query,
+            "word":       query,
             "ServiceKey": API_KEY,
-            "docsStart": 1,
-            "docsCount": 50,
-            "patent": "true",
-            "utility": "false",
-            "sortSpec": "AD",
-            "descSort": "true",
+            "docsStart":  1,
+            "docsCount":  50,
+            "patent":     "true",
+            "utility":    "false",
+            "sortSpec":   "AD",
+            "descSort":   "true",
         }
 
         res = requests.get(BASE_URL, params=params, timeout=20)
         res.raise_for_status()
 
-        root = ET.fromstring(res.text)
+        root    = ET.fromstring(res.text)
         err_msg = root.findtext(".//errMsg", "")
         if err_msg:
             print(f"  API 오류: {err_msg}")
@@ -125,6 +158,7 @@ for query in SEARCH_QUERIES:
                 "url":       url,
                 "abstract":  abstract[:200] + "..." if len(abstract) > 200 else abstract,
                 "source":    "KIPRIS",
+                "category":  classify_category(title, abstract),   # ← 카테고리 추가
             })
             print(f"  추가: {title[:50]}...")
 
@@ -149,11 +183,20 @@ print(f"신규 특허 (30일 이내): {new_count}건 / 전체: {len(patents)}건
 for p in patents[:5]:
     print(f"  {p['app_date']} | {p['title'][:50]}...")
 
+# ── 카테고리별 통계 출력 ───────────────────────────────────────────────────
+cat_counts = {}
+for p in patents:
+    cat = p.get("category", "기타")
+    cat_counts[cat] = cat_counts.get(cat, 0) + 1
+for cat, cnt in cat_counts.items():
+    print(f"  [{cat}] {cnt}건")
+
 output = {
     "updated":    datetime.now().strftime("%Y-%m-%d %H:%M"),
     "source":     "KIPRIS (한국특허정보원)",
     "source_url": "https://plus.kipris.or.kr",
     "new_count":  new_count,
+    "categories": list(CATEGORIES.keys()),   # ← 카테고리 목록 추가
     "items":      patents,
 }
 
