@@ -40,7 +40,7 @@ except ImportError:
     requests = None  # 한글 폰트 자동 다운로드 시에만 필요
 
 # ── 경로 설정 ───────────────────────────────────────────────────────────────
-BASE_DIR      = Path(__file__).parent
+BASE_DIR      = Path(__file__).parent.parent 
 DATA_DIR      = BASE_DIR / "data"
 OUTPUT_DIR    = BASE_DIR / "assets" / "images"
 FONT_DIR      = BASE_DIR / "assets" / "fonts"
