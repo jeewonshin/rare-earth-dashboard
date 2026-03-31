@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import time
 from datetime import datetime
 
 print("📡 KOMIS 희토류 가격 수집 중...")
@@ -13,6 +14,8 @@ HEADERS = {
     "Accept": "application/json, text/plain, */*",
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     "X-Requested-With": "XMLHttpRequest",
+    "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+    "Connection": "keep-alive",
 }
 
 # ── 수집할 광종 목록 ───────────────────────────────────────
@@ -50,8 +53,8 @@ METALS = [
 ]
 
 def fetch_metal(metal):
-    """KOMIS에서 특정 광종의 차트 데이터를 가져옵니다."""
-    unit = metal.get("unit", "USD/kg")   # ← 광종별 단위 (기본 USD/kg)
+    """KOMIS에서 특정 광종의 차트 데이터를 가져옵니다. (최대 3회 재시도)"""
+    unit = metal.get("unit", "USD/kg")
 
     params = {
         "mnrkndUnqRadioCd":       metal["code"],
@@ -68,51 +71,72 @@ def fetch_metal(metal):
         "HP000":                  "HP002",
     }
 
-    res = requests.post(URL, data=params, headers=HEADERS, timeout=20)
-    res.raise_for_status()
-    raw = res.json()
-
-    # xaxis / series[0].data 파싱
-    xaxis  = raw["data"]["xaxis"]
-    yaxis  = raw["data"]["series"][0]["data"]
-
-    history = []
-    for d, v in zip(xaxis, yaxis):
+    last_error = None
+    for attempt in range(3):
         try:
-            if v is not None and v != "" and v != "-":
-                history.append({"date": str(d).strip(), "value": float(v)})
-        except:
-            pass
+            print(f"  시도 {attempt + 1}/3...")
+            res = requests.post(URL, data=params, headers=HEADERS, timeout=40)
+            res.raise_for_status()
+            raw = res.json()
 
-    # 오늘 가격 / 등락
-    today_price = today_date = change_val = change_pct = None
-    if history:
-        today_price = history[-1]["value"]
-        today_date  = history[-1]["date"]
-        if len(history) >= 2:
-            prev       = history[-2]["value"]
-            change_val = round(today_price - prev, 4)
-            change_pct = round((change_val / prev) * 100, 2) if prev else 0
+            # xaxis / series[0].data 파싱
+            xaxis = raw["data"]["xaxis"]
+            yaxis = raw["data"]["series"][0]["data"]
 
-    return {
-        "name":       metal["name"],
-        "grade":      metal["grade"],
-        "today": {
-            "date":       today_date or "",
-            "value":      today_price,
-            "unit":       unit,          # ← 광종별 단위 적용
-            "change_val": change_val,
-            "change_pct": change_pct,
-        },
-        "history": history,
-    }
+            history = []
+            for d, v in zip(xaxis, yaxis):
+                try:
+                    if v is not None and v != "" and v != "-":
+                        history.append({"date": str(d).strip(), "value": float(v)})
+                except:
+                    pass
+
+            # 오늘 가격 / 등락
+            today_price = today_date = change_val = change_pct = None
+            if history:
+                today_price = history[-1]["value"]
+                today_date  = history[-1]["date"]
+                if len(history) >= 2:
+                    prev       = history[-2]["value"]
+                    change_val = round(today_price - prev, 4)
+                    change_pct = round((change_val / prev) * 100, 2) if prev else 0
+
+            return {
+                "name":  metal["name"],
+                "grade": metal["grade"],
+                "today": {
+                    "date":       today_date or "",
+                    "value":      today_price,
+                    "unit":       unit,
+                    "change_val": change_val,
+                    "change_pct": change_pct,
+                },
+                "history": history,
+            }
+
+        except requests.exceptions.Timeout:
+            last_error = f"타임아웃 (시도 {attempt + 1}/3)"
+            print(f"  ⏱ {last_error}")
+            if attempt < 2:
+                wait = 3 * (attempt + 1)
+                print(f"  ⏳ {wait}초 후 재시도...")
+                time.sleep(wait)
+
+        except Exception as e:
+            last_error = str(e)
+            print(f"  ⚠ 오류: {e}")
+            if attempt < 2:
+                print(f"  ⏳ 3초 후 재시도...")
+                time.sleep(3)
+
+    raise Exception(f"3회 모두 실패: {last_error}")
 
 
 # ── 메인 실행 ──────────────────────────────────────────────
 results = []
 
 for metal in METALS:
-    print(f"\n  수집 중: {metal['name']}")
+    print(f"\n  수집 중: {metal['name']} (최대 3회 시도)")
     try:
         data = fetch_metal(metal)
         results.append(data)
