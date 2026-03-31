@@ -117,7 +117,6 @@
 
     /* ── 워드클라우드 그리드 ───────────────────────────────── */
     .wc-grid { display: grid; gap: 16px; margin-bottom: 16px; }
-    .wc-3col { grid-template-columns: 1fr 1fr 1fr; }
     .wc-2col { grid-template-columns: 1fr 1fr; }
     .wc-card {
       background: white; border-radius: 14px; padding: 18px;
@@ -129,11 +128,12 @@
       display: flex; align-items: center; gap: 6px;
     }
     @media (max-width: 768px) {
-      .wc-3col { grid-template-columns: 1fr; }
       .wc-2col { grid-template-columns: 1fr; }
       .price-grid { grid-template-columns: 1fr 1fr; }
       .content-3col { grid-template-columns: 1fr; }
     }
+        .wc-card img { max-height: 260px; width: 100%; object-fit: contain; }
+        .wc-card { padding: 12px; }
   </style>
 </head>
 <body>
@@ -154,50 +154,6 @@
   <!-- 🔑 키워드 트렌드 (워드클라우드)                     -->
   <!-- ══════════════════════════════════════════════════ -->
   <div class="section-title">🔑 키워드 트렌드 (워드클라우드)</div>
-
-  <!-- 소재별 키워드: 3열 -->
-  <div class="wc-grid wc-3col">
-
-    <div class="wc-card">
-      <h2>🔵 NdFeB
-        <span style="font-size:11px;color:#888;font-weight:normal;">논문+특허</span>
-      </h2>
-      <img src="assets/images/wc_ndfeb.png" width="100%"
-           style="border-radius:8px;" alt="NdFeB 워드클라우드"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <p style="display:none;color:#aaa;font-size:12px;padding:20px;text-align:center;">
-        데이터 수집 후 표시됩니다
-      </p>
-      <p class="updated">매일 자동 갱신</p>
-    </div>
-
-    <div class="wc-card">
-      <h2>🟣 MnBi
-        <span style="font-size:11px;color:#888;font-weight:normal;">논문+특허</span>
-      </h2>
-      <img src="assets/images/wc_mnbi.png" width="100%"
-           style="border-radius:8px;" alt="MnBi 워드클라우드"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <p style="display:none;color:#aaa;font-size:12px;padding:20px;text-align:center;">
-        데이터 수집 후 표시됩니다
-      </p>
-      <p class="updated">매일 자동 갱신</p>
-    </div>
-
-    <div class="wc-card">
-      <h2>🟢 Recycling
-        <span style="font-size:11px;color:#888;font-weight:normal;">논문+특허+뉴스</span>
-      </h2>
-      <img src="assets/images/wc_recycling.png" width="100%"
-           style="border-radius:8px;" alt="Recycling 워드클라우드"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <p style="display:none;color:#aaa;font-size:12px;padding:20px;text-align:center;">
-        데이터 수집 후 표시됩니다
-      </p>
-      <p class="updated">매일 자동 갱신</p>
-    </div>
-
-  </div>
 
   <!-- 뉴스 키워드: 2열 -->
   <div class="wc-grid wc-2col">
