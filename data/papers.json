@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-31 08:52",
+  "updated": "2026-03-31 23:48",
   "source": "arXiv + CrossRef",
   "new_count": 26,
   "categories": [
@@ -103,18 +103,6 @@
       "category": "NdFeB",
       "first_seen": "2026-03-30",
       "is_new": true
-    },
-    {
-      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
-      "authors": "Soroush Rahmati",
-      "date": "2026-02",
-      "sort_date": "2026-02-01",
-      "url": "https://doi.org/10.1016/j.jece.2025.120983",
-      "abstract": "",
-      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-02-01",
-      "is_new": false
     },
     {
       "title": "RKKY signatures as a probe of band properties and photoinduced topological phase transitions in MnBi$_2$Te$_4$ films",
@@ -331,6 +319,18 @@
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
       "is_new": true
+    },
+    {
+      "title": "The dynamics of accelerating end-of-life rare earth permanent magnet recycling: A technological innovation systems approach",
+      "authors": "Maarten Koese, Sander van Nielen, Jessie Bradley et al.",
+      "date": "2025-06",
+      "sort_date": "2025-06-01",
+      "url": "https://doi.org/10.1016/j.apenergy.2025.125707",
+      "abstract": "",
+      "source": "CrossRef (Applied Energy)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2025-06-01",
+      "is_new": false
     },
     {
       "title": "Optimizing Ce-doped Nd-Fe-B magnets for high-efficient grain boundary diffusion of Tb-Fe alloy",
