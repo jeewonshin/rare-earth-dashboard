@@ -45,7 +45,7 @@ jobs:
         run: python scripts/fetch_news.py
 
       - name: 워드클라우드 생성                               # ← 추가
-        run: python generate_wordcloud.py
+        run: python scripts/generate_wordcloud.py
 
       - name: 알림 메일 발송
         run: python scripts/send_notify.py
