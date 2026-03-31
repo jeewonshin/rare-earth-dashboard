@@ -4,21 +4,17 @@ import os
 import time
 from datetime import datetime
 
+# ── Cloudflare Worker 프록시를 통해 KOMIS 데이터 수집 ─────────────────────────
+# Worker URL: https://komis-proxy.jeewon00-shin.workers.dev
+# Cloudflare 서울 엣지 서버 경유 → KOMIS IP 차단 우회
+
 print("📡 KOMIS 희토류 가격 수집 중...")
 
-URL = "https://www.komis.or.kr/Komis/RsrcPrice/ajax/getChartData"
+# ✅ Cloudflare Worker URL (KOMIS 직접 접속 대신 Worker 경유)
+URL = "https://komis-proxy.jeewon00-shin.workers.dev"
 
 HEADERS = {
-    "User-Agent":        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/146.0.0.0 Safari/537.36",
-    "Referer":           "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
-    "Origin":            "https://www.komis.or.kr",
-    "Accept":            "application/json, text/plain, */*",
-    "Content-Type":      "application/x-www-form-urlencoded; charset=UTF-8",
-    "X-Requested-With":  "XMLHttpRequest",
-    "Accept-Language":   "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-    "sec-fetch-dest":    "empty",
-    "sec-fetch-mode":    "cors",
-    "sec-fetch-site":    "same-origin",
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
 }
 
 # ── 수집할 광종 목록 ───────────────────────────────────────
@@ -56,8 +52,8 @@ METALS = [
 ]
 
 
-def fetch_metal(metal, session):
-    """KOMIS에서 특정 광종의 차트 데이터를 가져옵니다. (최대 3회 재시도)"""
+def fetch_metal(metal):
+    """Cloudflare Worker를 통해 KOMIS 가격 데이터를 가져옵니다. (최대 3회 재시도)"""
     unit = metal.get("unit", "USD/kg")
 
     params = {
@@ -79,8 +75,8 @@ def fetch_metal(metal, session):
     for attempt in range(3):
         try:
             print(f"  시도 {attempt + 1}/3...")
-            # ✅ session.post() 으로 JSESSIONID 쿠키 자동 포함
-            res = session.post(URL, data=params, headers=HEADERS, timeout=40)
+            # ✅ Worker가 KOMIS 헤더/쿠키를 대신 처리
+            res = requests.post(URL, data=params, headers=HEADERS, timeout=40)
             res.raise_for_status()
             raw = res.json()
 
@@ -146,30 +142,13 @@ try:
 except:
     print("📂 기존 데이터 없음 (첫 실행)")
 
-# ── 세션 초기화: JSESSIONID 쿠키 획득 ───────────────────────
-session = requests.Session()
-try:
-    print("\n  🍪 KOMIS 세션 초기화 중...")
-    session.get(
-        "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
-        headers=HEADERS,
-        timeout=40
-    )
-    cookies = dict(session.cookies)
-    if cookies:
-        print(f"  ✅ 세션 쿠키 획득 완료: {list(cookies.keys())}")
-    else:
-        print("  ⚠️  쿠키 없음 — 그냥 진행")
-except Exception as e:
-    print(f"  ⚠️  세션 초기화 실패: {e} — 쿠키 없이 진행")
-
 # ── 메인 수집 루프 ───────────────────────────────────────────
 results = []
 
 for metal in METALS:
     print(f"\n  수집 중: {metal['name']} (최대 3회 시도)")
     try:
-        data = fetch_metal(metal, session)
+        data = fetch_metal(metal)
         results.append(data)
         print(f"  ✅ {data['today']['value']} {data['today']['unit']} ({len(data['history'])}건)")
 
