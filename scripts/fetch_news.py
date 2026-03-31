@@ -2,219 +2,245 @@ import requests
 import json
 import os
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from collections import Counter
 
-print("뉴스 수집 시작 (Google News RSS - 영문 + 한국어)...")
+print("📰 뉴스 수집 중...")
 
-os.makedirs("data", exist_ok=True)
-
-# ── 카테고리 정의 ─────────────────────────────────────────────────────────
+# ── 카테고리 키워드 ──────────────────────────────────────────────────────────
 CATEGORIES = {
     "NdFeB": [
-        "Nd-Fe-B", "NdFeB", "neodymium", "permanent magnet",
-        "sintered magnet", "hot deform", "grain boundary", "coercivity",
-        "네오디뮴", "소결자석", "열간변형", "입계확산", "영구자석"
+        "NdFeB", "Nd-Fe-B", "네오디뮴 자석", "영구자석", "네오디뮴자석",
+        "ndfeb", "neodymium magnet", "sintered magnet", "소결자석",
+        "네오디뮴", "neodymium", "praseodymium", "프라세오디뮴", "dysprosium",
     ],
     "MnBi": [
-        "MnBi", "manganese bismuth", "LTP-MnBi",
-        "망간비스무스", "망간 비스무트", "망간비스무트", "비스무트"
+        "MnBi", "망간비스무트", "Mn-Bi", "manganese bismuth",
+        "hard magnetic", "경자성", "MnBi magnet",
     ],
     "NdFeB_Recycling": [
-        "recycling", "recycle", "recovery", "hydrogen decrepitation", "urban mining",
-        "재활용", "회수", "재생", "수소분쇄"
+        "재활용", "recycling", "회수", "recovery", "urban mining",
+        "도시광산", "폐자석", "재자원화", "희토류 재활용",
+        "rare earth recycl", "magnet recycl", "WEEE",
     ],
 }
 
-
-def classify_category(title, abstract=""):
-    text = (title + " " + abstract).lower()
-    scores = {cat: 0 for cat in CATEGORIES}
-    for cat, keywords in CATEGORIES.items():
-        for kw in keywords:
-            if kw.lower() in text:
-                scores[cat] += 1
-    best = max(scores, key=scores.get)
-    return best if scores[best] > 0 else "기타"
-
-
-def detect_lang(title):
-    """제목에 한글 포함 여부로 언어 판단"""
-    return "ko" if re.search(r"[가-힣]", title) else "en"
-
-
-# ── RSS 피드 ──────────────────────────────────────────────────────────────
+# ── RSS 피드 목록 ────────────────────────────────────────────────────────────
 RSS_FEEDS = [
-    # 영문 검색
-    "https://news.google.com/rss/search?q=NdFeB+magnet&hl=en&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=neodymium+magnet&hl=en&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=rare+earth+magnet&hl=en&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=MnBi+magnet&hl=en&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=rare+earth+recycling+magnet&hl=en&gl=US&ceid=US:en",
-    # 한국어 검색 (구글 한국)
+    # 국내 뉴스
     "https://news.google.com/rss/search?q=네오디뮴+자석&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=희토류+자석&hl=ko&gl=KR&ceid=KR:ko",
     "https://news.google.com/rss/search?q=영구자석+희토류&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=망간비스무트+자석&hl=ko&gl=KR&ceid=KR:ko",
+    "https://news.google.com/rss/search?q=NdFeB+자석&hl=ko&gl=KR&ceid=KR:ko",
     "https://news.google.com/rss/search?q=희토류+재활용&hl=ko&gl=KR&ceid=KR:ko",
+    "https://news.google.com/rss/search?q=MnBi+자석&hl=ko&gl=KR&ceid=KR:ko",
+    # 해외 뉴스
+    "https://news.google.com/rss/search?q=neodymium+magnet&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=NdFeB+rare+earth&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=rare+earth+recycling+magnet&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=MnBi+permanent+magnet&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=permanent+magnet+supply+chain&hl=en-US&gl=US&ceid=US:en",
 ]
 
 RELEVANCE_KEYWORDS = [
-    "NdFeB", "neodymium", "rare earth", "MnBi", "magnet", "Nd-Fe-B",
-    "permanent magnet", "magnet recycling",
-    "네오디뮴", "희토류", "영구자석", "자석", "망간비스무트", "망간비스무스", "비스무트", "재활용",
+    "자석", "magnet", "희토류", "rare earth", "neodymium", "네오디뮴",
+    "NdFeB", "MnBi", "영구자석", "permanent magnet", "재활용", "recycling",
+    "dysprosium", "praseodymium", "terbium", "소결", "sintered",
 ]
 
 
-def is_relevant(title):
-    return any(kw.lower() in title.lower() for kw in RELEVANCE_KEYWORDS)
+def classify_category(title, snippet=""):
+    text = (title + " " + snippet).lower()
+    for cat, keywords in CATEGORIES.items():
+        for kw in keywords:
+            if kw.lower() in text:
+                return cat
+    return "기타"
+
+
+def detect_lang(title):
+    ko_chars = len(re.findall(r"[가-힣]", title))
+    return "ko" if ko_chars > 2 else "en"
+
+
+def is_relevant(title, snippet=""):
+    text = (title + " " + snippet).lower()
+    return any(kw.lower() in text for kw in RELEVANCE_KEYWORDS)
 
 
 def parse_pub_date(date_str):
-    """RSS pubDate → YYYY-MM-DD 파싱"""
     if not date_str:
-        return ""
-    date_str = date_str.strip()
-    formats = [
-        "%a, %d %b %Y %H:%M:%S %Z",   # Mon, 30 Mar 2026 10:00:00 GMT
-        "%a, %d %b %Y %H:%M:%S %z",   # Mon, 30 Mar 2026 10:00:00 +0000
-    ]
-    for fmt in formats:
+        return None
+    for fmt in [
+        "%a, %d %b %Y %H:%M:%S %Z",
+        "%a, %d %b %Y %H:%M:%S %z",
+        "%Y-%m-%dT%H:%M:%SZ",
+    ]:
         try:
-            return datetime.strptime(date_str, fmt).strftime("%Y-%m-%d")
-        except ValueError:
-            continue
-    # 마지막 시도: 앞 25자만 파싱
-    try:
-        return datetime.strptime(date_str[:25], "%a, %d %b %Y %H:%M:%S").strftime("%Y-%m-%d")
-    except Exception:
-        return ""
+            return datetime.strptime(date_str.strip(), fmt)
+        except:
+            pass
+    return None
 
 
 def parse_rss(url):
-    """RSS 피드 파싱 → 뉴스 아이템 리스트 반환"""
+    items = []
     try:
-        resp = requests.get(
-            url, timeout=10,
-            headers={"User-Agent": "Mozilla/5.0 (compatible; RareEarthBot/1.0)"}
-        )
+        resp = requests.get(url, timeout=20,
+                            headers={"User-Agent": "Mozilla/5.0"})
         resp.raise_for_status()
+        text = resp.text
 
-        items = re.findall(r"<item>(.*?)</item>", resp.text, re.DOTALL)
-        results = []
+        # 각 <item> 파싱
+        for block in re.findall(r"<item>(.*?)</item>", text, re.DOTALL):
+            def get(tag):
+                m = re.search(rf"<{tag}[^>]*>(.*?)</{tag}>", block, re.DOTALL)
+                return re.sub(r"<[^>]+>", "", m.group(1)).strip() if m else ""
 
-        for item in items:
-            title_m = re.search(r"<title>(.*?)</title>",        item, re.DOTALL)
-            link_m  = re.search(r"<link>(.*?)</link>",          item, re.DOTALL)
-            pub_m   = re.search(r"<pubDate>(.*?)</pubDate>",    item, re.DOTALL)
-            src_m   = re.search(r"<source[^>]*>(.*?)</source>", item, re.DOTALL)
+            title   = get("title")
+            link    = get("link")
+            pubdate = get("pubDate")
+            source  = get("source")
 
-            if not title_m or not link_m:
+            if not title:
                 continue
 
-            title   = re.sub(r"<[^>]+>", "", title_m.group(1)).strip()
-            title   = re.sub(r"<!\[CDATA\[(.*?)\]\]>", r"", title).strip()
-            link    = link_m.group(1).strip()
-            pub_raw = pub_m.group(1).strip() if pub_m else ""
-            src     = re.sub(r"<[^>]+>", "", src_m.group(1)).strip() if src_m else "Google News"
+            dt = parse_pub_date(pubdate)
+            date_str = dt.strftime("%Y-%m-%d") if dt else ""
 
-            results.append({
-                "title":    title,
-                "url":      link,
-                "pub_date": parse_pub_date(pub_raw),  # ← 실제 기사 날짜 YYYY-MM-DD
-                "date":     pub_raw,                   # ← 원본 보관
-                "source":   src,
+            items.append({
+                "title":       title,
+                "url":         link,
+                "pub_date":    date_str,
+                "date":        date_str,
+                "source":      source,
+                "first_seen":  datetime.now().strftime("%Y-%m-%d"),
+                "source_lang": detect_lang(title),
+                "category":    classify_category(title),
+                "_dt":         dt,
             })
-
-        return results
-
     except Exception as e:
-        print(f"  RSS 수집 실패 ({url[:60]}...): {e}")
-        return []
+        print(f"  ⚠️  피드 오류: {url[:60]} → {e}")
+    return items
 
+
+# ── 중복 제거 함수 ──────────────────────────────────────────────────────────
+
+def normalize_title(title):
+    """제목 정규화: 신문사명 제거 + 공백/특수문자 정리"""
+    t = title.strip()
+    # 신문사 suffix 제거: " - 신문사", " | 신문사", " · 신문사" 패턴
+    for sep in [" - ", " | ", " · ", " :: ", " : "]:
+        if sep in t:
+            t = t[: t.rfind(sep)]
+    # 소문자 변환
+    t = t.lower()
+    # 특수문자 제거 (한글/영문/숫자만 유지)
+    t = re.sub(r"[^\w가-힣]", "", t)
+    return t.strip()
+
+
+def similarity(s1, s2):
+    """두 문자열의 문자 기반 유사도 (0.0 ~ 1.0)"""
+    if not s1 or not s2:
+        return 0.0
+    c1, c2 = Counter(s1), Counter(s2)
+    common = sum((c1 & c2).values())
+    return common / max(len(s1), len(s2))
+
+
+def is_duplicate(title1, title2):
+    """두 제목이 중복인지 판단"""
+    n1 = normalize_title(title1)
+    n2 = normalize_title(title2)
+    if not n1 or not n2:
+        return False
+    # 완전히 동일
+    if n1 == n2:
+        return True
+    # 한쪽이 다른 쪽에 포함 (길이 10자 이상일 때만)
+    shorter, longer = (n1, n2) if len(n1) <= len(n2) else (n2, n1)
+    if len(shorter) >= 10 and shorter in longer:
+        return True
+    # 유사도 0.8 이상
+    if similarity(n1, n2) >= 0.8:
+        return True
+    return False
+
+
+def deduplicate_news(news_list):
+    """중복 뉴스 제거 (제목 유사도 기반)"""
+    kept = []
+    removed = 0
+    for item in news_list:
+        title = item.get("title", "")
+        is_dup = any(is_duplicate(title, k.get("title", "")) for k in kept)
+        if is_dup:
+            removed += 1
+        else:
+            kept.append(item)
+    print(f"  중복 제거: {removed}건 제거 → {len(kept)}건 유지")
+    return kept
+
+
+# ── 메인 ─────────────────────────────────────────────────────────────────────
 
 def main():
-    data_path = "data/news.json"
-    today_str = datetime.utcnow().strftime("%Y-%m-%d")
-    cutoff    = (datetime.utcnow() - timedelta(days=30)).strftime("%Y-%m-%d")
+    # 기존 데이터 로드
+    existing = []
+    news_path = "data/news.json"
+    try:
+        with open(news_path, "r", encoding="utf-8") as f:
+            existing = json.load(f)
+        if isinstance(existing, dict):
+            existing = existing.get("items", [])
+        print(f"📂 기존 뉴스 로드: {len(existing)}건")
+    except:
+        print("📂 기존 뉴스 없음 (첫 실행)")
 
-    # ── 기존 뉴스 로드 ────────────────────────────────────────────────────
-    existing = {}
-    if os.path.exists(data_path):
-        try:
-            with open(data_path, "r", encoding="utf-8") as f:
-                old_list = json.load(f)
-            for n in old_list:
-                url = n.get("url", "")
-                if not url:
-                    continue
-                # source_lang 없는 기존 데이터 보완
-                if not n.get("source_lang"):
-                    n["source_lang"] = detect_lang(n.get("title", ""))
-                # ★ pub_date 없는 기존 데이터 보완 → date 필드에서 파싱
-                if not n.get("pub_date") and n.get("date"):
-                    n["pub_date"] = parse_pub_date(n["date"])
-                existing[url] = n
-            print(f"  기존 뉴스 {len(existing)}건 로드 완료")
-        except Exception as e:
-            print(f"  기존 데이터 로드 실패 (첫 실행 시 정상): {e}")
+    # RSS 수집
+    collected = []
+    for url in RSS_FEEDS:
+        items = parse_rss(url)
+        print(f"  ✅ {len(items)}건 수집: {url[40:80]}...")
+        collected.extend(items)
 
-    # ── RSS 수집 ──────────────────────────────────────────────────────────
-    new_ko = new_en = 0
-    for feed_url in RSS_FEEDS:
-        kw = feed_url[feed_url.find("q=")+2 : feed_url.find("&")]
-        print(f"  피드: {kw}")
-        for item in parse_rss(feed_url):
-            url = item.get("url", "")
-            if not url or not is_relevant(item["title"]):
-                continue
-            if url not in existing:
-                lang = detect_lang(item["title"])
-                item["first_seen"]  = today_str
-                item["source_lang"] = lang
-                item["category"]    = classify_category(item["title"])
-                existing[url] = item
-                if lang == "ko":
-                    new_ko += 1
-                else:
-                    new_en += 1
+    # 기존 데이터와 병합 (URL 기준 중복 제거)
+    existing_urls = {item["url"] for item in existing}
+    new_items = [i for i in collected if i["url"] not in existing_urls]
+    print(f"\n신규 기사: {len(new_items)}건")
 
-    # ── category / source_lang 없는 기존 뉴스 보완 ────────────────────────
-    for item in existing.values():
-        if not item.get("category"):
-            item["category"] = classify_category(item.get("title", ""))
-        if not item.get("source_lang"):
-            item["source_lang"] = detect_lang(item.get("title", ""))
+    news_list = existing + new_items
 
-    # ── 30일 이내 뉴스만 유지 ─────────────────────────────────────────────
-    news_list = [
-        n for n in existing.values()
-        if n.get("first_seen", "9999-99-99") >= cutoff
-    ]
-    # pub_date 기준 정렬 (없으면 first_seen 사용)
-    news_list.sort(
-        key=lambda x: x.get("pub_date") or x.get("first_seen", ""),
-        reverse=True
-    )
+    # 관련성 필터
+    news_list = [n for n in news_list if is_relevant(n.get("title", ""))]
 
-    # ── 통계 출력 ──────────────────────────────────────────────────────────
-    ko_total = sum(1 for n in news_list if n.get("source_lang") == "ko")
-    en_total = sum(1 for n in news_list if n.get("source_lang") != "ko")
-    print(f"\n뉴스 수집 완료:")
-    print(f"  신규 → 국내 {new_ko}건 / 해외 {new_en}건")
-    print(f"  전체 → 국내 {ko_total}건 / 해외 {en_total}건 / 합계 {len(news_list)}건")
+    # 30일 이내 필터 + 정렬
+    cutoff = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+    news_list = [n for n in news_list if n.get("date", "") >= cutoff]
+    news_list.sort(key=lambda x: x.get("date", ""), reverse=True)
 
-    cat_counts = {}
-    for n in news_list:
-        cat = n.get("category", "기타")
-        cat_counts[cat] = cat_counts.get(cat, 0) + 1
-    for cat, cnt in cat_counts.items():
-        print(f"  [{cat}] {cnt}건")
+    # ── 중복 제거 ─────────────────────────────────────────────────────────
+    print("\n중복 뉴스 제거 중...")
+    news_list = deduplicate_news(news_list)
 
-    # ── 저장 ──────────────────────────────────────────────────────────────
-    with open(data_path, "w", encoding="utf-8") as f:
+    # _dt 필드 제거 (저장용)
+    for item in news_list:
+        item.pop("_dt", None)
+
+    # 통계
+    ko_cnt  = sum(1 for n in news_list if n.get("source_lang") == "ko")
+    en_cnt  = len(news_list) - ko_cnt
+    cat_cnt = Counter(n.get("category", "기타") for n in news_list)
+    print(f"\n📊 최종 뉴스: {len(news_list)}건")
+    print(f"   국내: {ko_cnt}건 / 해외: {en_cnt}건")
+    for cat, cnt in cat_cnt.most_common():
+        print(f"   [{cat}] {cnt}건")
+
+    # 저장
+    os.makedirs("data", exist_ok=True)
+    with open(news_path, "w", encoding="utf-8") as f:
         json.dump(news_list, f, ensure_ascii=False, indent=2)
-
-    print("data/news.json 저장 완료!")
+    print(f"\n✅ 저장 완료: data/news.json ({len(news_list)}건)")
 
 
 if __name__ == "__main__":
