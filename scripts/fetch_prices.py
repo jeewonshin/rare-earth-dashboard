@@ -9,13 +9,16 @@ print("📡 KOMIS 희토류 가격 수집 중...")
 URL = "https://www.komis.or.kr/Komis/RsrcPrice/ajax/getChartData"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
-    "Referer": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
-    "Accept": "application/json, text/plain, */*",
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "X-Requested-With": "XMLHttpRequest",
-    "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-    "Connection": "keep-alive",
+    "User-Agent":        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/146.0.0.0 Safari/537.36",
+    "Referer":           "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
+    "Origin":            "https://www.komis.or.kr",
+    "Accept":            "application/json, text/plain, */*",
+    "Content-Type":      "application/x-www-form-urlencoded; charset=UTF-8",
+    "X-Requested-With":  "XMLHttpRequest",
+    "Accept-Language":   "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+    "sec-fetch-dest":    "empty",
+    "sec-fetch-mode":    "cors",
+    "sec-fetch-site":    "same-origin",
 }
 
 # ── 수집할 광종 목록 ───────────────────────────────────────
@@ -40,7 +43,7 @@ METALS = [
         "code":   "MNRL0004",
         "crtr":   "815",
         "spcfct": "75",
-        "unit":   "USD/mt",          # ← Mn도 mt 단위
+        "unit":   "USD/mt",
     },
     {
         "name":   "창연 (Bi)",
@@ -48,11 +51,12 @@ METALS = [
         "code":   "MNRL0020",
         "crtr":   "789",
         "spcfct": "99.99",
-        "unit":   "USD/mt",          # ← Bi는 mt 단위
+        "unit":   "USD/mt",
     },
 ]
 
-def fetch_metal(metal):
+
+def fetch_metal(metal, session):
     """KOMIS에서 특정 광종의 차트 데이터를 가져옵니다. (최대 3회 재시도)"""
     unit = metal.get("unit", "USD/kg")
 
@@ -75,11 +79,11 @@ def fetch_metal(metal):
     for attempt in range(3):
         try:
             print(f"  시도 {attempt + 1}/3...")
-            res = requests.post(URL, data=params, headers=HEADERS, timeout=40)
+            # ✅ session.post() 으로 JSESSIONID 쿠키 자동 포함
+            res = session.post(URL, data=params, headers=HEADERS, timeout=40)
             res.raise_for_status()
             raw = res.json()
 
-            # xaxis / series[0].data 파싱
             xaxis = raw["data"]["xaxis"]
             yaxis = raw["data"]["series"][0]["data"]
 
@@ -91,7 +95,6 @@ def fetch_metal(metal):
                 except:
                     pass
 
-            # 오늘 가격 / 등락
             today_price = today_date = change_val = change_pct = None
             if history:
                 today_price = history[-1]["value"]
@@ -132,25 +135,64 @@ def fetch_metal(metal):
     raise Exception(f"3회 모두 실패: {last_error}")
 
 
-# ── 메인 실행 ──────────────────────────────────────────────
+# ── 기존 데이터 로드 (fallback용) ───────────────────────────
+existing_data = {}
+try:
+    with open("data/prices.json", "r", encoding="utf-8") as f:
+        old = json.load(f)
+    for m in old.get("metals", []):
+        existing_data[m["name"]] = m
+    print(f"📂 기존 데이터 로드 완료 ({len(existing_data)}종)")
+except:
+    print("📂 기존 데이터 없음 (첫 실행)")
+
+# ── 세션 초기화: JSESSIONID 쿠키 획득 ───────────────────────
+session = requests.Session()
+try:
+    print("\n  🍪 KOMIS 세션 초기화 중...")
+    session.get(
+        "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
+        headers=HEADERS,
+        timeout=40
+    )
+    cookies = dict(session.cookies)
+    if cookies:
+        print(f"  ✅ 세션 쿠키 획득 완료: {list(cookies.keys())}")
+    else:
+        print("  ⚠️  쿠키 없음 — 그냥 진행")
+except Exception as e:
+    print(f"  ⚠️  세션 초기화 실패: {e} — 쿠키 없이 진행")
+
+# ── 메인 수집 루프 ───────────────────────────────────────────
 results = []
 
 for metal in METALS:
     print(f"\n  수집 중: {metal['name']} (최대 3회 시도)")
     try:
-        data = fetch_metal(metal)
+        data = fetch_metal(metal, session)
         results.append(data)
         print(f"  ✅ {data['today']['value']} {data['today']['unit']} ({len(data['history'])}건)")
+
     except Exception as e:
         print(f"  ❌ 실패: {e}")
-        results.append({
-            "name":    metal["name"],
-            "grade":   metal["grade"],
-            "today":   {"date": "", "value": None,
-                        "unit": metal.get("unit", "USD/kg"),
-                        "change_val": None, "change_pct": None},
-            "history": [],
-        })
+
+        # ── fallback: 기존 데이터 유지 ──
+        if metal["name"] in existing_data:
+            old_metal = existing_data[metal["name"]]
+            results.append(old_metal)
+            print(f"  🔄 기존 데이터 유지: {metal['name']} "
+                  f"({old_metal['today'].get('date', '날짜 미상')})")
+        else:
+            results.append({
+                "name":    metal["name"],
+                "grade":   metal["grade"],
+                "today":   {
+                    "date": "", "value": None,
+                    "unit": metal.get("unit", "USD/kg"),
+                    "change_val": None, "change_pct": None
+                },
+                "history": [],
+            })
 
 os.makedirs("data", exist_ok=True)
 
