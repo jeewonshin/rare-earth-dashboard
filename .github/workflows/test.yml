@@ -1,0 +1,54 @@
+name: 테스트 실행
+
+on:
+  workflow_dispatch:      # 수동 실행만
+    inputs:
+      script:
+        description: '실행할 스크립트'
+        required: true
+        default: 'scripts/fetch_news.py'
+        type: choice
+        options:
+          - scripts/fetch_news.py
+          - scripts/fetch_papers.py
+          - scripts/fetch_patents.py
+          - scripts/fetch_prices.py
+          - scripts/generate_wordcloud.py
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 패키지 설치
+        run: pip install requests arxiv wordcloud matplotlib
+
+      - name: 한글 폰트 설치
+        run: sudo apt-get install -y fonts-nanum
+
+      - name: 선택한 스크립트 실행
+        run: python ${{ github.event.inputs.script }}
+        env:
+          KIPRIS_API_KEY: ${{ secrets.KIPRIS_API_KEY }}
+          GMAIL_USER:     ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS:     ${{ secrets.GMAIL_PASS }}
+          NOTIFY_EMAIL:   ${{ secrets.NOTIFY_EMAIL }}
+          NOTIFY_CC:      ${{ secrets.NOTIFY_CC }}
+
+      - name: 결과 저장
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ assets/ || true
+          git diff --staged --quiet || git commit -m "🧪 테스트 실행: ${{ github.event.inputs.script }}"
+          git pull --rebase origin main
+          git push origin main
