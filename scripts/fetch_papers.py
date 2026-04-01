@@ -320,25 +320,37 @@ print(f'\n  총 수집: {len(all_papers)}건')
 today_str  = datetime.now().strftime('%Y-%m-%d')
 today_date = datetime.now().date()
 
+# ── URL 정규화 (arXiv v1/v2 버전 차이 처리) ─────────────────────────────
+def normalize_url(url):
+    """arXiv URL 버전 번호 제거: .../abs/2408.12345v2 → .../abs/2408.12345"""
+    return re.sub(r'v\d+$', '', url.strip())
+
+# 정규화된 URL로 기존 데이터 재구성
+existing_first_seen_norm = {
+    normalize_url(u): s for u, s in existing_first_seen.items()
+}
+existing_urls_norm = {normalize_url(u) for u in existing_urls}
+
 for p in all_papers:
-    url = p.get('url', '')
-    if url in existing_first_seen:
-        p['first_seen'] = normalize_date(existing_first_seen[url], today_str)
-    elif url in existing_urls:
-        p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
+    url      = p.get('url', '')
+    url_norm = normalize_url(url)
+    pub_date = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
+
+    if url_norm in existing_first_seen_norm:
+        # 기존에 first_seen이 기록된 논문 → 그대로 유지
+        p['first_seen'] = existing_first_seen_norm[url_norm]
+    elif url_norm in existing_urls_norm:
+        # 기존에 있던 논문인데 first_seen 없음 → 발행일로 설정 (NEW 방지)
+        p['first_seen'] = pub_date
     elif not existing_urls:
-        p['first_seen'] = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
+        # 첫 실행 → 발행일로 설정 (첫 실행 시 전부 NEW 뜨는 것 방지)
+        p['first_seen'] = pub_date
     else:
-        p['first_seen'] = normalize_date(
-        p.get('sort_date', p.get('date', today_str)), today_str
-    )
+        # 진짜 신규 논문 → 오늘 날짜
+        p['first_seen'] = today_str
 
-
-    try:
-        first_seen_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
-        p['is_new'] = (today_date - first_seen_date).days <= 30
-    except Exception:
-        p['is_new'] = False
+    # is_new: first_seen이 오늘인 것만 NEW (발행일 기준 X)
+    p['is_new'] = (p['first_seen'] == today_str)
 
 new_count = sum(1 for p in all_papers if p['is_new'])
 print(f'신규 논문 (30일 이내): {new_count}건 / 전체: {len(all_papers)}건')
