@@ -50,10 +50,22 @@ def parse_date_safe(ds):
 to_list = [e.strip() for e in NOTIFY_EMAIL.split(',') if e.strip()]
 cc_list = [e.strip() for e in NOTIFY_CC.split(',')   if e.strip()]
 
-today        = datetime.now().strftime('%Y-%m-%d')
-# is_wednesday = datetime.now().weekday() == 2
-is_wednesday = True
-week_ago     = str(date.today() - timedelta(days=7))
+# 현재
+today = datetime.now().strftime('%Y-%m-%d')
+
+# UTC+9 (한국 시간) 강제 적용으로 변경
+
+from datetime import timezone
+KST          = timezone(timedelta(hours=9))
+now_kst      = datetime.now(KST)
+today        = now_kst.strftime('%Y-%m-%d')
+# is_wednesday = now_kst.weekday() == 2
+
+# ✅ 임시 수정
+is_wednesday = True  # 테스트용 강제 활
+
+week_ago     = (now_kst - timedelta(days=7)).strftime('%Y-%m-%d')
+
 
 # ── 가격 데이터 로드 ──────────────────────────────────────────────────────
 metals = []
