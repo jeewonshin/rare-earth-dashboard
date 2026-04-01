@@ -443,6 +443,8 @@
     function renderNewsSection(items) {
       if (!items || items.length === 0)
         return '<p class="loading">해당 카테고리 뉴스 없음</p>';
+    const total = items.length;
+    items = items.slice(0, 15);
       const ko = items.filter(n => n.source_lang === 'ko');
       const en = items.filter(n => n.source_lang !== 'ko');
       let html = '';
@@ -456,6 +458,9 @@
         html += `<div class="news-header-en">🌍 해외 뉴스 (${en.length}건)</div>`;
         html += en.map(newsHTML).join('');
       }
+    if (total > 15) {
+      html += `<p style="text-align:center;font-size:11px;color:#aaa;padding:8px 0;">최근 15건 표시 중 (전체 ${total}건)</p>`;
+    }
       return html || '<p class="loading">뉴스 없음</p>';
     }
 
