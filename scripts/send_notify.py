@@ -2,10 +2,10 @@ import smtplib
 import json
 import os
 import sys
-import base64
 from datetime import datetime, date, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 
 print('알림 메일 발송 시작...')
 
@@ -16,23 +16,17 @@ NOTIFY_CC     = os.environ.get('NOTIFY_CC',     '')
 DASHBOARD_URL = 'http://lgemagone.xyz'
 
 
-def img_to_base64(filename):
-    """이미지 파일을 Base64로 인코딩. 여러 경로 시도."""
+def find_image_path(filename):
+    """이미지 파일을 여러 경로에서 탐색 후 존재하는 경로 반환"""
     candidates = [
         os.path.join('assets', 'images', filename),
         os.path.join(os.path.dirname(__file__), '..', 'assets', 'images', filename),
         os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'images', filename),
     ]
-    for path in candidates:
-        try:
-            with open(path, 'rb') as f:
-                data = base64.b64encode(f.read()).decode('utf-8')
-            print(f'  이미지 로드 성공: {path}')
-            return 'data:image/png;base64,' + data
-        except Exception:
-            continue
-    print(f'  이미지 없음: {filename} (워드클라우드 먼저 실행 필요)')
-    return ''
+    for p in candidates:
+        if os.path.exists(p):
+            return p
+    return None
 
 
 to_list = [e.strip() for e in NOTIFY_EMAIL.split(',') if e.strip()]
@@ -78,16 +72,14 @@ try:
 except Exception as e:
     print(f'patents.json 로드 실패: {e}')
 
-# ── 뉴스 데이터 로드 (first_seen 기준 엄격 필터) ─────────────────────────
+# ── 뉴스 데이터 로드 (date 기준 7일 이내) ────────────────────────────────
 new_news = []
 try:
     with open('data/news.json', 'r', encoding='utf-8') as f:
         news_raw = json.load(f)
-    all_items = news_raw if isinstance(news_raw, list) else news_raw.get('items', news_raw)
-    total_count      = len(all_items)
-    has_first_seen   = sum(1 for n in all_items if n.get('first_seen'))
-    # first_seen 없으면 '' → week_ago보다 항상 작아서 자동 제외
-    new_news = [n for n in all_items if n.get('date', n.get('pub_date', '')) >= week_ago]
+    all_items   = news_raw if isinstance(news_raw, list) else news_raw.get('items', news_raw)
+    total_count = len(all_items)
+    new_news    = [n for n in all_items if n.get('date', n.get('pub_date', '')) >= week_ago]
     new_news.sort(key=lambda x: x.get('date', x.get('pub_date', '')), reverse=True)
     print(f'뉴스 전체: {total_count}건 | 7일 이내 (date 기준): {len(new_news)}건')
 except Exception as e:
@@ -122,9 +114,11 @@ else:
 
 print('제목: ' + subject)
 
-# ── 워드클라우드 이미지 Base64 로드 ──────────────────────────────────────
-wc_ko_src = img_to_base64('wc_news_ko.png')
-wc_en_src = img_to_base64('wc_news_en.png')
+# ── 워드클라우드 이미지 경로 탐색 ────────────────────────────────────────
+wc_ko_path = find_image_path('wc_news_ko.png')
+wc_en_path = find_image_path('wc_news_en.png')
+print(f'  워드클라우드 KO: {"발견 " + wc_ko_path if wc_ko_path else "없음"}')
+print(f'  워드클라우드 EN: {"발견 " + wc_en_path if wc_en_path else "없음"}')
 
 # ── HTML 본문 생성 ────────────────────────────────────────────────────────
 html  = '<html><body style="font-family:Segoe UI,sans-serif;background:#f0f4f8;padding:20px">'
@@ -142,6 +136,7 @@ if price_alerts:
     html += '<span style="color:#c53030">' + ' &nbsp;|&nbsp; '.join(price_alerts) + '</span>'
     html += '</div>'
 
+# 가격 섹션
 html += '<h2 style="color:#2b6cb0;margin-top:24px">&#x1F4B0; 희토류 가격 동향</h2>'
 if metals:
     for m in metals:
@@ -172,7 +167,7 @@ else:
 
 if is_wednesday:
 
-    # ── 논문 섹션 ─────────────────────────────────────────────────────────
+    # 논문 섹션
     html += '<h2 style="color:#6b46c1;margin-top:24px">&#x1F4C4; 이번 주 새 논문 ' + str(len(new_papers)) + '건</h2>'
     if new_papers:
         for p in new_papers:
@@ -185,7 +180,7 @@ if is_wednesday:
     else:
         html += '<p style="color:#aaa">이번 주 새 논문 없음</p>'
 
-    # ── 특허 섹션 ─────────────────────────────────────────────────────────
+    # 특허 섹션
     html += '<h2 style="color:#c53030;margin-top:24px">&#x1F510; 이번 주 새 특허 ' + str(len(new_patents)) + '건</h2>'
     if new_patents:
         for p in new_patents:
@@ -198,10 +193,10 @@ if is_wednesday:
     else:
         html += '<p style="color:#aaa">이번 주 새 특허 없음</p>'
 
-    # ── 뉴스 섹션 (카테고리별 + 국내/해외) ───────────────────────────────
+    # 뉴스 섹션 (카테고리별 + 국내/해외)
     html += '<h2 style="color:#276749;margin-top:24px">&#x1F4F0; 이번 주 뉴스 동향 ' + str(len(new_news)) + '건</h2>'
     CAT_CONFIG = [
-        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB 소결자석'),
+        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB 자석'),
         ('MnBi',            '#6b46c1', '#faf5ff', '🟣 MnBi 자석'),
         ('NdFeB_Recycling', '#276749', '#f0fff4', '🟢 Recycling 재활용'),
         ('기타',             '#718096', '#f7fafc', '⚪ 희토류 일반'),
@@ -232,26 +227,26 @@ if is_wednesday:
     else:
         html += '<p style="color:#aaa">이번 주 새 뉴스 없음</p>'
 
-    # ── 워드클라우드 섹션 (Base64 직접 임베드) ────────────────────────────
+    # 워드클라우드 섹션 (CID 방식)
     html += '<h2 style="color:#2b6cb0;margin-top:24px">&#x1F511; 키워드 트렌드 (워드클라우드)</h2>'
     html += '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">'
     html += '<div style="flex:1;min-width:280px">'
     html += '<p style="color:#666;font-size:12px;margin:0 0 4px 0">&#x1F1F0;&#x1F1F7; 국내 뉴스 키워드</p>'
-    if wc_ko_src:
-        html += '<img src="' + wc_ko_src + '" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
+    if wc_ko_path:
+        html += '<img src="cid:wc_ko" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
     else:
-        html += '<p style="color:#aaa;font-size:12px;padding:20px;text-align:center;border:1px solid #e2e8f0;border-radius:8px">이미지 없음 (워드클라우드 먼저 실행)</p>'
+        html += '<p style="color:#aaa;font-size:12px;padding:20px;text-align:center;border:1px solid #e2e8f0;border-radius:8px">이미지 없음</p>'
     html += '</div>'
     html += '<div style="flex:1;min-width:280px">'
     html += '<p style="color:#666;font-size:12px;margin:0 0 4px 0">&#x1F30D; 해외 뉴스 키워드</p>'
-    if wc_en_src:
-        html += '<img src="' + wc_en_src + '" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
+    if wc_en_path:
+        html += '<img src="cid:wc_en" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
     else:
-        html += '<p style="color:#aaa;font-size:12px;padding:20px;text-align:center;border:1px solid #e2e8f0;border-radius:8px">이미지 없음 (워드클라우드 먼저 실행)</p>'
+        html += '<p style="color:#aaa;font-size:12px;padding:20px;text-align:center;border:1px solid #e2e8f0;border-radius:8px">이미지 없음</p>'
     html += '</div>'
     html += '</div>'
 
-# ── 바로가기 버튼 + 푸터 ──────────────────────────────────────────────────
+# 바로가기 버튼 + 푸터
 html += '<div style="margin-top:24px;text-align:center">'
 html += '<a href="' + DASHBOARD_URL + '" style="background:#2b6cb0;color:white;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:bold">'
 html += '&#x1F449; 대시보드 바로가기</a>'
@@ -259,14 +254,36 @@ html += '</div>'
 html += '<p style="color:#bbb;font-size:11px;text-align:right;margin-top:20px">자동 발송 &middot; 희토류 기술 대시보드</p>'
 html += '</div></body></html>'
 
-# ── 메일 구성 ─────────────────────────────────────────────────────────────
-msg = MIMEMultipart('alternative')
-msg['Subject'] = subject
-msg['From']    = GMAIL_USER
-msg['To']      = ', '.join(to_list)
+# ── 메일 구성 (CID 이미지 임베드) ────────────────────────────────────────
+# HTML + 인라인 이미지를 related로 묶음
+msg_related = MIMEMultipart('related')
+msg_related.attach(MIMEText(html, 'html', 'utf-8'))
+
+# 워드클라우드 이미지 CID 첨부
+if wc_ko_path:
+    with open(wc_ko_path, 'rb') as f:
+        img_ko = MIMEImage(f.read(), _subtype='png')
+    img_ko.add_header('Content-ID', '<wc_ko>')
+    img_ko.add_header('Content-Disposition', 'inline', filename='wc_news_ko.png')
+    msg_related.attach(img_ko)
+    print('  KO 이미지 CID 첨부 완료')
+
+if wc_en_path:
+    with open(wc_en_path, 'rb') as f:
+        img_en = MIMEImage(f.read(), _subtype='png')
+    img_en.add_header('Content-ID', '<wc_en>')
+    img_en.add_header('Content-Disposition', 'inline', filename='wc_news_en.png')
+    msg_related.attach(img_en)
+    print('  EN 이미지 CID 첨부 완료')
+
+# 외부 wrapper
+msg_outer = MIMEMultipart('mixed')
+msg_outer['Subject'] = subject
+msg_outer['From']    = GMAIL_USER
+msg_outer['To']      = ', '.join(to_list)
 if cc_list:
-    msg['Cc']  = ', '.join(cc_list)
-msg.attach(MIMEText(html, 'html', 'utf-8'))
+    msg_outer['Cc'] = ', '.join(cc_list)
+msg_outer.attach(msg_related)
 
 all_recipients = to_list + cc_list
 
@@ -276,7 +293,7 @@ try:
         server.ehlo()
         server.starttls()
         server.login(GMAIL_USER, GMAIL_PASS)
-        server.sendmail(GMAIL_USER, all_recipients, msg.as_string())
+        server.sendmail(GMAIL_USER, all_recipients, msg_outer.as_string())
     print('메일 발송 완료!')
     print('수신: ' + ', '.join(to_list))
     if cc_list:
