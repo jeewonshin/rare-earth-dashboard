@@ -134,30 +134,12 @@
     }
         .wc-card img { max-height: 260px; width: 100%; object-fit: contain; }
         .wc-card { padding: 12px; }
-        /* 키워드 트렌드 3열 */
-        .wc-trend-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1.2fr;
-          gap: 16px;
-          margin-bottom: 16px;
-        }
-        .trend-card {
-          background: white; border-radius: 14px; padding: 18px;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-        .trend-card h2 {
-          color: #2b6cb0; font-size: 14px; border-bottom: 2px solid #ebf8ff;
-          padding-bottom: 10px; margin-bottom: 12px;
-          display: flex; align-items: center; gap: 6px;
-        }
-        .trend-legend {
-          display: flex; gap: 14px; flex-wrap: wrap;
-          margin-bottom: 8px; font-size: 11px;
-        }
+        .wc-trend-grid { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px; margin-bottom: 16px; }
+        .trend-card { background: white; border-radius: 14px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .trend-card h2 { color: #2b6cb0; font-size: 14px; border-bottom: 2px solid #ebf8ff; padding-bottom: 10px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .trend-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; font-size: 11px; }
         .trend-legend span { display: flex; align-items: center; gap: 4px; }
-        .trend-dot {
-          width: 10px; height: 10px; border-radius: 50%; display: inline-block;
-        }
+        .trend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
   </style>
 </head>
 <body>
@@ -179,40 +161,27 @@
   <!-- ══════════════════════════════════════════════════ -->
   <div class="section-title">🔑 키워드 트렌드</div>
   <div class="wc-trend-grid">
-
-    <!-- 국내 뉴스 워드클라우드 -->
     <div class="wc-card">
-      <h2>🇰🇷 국내 뉴스 키워드</h2>
-      <img src="assets/images/wc_news_ko.png" width="100%"
-           style="border-radius:8px;" alt="국내 뉴스 워드클라우드"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <img src="assets/images/wc_news_ko.png" width="100%" style="border-radius:8px;" alt="국내 뉴스 워드클라우드" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
       <p style="display:none;color:#aaa;font-size:12px;padding:20px;text-align:center;">데이터 수집 후 표시됩니다</p>
-      <p class="updated">매일 자동 갱신</p>
+      <p class="updated">🇰🇷 국내 뉴스 키워드 · 매일 자동 갱신</p>
     </div>
-
-    <!-- 해외 뉴스 워드클라우드 -->
     <div class="wc-card">
-      <h2>🌍 해외 뉴스 키워드</h2>
-      <img src="assets/images/wc_news_en.png" width="100%"
-           style="border-radius:8px;" alt="해외 뉴스 워드클라우드"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <img src="assets/images/wc_news_en.png" width="100%" style="border-radius:8px;" alt="해외 뉴스 워드클라우드" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
       <p style="display:none;color:#aaa;font-size:12px;padding:20px;text-align:center;">데이터 수집 후 표시됩니다</p>
-      <p class="updated">매일 자동 갱신</p>
+      <p class="updated">🌍 해외 뉴스 키워드 · 매일 자동 갱신</p>
     </div>
-
-    <!-- 소재별 관심도 트렌드 -->
     <div class="trend-card">
       <h2>📈 소재별 관심도 트렌드 <span style="font-size:11px;color:#888;font-weight:normal;">(최근 30일 뉴스 건수)</span></h2>
       <div class="trend-legend">
         <span><i class="trend-dot" style="background:#2b6cb0;"></i>NdFeB</span>
         <span><i class="trend-dot" style="background:#6b46c1;"></i>MnBi</span>
         <span><i class="trend-dot" style="background:#276749;"></i>Recycling</span>
-        <span><i class="trend-dot" style="background:#718096;"></i>기타</span>
+        <span><i class="trend-dot" style="background:#718096;"></i>희토류</span>
       </div>
       <canvas id="trend-chart" style="width:100%;"></canvas>
       <p class="updated" id="trend-updated"></p>
     </div>
-
   </div>
 
 
@@ -225,7 +194,7 @@
     <button class="cat-tab-btn active" data-cat="NdFeB"           onclick="switchCat(this,'NdFeB')">🔵 NdFeB</button>
     <button class="cat-tab-btn"        data-cat="MnBi"            onclick="switchCat(this,'MnBi')">🟣 MnBi</button>
     <button class="cat-tab-btn"        data-cat="NdFeB_Recycling" onclick="switchCat(this,'NdFeB_Recycling')">🟢 Recycling</button>
-    <button class="cat-tab-btn"        data-cat="기타"             onclick="switchCat(this,'기타')">⚪ 기타</button>
+    <button class="cat-tab-btn"        data-cat="기타"             onclick="switchCat(this,'기타')">⚪ 희토류</button>
   </div>
 
   <!-- NdFeB 패널 -->
@@ -476,11 +445,7 @@
     function renderNewsSection(items) {
       if (!items || items.length === 0)
         return '<p class="loading">해당 카테고리 뉴스 없음</p>';
-    items = items.slice().sort((a, b) => {
-      const da = a.pub_date || a.date || a.first_seen || '';
-      const db = b.pub_date || b.date || b.first_seen || '';
-      return db.localeCompare(da);
-    });
+    items = items.slice().sort((a,b)=>{ const da=a.pub_date||a.date||a.first_seen||''; const db=b.pub_date||b.date||b.first_seen||''; return db.localeCompare(da); });
     const total = items.length;
     items = items.slice(0, 15);
       const ko = items.filter(n => n.source_lang === 'ko');
@@ -496,9 +461,7 @@
         html += `<div class="news-header-en">🌍 해외 뉴스 (${en.length}건)</div>`;
         html += en.map(newsHTML).join('');
       }
-    if (total > 15) {
-      html += `<p style="text-align:center;font-size:11px;color:#aaa;padding:8px 0;">최근 15건 표시 중 (전체 ${total}건)</p>`;
-    }
+    if (total > 15) { html += `<p style="text-align:center;font-size:11px;color:#aaa;padding:8px 0;">최근 15건 표시 중 (전체 ${total}건)</p>`; }
       return html || '<p class="loading">뉴스 없음</p>';
     }
 
@@ -562,116 +525,84 @@
             `<span class="badge-new">📰 ${items.length}건</span>`;
           document.getElementById('updated-news-' + cat).textContent =
             '출처: Google News + 네이버 뉴스';
-      // 트렌드 차트
       setTimeout(() => drawTrendChart(news), 150);
       document.getElementById('trend-updated').textContent = '업데이트: ' + new Date().toLocaleDateString('ko-KR');
         });
       }
 
     });
-  // ================================================
-  // 소재별 관심도 트렌드 차트
-  // ================================================
+  // ── 소재별 관심도 트렌드 차트 ──────────────────────────────
   function drawTrendChart(news) {
     const canvas = document.getElementById('trend-chart');
     if (!canvas || !news || news.length === 0) return;
-
-    // 최근 30일 날짜 생성
     const today = new Date();
     const dates = [];
     for (let i = 29; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(d.getDate() - i);
+      const d = new Date(today); d.setDate(d.getDate() - i);
       dates.push(d.toISOString().slice(0, 10));
     }
-
-    // 카테고리별 날짜별 집계
-    const CATS   = ['NdFeB', 'MnBi', 'NdFeB_Recycling', '기타'];
+    const CATS   = ['NdFeB','MnBi','NdFeB_Recycling','기타'];
     const COLORS = { NdFeB:'#2b6cb0', MnBi:'#6b46c1', NdFeB_Recycling:'#276749', '기타':'#718096' };
-    const LABELS = { NdFeB:'NdFeB', MnBi:'MnBi', NdFeB_Recycling:'Recycling', '기타':'기타' };
-
+    const LABELS = { NdFeB:'NdFeB', MnBi:'MnBi', NdFeB_Recycling:'Recycling', '기타':'희토류' };
     const counts = {};
     CATS.forEach(cat => { counts[cat] = {}; dates.forEach(d => counts[cat][d] = 0); });
     news.forEach(n => {
-      const d   = n.pub_date || n.date || n.first_seen || '';
+      const d = n.pub_date || n.date || n.first_seen || '';
       const cat = counts[n.category] !== undefined ? n.category : '기타';
       if (d && counts[cat][d] !== undefined) counts[cat][d]++;
     });
-
-    // 5일 이동평균
     function movAvg(arr, w) {
       return arr.map((_, i) => {
-        const sl = arr.slice(Math.max(0, i - w + 1), i + 1);
-        return sl.reduce((a, b) => a + b, 0) / sl.length;
+        const sl = arr.slice(Math.max(0, i-w+1), i+1);
+        return sl.reduce((a,b) => a+b, 0) / sl.length;
       });
     }
-
     const series = CATS.map(cat => ({
       cat, color: COLORS[cat], label: LABELS[cat],
       data: movAvg(dates.map(d => counts[cat][d]), 5),
     }));
-
     const maxVal = Math.max(...series.flatMap(s => s.data), 1);
-
     canvas.width  = canvas.parentElement.clientWidth - 36;
     canvas.height = 200;
     const ctx = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
     const pad = { top:10, right:12, bottom:36, left:28 };
-    const iW = W - pad.left - pad.right;
-    const iH = H - pad.top - pad.bottom;
-
+    const iW = W-pad.left-pad.right, iH = H-pad.top-pad.bottom;
     ctx.clearRect(0, 0, W, H);
-
-    // 그리드
-    ctx.lineWidth = 1;
-    [0.25, 0.5, 0.75, 1].forEach(r => {
-      const y = pad.top + iH * (1 - r);
-      ctx.strokeStyle = '#f0f4f8';
-      ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
-      ctx.fillStyle = '#bbb'; ctx.font = '9px sans-serif'; ctx.textAlign = 'right';
-      ctx.fillText(Math.round(maxVal * r), pad.left - 3, y + 3);
+    [0.25,0.5,0.75,1].forEach(r => {
+      const y = pad.top + iH*(1-r);
+      ctx.strokeStyle='#f0f4f8'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(W-pad.right,y); ctx.stroke();
+      ctx.fillStyle='#bbb'; ctx.font='9px sans-serif'; ctx.textAlign='right';
+      ctx.fillText(Math.round(maxVal*r), pad.left-3, y+3);
     });
-
-    // X축 레이블 (7일 간격)
-    ctx.fillStyle = '#999'; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
-    dates.forEach((d, i) => {
-      if (i % 7 === 0 || i === dates.length - 1) {
-        const x = pad.left + (i / (dates.length - 1)) * iW;
-        const label = d.slice(5); // MM-DD
-        ctx.fillText(label, x, H - pad.bottom + 13);
-        ctx.strokeStyle = '#eee'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + iH); ctx.stroke();
+    ctx.fillStyle='#999'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+    dates.forEach((d,i) => {
+      if (i%7===0 || i===dates.length-1) {
+        const x = pad.left + (i/(dates.length-1))*iW;
+        ctx.fillText(d.slice(5), x, H-pad.bottom+13);
+        ctx.strokeStyle='#eee'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(x,pad.top); ctx.lineTo(x,pad.top+iH); ctx.stroke();
       }
     });
-
-    // 꺾은선
     series.forEach(s => {
-      if (s.data.every(v => v === 0)) return;
-      const xOf = i => pad.left + (i / (dates.length - 1)) * iW;
-      const yOf = v => pad.top + iH * (1 - v / maxVal);
-
-      // 면적 채우기
+      if (s.data.every(v => v===0)) return;
+      const xOf = i => pad.left + (i/(dates.length-1))*iW;
+      const yOf = v => pad.top + iH*(1-v/maxVal);
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(s.data[0]));
-      s.data.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
-      ctx.lineTo(xOf(s.data.length - 1), pad.top + iH);
-      ctx.lineTo(xOf(0), pad.top + iH);
+      s.data.forEach((v,i) => { if(i>0) ctx.lineTo(xOf(i),yOf(v)); });
+      ctx.lineTo(xOf(s.data.length-1), pad.top+iH);
+      ctx.lineTo(xOf(0), pad.top+iH);
       ctx.closePath();
-      ctx.fillStyle = s.color + '1a';
-      ctx.fill();
-
-      // 선
+      ctx.fillStyle = s.color+'1a'; ctx.fill();
       ctx.beginPath();
       ctx.moveTo(xOf(0), yOf(s.data[0]));
-      s.data.forEach((v, i) => { if (i > 0) ctx.lineTo(xOf(i), yOf(v)); });
-      ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.stroke();
-
-      // 마지막 점
-      const li = s.data.length - 1;
-      ctx.beginPath();
-      ctx.arc(xOf(li), yOf(s.data[li]), 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = s.color; ctx.fill();
+      s.data.forEach((v,i) => { if(i>0) ctx.lineTo(xOf(i),yOf(v)); });
+      ctx.strokeStyle=s.color; ctx.lineWidth=2; ctx.stroke();
+      const li = s.data.length-1;
+      ctx.beginPath(); ctx.arc(xOf(li),yOf(s.data[li]),3.5,0,Math.PI*2);
+      ctx.fillStyle=s.color; ctx.fill();
     });
   }
 
