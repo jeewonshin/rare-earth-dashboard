@@ -1,7 +1,7 @@
 {
-  "updated": "2026-04-01 05:29",
+  "updated": "2026-04-01 05:52",
   "source": "arXiv + CrossRef",
-  "new_count": 28,
+  "new_count": 3,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -33,54 +33,6 @@
       "is_new": true
     },
     {
-      "title": "Optimizing Density Functional Theory for Strain-Dependent Magnetic Properties of Monolayer MnBi$_2$Te$_4$ with Diffusion Monte Carlo",
-      "authors": "Jeonghwan Ahn, Swarnava Ghosh, Seoung-Hun Kang et al.",
-      "date": "2026-03-17",
-      "sort_date": "2026-03-17",
-      "url": "http://arxiv.org/abs/2603.16162v1",
-      "abstract": "Monolayer MnBi$_{2}$Te$_{4}$ (MBT) is an intrinsically magnetic topological insulator whose magnetic response is strongly affected by strain and electron correlation. In density functional theory with...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-01",
-      "is_new": true
-    },
-    {
-      "title": "Linear response of the Chern insulator MnBi$_2$Te$_4$: A Wannier function approach",
-      "authors": "Matthew Albert, Javier Sivianes, Jason G. Kattan et al.",
-      "date": "2026-03-11",
-      "sort_date": "2026-03-11",
-      "url": "http://arxiv.org/abs/2603.11268v1",
-      "abstract": "Recent work demonstrated that in the long wavelength limit the linear response of a Chern insulator to finite-frequency electric fields is the sum of two terms: A general frequency-dependent Kubo cont...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-01",
-      "is_new": true
-    },
-    {
-      "title": "Magnetic criticality and magnetocaloric response in MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$",
-      "authors": "Nazma Firdosh, Shreyashi Sinha, Sujit Manna",
-      "date": "2026-03-11",
-      "sort_date": "2026-03-11",
-      "url": "http://arxiv.org/abs/2603.10824v1",
-      "abstract": "MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$ are antiferromagnetic topological insulators belonging to the MnBi$_{2n}$Te$_{3n+1}$ series, where structural layering provides a natural route to tune magnetic inter...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-01",
-      "is_new": true
-    },
-    {
-      "title": "Magneto-optical Response of 5-SL MnBi$_2$Te$_4$ in Spin-Flip States",
-      "authors": "Shahid Sattar, Roman Stepanov, A. H. MacDonald et al.",
-      "date": "2026-03-10",
-      "sort_date": "2026-03-10",
-      "url": "http://arxiv.org/abs/2603.09578v1",
-      "abstract": "Magneto-optical effects like Kerr and Faraday rotations provide a direct probe of topological order in thin films of the magnetic topological insulator MnBi$_2$Te$_4$ (MBT). Motivated by recent experi...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-01",
-      "is_new": true
-    },
-    {
       "title": "EV battery recycling economics and rare earth element recovery for sustainable resource management",
       "authors": "Raajasekar Mathiyalagan, Jayakrishna Kandasamy",
       "date": "2026-03-09",
@@ -102,7 +54,7 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
@@ -114,19 +66,7 @@
       "source": "CrossRef (Journal of Environmental Chemical Engineering)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-04-01",
-      "is_new": true
-    },
-    {
-      "title": "RKKY signatures as a probe of band properties and photoinduced topological phase transitions in MnBi$_2$Te$_4$ films",
-      "authors": "Ya-Xi Li, Rui-Qiang Wang, Ming-Xun Deng et al.",
-      "date": "2026-01-14",
-      "sort_date": "2026-01-14",
-      "url": "http://arxiv.org/abs/2601.09303v1",
-      "abstract": "We present a systematic study of the Ruderman-Kittel-Kasuya-Yosida (RKKY) interaction in MnBi$_2$Te$_4$ films under both dark and illuminated conditions. In the dark, the intrinsic magnetism of MnBi$_...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-01",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Temperature-dependent grain boundary diffusion behavior of Nd-Dy-Al alloy in sintered Nd-Fe-B magnet",
@@ -150,7 +90,7 @@
       "source": "CrossRef (Resources Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Grain boundary diffusion of dysprosium using DyF3 dip-coating method to enhance the magnetic properties of sintered Nd-Fe-B magnet",
@@ -186,7 +126,7 @@
       "source": "CrossRef (Surfaces and Interfaces)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Effect of sputtering-coated Al–Cu alloy on magnetic properties and microstructure of grain boundary diffusion-sintered Nd-Fe-B permanent magnet",
@@ -210,7 +150,7 @@
       "source": "CrossRef (Minerals Engineering)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Environmental aspects of rare-earth elements life cycle",
@@ -222,7 +162,7 @@
       "source": "CrossRef (Russian Journal of Resources, Conservation and Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Extraction of Rare Earth Elements from Organic Acid Leachate Using Formo-Phenolic-like Resins",
@@ -234,7 +174,7 @@
       "source": "CrossRef (Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Analysis of structural differences in hot deformed Nd-Fe-B magnets——From the perspective of grain boundary plane distribution",
@@ -258,7 +198,7 @@
       "source": "CrossRef (Resources, Conservation and Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "A Cross-Disciplinary Review of Rare Earth Elements: Deposit Types, Mineralogy, Machine Learning, Environmental Impact, and Recycling",
@@ -270,7 +210,7 @@
       "source": "CrossRef (Minerals)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Distribution of grain boundary plane orientation texture in hot deformed Nd-Fe-B magnets and its texture enhancement mechanism",
@@ -330,7 +270,7 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Optimizing Ce-doped Nd-Fe-B magnets for high-efficient grain boundary diffusion of Tb-Fe alloy",
@@ -354,7 +294,7 @@
       "source": "CrossRef (IEEE Transactions on Magnetics)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Misorientation statistics across hot-deformed Nd<sub>2</sub>Fe<sub>14</sub>B permanent magnet boundaries and the potential correlation with magnetic properties",
@@ -378,7 +318,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Transformation of in-plane to out-of-plane anisotropy in MnBi alloy for permanent magnet application: a First-principles study",
@@ -390,7 +330,7 @@
       "source": "CrossRef (Scientific Reports)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Oxygen adsorption on pristine MnBi and Ta-capped MnBi thin-films: Ab-initio study of structural and electronic properties, and magnetic anisotropy",
@@ -402,7 +342,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Magnetocrystalline anisotropy of interstitially and substitutionally Sn-doped MnBi for high temperature permanent magnet applications",
@@ -414,7 +354,7 @@
       "source": "CrossRef (AIP Advances)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "A core–shell magnet Mn<sub>70</sub>Bi<sub>30</sub> grown at seeds in magnetic fields and its impacts on its spin-dynamics, Curie point and other tailored properties",
@@ -426,7 +366,7 @@
       "source": "CrossRef (Nanotechnology)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Engineering microstructure to improve coercivity of bulk MnBi magnet",
@@ -438,7 +378,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Influence of Bi Content on the Temperature of the Formation of the Hard Magnetic MnBi Phase: Simultaneous Irreversible Drop of Resistance",
@@ -450,7 +390,7 @@
       "source": "CrossRef (Magnetochemistry)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Magnetic domain configurations of pulsed laser deposited MnBi hard magnetic films",
@@ -462,7 +402,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Microstructure and Magnetic Properties of Fe-doped MnBi Permanent Magnet Alloys",
@@ -474,7 +414,7 @@
       "source": "CrossRef (Journal of Magnetics)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": true
+      "is_new": false
     }
   ]
 }
