@@ -74,6 +74,10 @@ BLOCKED_DOMAINS = [
     'prlog.org',
     'ec.lt',
     'steadyincomeinvestors.com',
+    'ruhrkanal.news',
+    'aplusme.me',
+
+    
 ]
 
 # 광고성 제목 패턴 차단
@@ -88,6 +92,17 @@ BLOCKED_TITLE_PATTERNS = [
     r'Non-ferrous Metals',                          # 비철금속 영문
     r'강력자석.*네오디[뮴음]|네오디[뮴음].*강력자석', # 자석 제품 나열
     r'\d+\s*-\s*(다아라|야후|네이버쇼핑)',            # 쇼핑 플랫폼
+    r'\d+-Pack',                                      # 100-Pack, 8-Pack
+    r'\d+\s*mm\s*[Xx]\s*\d+\s*mm',                  # 2mm X 1mm 치수
+    r'\d+\s*(Gauss|gauss)',                           # 자력 스펙
+    r'(Nickel|Zinc|Gold|Silver)\s+Plated',           # 도금 스펙
+    r'\d+\s*(Lbs|lbs)\b',                            # 중량 스펙
+    r'(Bracelet|Necklace|Jewelry|Carabiner)',         # 소비재
+    r'(Round Disc|Disc Magnet|Bar Magnet|Block Magnet)',  # 제품 형태
+    r'For\s+(Fridge|Kitchen|Camping|Whiteboard)',    # 소비재 용도
+    r'Heavy Duty.{0,20}[Mm]agnet|[Mm]agnet.{0,20}Heavy Duty',  # 산업용 제품
+    r'\d+\s*(Pieces|Pcs|pcs)\s',                     # 수량 단위
+
 ]
 
 def classify_category(title, abstract=""):
