@@ -175,24 +175,53 @@ def deduplicate_news(lst):
 
 
 def smart_retention(lst):
-    MIN_PER_CAT,MAX_PER_CAT = 5,50
+    MIN_PER_CAT  = 5    # 카테고리 전체 최소
+    MAX_PER_CAT  = 50   # 카테고리 전체 최대
+    MIN_PER_LANG = 3    # ★ 국내/해외 각각 최소 (부족하면 이전 뉴스로 보충)
+
     c90  = (datetime.now()-timedelta(days=90)).strftime("%Y-%m-%d")
     c365 = (datetime.now()-timedelta(days=365)).strftime("%Y-%m-%d")
     lst  = sorted(lst, key=lambda x: x.get("date",""), reverse=True)
     bkts = defaultdict(list)
     for item in lst: bkts[item.get("category","기타")].append(item)
+
     final = []
-    for cat,items in bkts.items():
-        recent   = [n for n in items if n.get("date","")>=c90]
-        extended = [n for n in items if n.get("date","")>=c365]
-        if len(recent)>=MIN_PER_CAT:
+    for cat, items in bkts.items():
+        recent   = [n for n in items if n.get("date","") >= c90]
+        extended = [n for n in items if n.get("date","") >= c365]
+
+        # 1단계: 기존 로직 (카테고리 전체 기준)
+        if len(recent) >= MIN_PER_CAT:
             kept = recent[:MAX_PER_CAT]
             print(f"    [{cat}] 90일 {len(recent)}건 -> {len(kept)}건 유지")
         else:
             kept = extended[:MAX_PER_CAT] or items[:MAX_PER_CAT]
             print(f"    [{cat}] 90일 {len(recent)}건 부족 -> 1년치 {len(kept)}건 확장")
+
+        # ★ 2단계: 국내/해외 각각 최소 보장 (NEW)
+        kept_urls = {n.get("url","") for n in kept}
+        for lang in ["ko", "en"]:
+            lang_kept = [n for n in kept if n.get("source_lang","") == lang]
+            if len(lang_kept) < MIN_PER_LANG:
+                # kept에 없는 이전 뉴스에서 보충
+                supplement = [
+                    n for n in items
+                    if n.get("source_lang","") == lang
+                    and n.get("url","") not in kept_urls
+                ]
+                need  = MIN_PER_LANG - len(lang_kept)
+                added = supplement[:need]
+                kept.extend(added)
+                kept_urls.update(n.get("url","") for n in added)
+                if added:
+                    label = "국내" if lang == "ko" else "해외"
+                    print(f"      [{cat}] {label} {len(lang_kept)}건 부족 → {len(added)}건 보충")
+
+        kept = sorted(kept, key=lambda x: x.get("date",""), reverse=True)
         final.extend(kept)
+
     return sorted(final, key=lambda x: x.get("date",""), reverse=True)
+
 
 
 def main():
