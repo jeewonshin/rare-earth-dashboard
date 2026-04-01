@@ -2,6 +2,7 @@ import smtplib
 import json
 import os
 import sys
+import base64
 from datetime import datetime, date, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -13,6 +14,15 @@ GMAIL_PASS    = os.environ.get('GMAIL_PASS',    '')
 NOTIFY_EMAIL  = os.environ.get('NOTIFY_EMAIL',  '')
 NOTIFY_CC     = os.environ.get('NOTIFY_CC',     '')
 DASHBOARD_URL = 'http://lgemagone.xyz'
+
+def img_to_base64(path):
+    try:
+        with open(path, 'rb') as f:
+            data = base64.b64encode(f.read()).decode('utf-8')
+        return 'data:image/png;base64,' + data
+    except Exception as e:
+        print(f'이미지 로드 실패 ({path}): {e}')
+        return ''
 
 to_list = [e.strip() for e in NOTIFY_EMAIL.split(',') if e.strip()]
 cc_list = [e.strip() for e in NOTIFY_CC.split(',')   if e.strip()]
@@ -57,7 +67,7 @@ try:
 except Exception as e:
     print(f'patents.json 로드 실패: {e}')
 
-# ── 뉴스 데이터 로드 (7일 이내) ───────────────────────────────────────────
+# ── 뉴스 데이터 로드 (first_seen 기준 7일 이내) ───────────────────────────
 new_news = []
 try:
     with open('data/news.json', 'r', encoding='utf-8') as f:
@@ -65,7 +75,7 @@ try:
     items = news_raw if isinstance(news_raw, list) else news_raw.get('items', news_raw)
     new_news = [
         n for n in items
-        if n.get('date', n.get('pub_date', '')) >= week_ago
+        if n.get('first_seen', n.get('date', n.get('pub_date', ''))) >= week_ago
     ]
     new_news.sort(key=lambda x: x.get('date', x.get('pub_date', '')), reverse=True)
     print(f'최근 뉴스 (7일 이내): {len(new_news)}건')
@@ -100,6 +110,10 @@ else:
     subject = '[희토류 대시보드] 가격 긴급 알림 ' + today + ' | ' + ' · '.join(price_alerts)
 
 print('제목: ' + subject)
+
+# ── 워드클라우드 이미지 Base64 로드 ──────────────────────────────────────
+wc_ko_src = img_to_base64('assets/images/wc_news_ko.png')
+wc_en_src = img_to_base64('assets/images/wc_news_en.png')
 
 # ── HTML 본문 생성 ────────────────────────────────────────────────────────
 html  = '<html><body style="font-family:Segoe UI,sans-serif;background:#f0f4f8;padding:20px">'
@@ -176,57 +190,56 @@ if is_wednesday:
     else:
         html += '<p style="color:#aaa">이번 주 새 특허 없음</p>'
 
-    # ── 뉴스 섹션 (카테고리별 전체) ───────────────────────────────────────
+    # ── 뉴스 섹션 (카테고리별) ────────────────────────────────────────────
     html += '<h2 style="color:#276749;margin-top:24px">&#x1F4F0; 이번 주 뉴스 동향 ' + str(len(new_news)) + '건</h2>'
-
     CAT_CONFIG = [
-        ('NdFeB',            '#2b6cb0', '#ebf8ff', '🔵 NdFeB 소결자석'),
-        ('MnBi',             '#6b46c1', '#faf5ff', '🟣 MnBi 자석'),
-        ('NdFeB_Recycling',  '#276749', '#f0fff4', '🟢 Recycling 재활용'),
-        ('기타',              '#718096', '#f7fafc', '⚪ 희토류 일반'),
+        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB 소결자석'),
+        ('MnBi',            '#6b46c1', '#faf5ff', '🟣 MnBi 자석'),
+        ('NdFeB_Recycling', '#276749', '#f0fff4', '🟢 Recycling 재활용'),
+        ('기타',             '#718096', '#f7fafc', '⚪ 희토류 일반'),
     ]
-
     if new_news:
         for cat_key, border_color, bg_color, cat_label in CAT_CONFIG:
             cat_news = [n for n in new_news if n.get('category','기타') == cat_key]
             if not cat_news:
                 continue
-
-            # 카테고리 헤더
             html += '<div style="margin-top:16px">'
             html += '<strong style="color:' + border_color + ';font-size:14px">' + cat_label + ' (' + str(len(cat_news)) + '건)</strong>'
             html += '</div>'
-
-            # 국내/해외 분리
             ko_news = [n for n in cat_news if n.get('source_lang','') == 'ko']
             en_news = [n for n in cat_news if n.get('source_lang','') != 'ko']
-
             for lang_label, lang_news in [('🇰🇷 국내', ko_news), ('🌍 해외', en_news)]:
                 if not lang_news:
                     continue
                 html += '<div style="margin:6px 0 2px 0"><small style="color:#999;font-weight:bold">' + lang_label + '</small></div>'
                 for n in lang_news:
-                    title   = n.get('title', '제목 없음')
-                    url     = n.get('url', '#')
+                    title_n = n.get('title', '제목 없음')
+                    url_n   = n.get('url', '#')
                     source  = n.get('source', '')
                     date_n  = n.get('date', n.get('pub_date', ''))
                     html += '<div style="border-left:3px solid ' + border_color + ';padding:6px 10px;margin:4px 0;background:' + bg_color + '">'
-                    html += '<a href="' + url + '" style="color:#1a365d;font-weight:bold;text-decoration:none;font-size:13px">' + title + '</a>'
+                    html += '<a href="' + url_n + '" style="color:#1a365d;font-weight:bold;text-decoration:none;font-size:13px">' + title_n + '</a>'
                     html += '<br><small style="color:#999">' + source + ' &middot; ' + date_n + '</small>'
                     html += '</div>'
     else:
         html += '<p style="color:#aaa">이번 주 뉴스 없음</p>'
 
-    # ── 워드클라우드 섹션 ─────────────────────────────────────────────────
+    # ── 워드클라우드 섹션 (Base64 임베드) ────────────────────────────────
     html += '<h2 style="color:#2b6cb0;margin-top:24px">&#x1F511; 키워드 트렌드 (워드클라우드)</h2>'
     html += '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">'
     html += '<div style="flex:1;min-width:280px">'
     html += '<p style="color:#666;font-size:12px;margin:0 0 4px 0">&#x1F1F0;&#x1F1F7; 국내 뉴스 키워드</p>'
-    html += '<img src="' + DASHBOARD_URL + '/assets/images/wc_news_ko.png" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
+    if wc_ko_src:
+        html += '<img src="' + wc_ko_src + '" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
+    else:
+        html += '<p style="color:#aaa;font-size:12px;padding:20px;text-align:center;border:1px solid #e2e8f0;border-radius:8px">이미지 없음 (워드클라우드 먼저 실행)</p>'
     html += '</div>'
     html += '<div style="flex:1;min-width:280px">'
     html += '<p style="color:#666;font-size:12px;margin:0 0 4px 0">&#x1F30D; 해외 뉴스 키워드</p>'
-    html += '<img src="' + DASHBOARD_URL + '/assets/images/wc_news_en.png" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
+    if wc_en_src:
+        html += '<img src="' + wc_en_src + '" style="width:100%;border-radius:8px;border:1px solid #e2e8f0" />'
+    else:
+        html += '<p style="color:#aaa;font-size:12px;padding:20px;text-align:center;border:1px solid #e2e8f0;border-radius:8px">이미지 없음 (워드클라우드 먼저 실행)</p>'
     html += '</div>'
     html += '</div>'
 
