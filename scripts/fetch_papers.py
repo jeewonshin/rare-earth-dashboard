@@ -28,7 +28,6 @@ def normalize_date(date_str, fallback=''):
         return fallback
 
 
-# ── 카테고리 정의 ─────────────────────────────────────────────────────────
 CATEGORIES = {
     'NdFeB': [
         'Nd-Fe-B', 'NdFeB', 'neodymium iron boron', 'neodymium magnet',
@@ -42,14 +41,13 @@ CATEGORIES = {
     ],
     'NdFeB_Recycling': [
         'NdFeB recycling', 'NdFeB recycle', 'rare earth recycling',
-        'magnet recycling', 
+        'magnet recycling',
         'rare earth recovery', 'end-of-life magnet', 'urban mining',
     ],
 }
 
 
 def classify_category(title, abstract=''):
-    """통계/검증용 카테고리 분류"""
     text = (title + ' ' + abstract).lower()
     scores = {cat: 0 for cat in CATEGORIES}
     for cat, keywords in CATEGORIES.items():
@@ -60,7 +58,6 @@ def classify_category(title, abstract=''):
     return best if scores[best] > 0 else '기타'
 
 
-# ── 카테고리별 수집 설정 ───────────────────────────────────────────────────
 CATEGORY_CONFIGS = [
     {
         'category': 'NdFeB',
@@ -118,8 +115,7 @@ CATEGORY_CONFIGS = [
             '"NdFeB recycling" OR "rare earth recycling" OR "magnet recycling" '
             'OR "rare earth recovery"'
         ),
-        'must_keywords':   ['recycling', 'recycle', 'recovery',
-                           ],
+        'must_keywords':   ['recycling', 'recycle', 'recovery'],
         'detail_keywords': ['magnet', 'rare earth', 'neodymium',
                             'nd-fe-b', 'ndfeb', 'urban mining', 'end-of-life'],
         'arxiv_max':    5,
@@ -148,12 +144,12 @@ if os.path.exists('data/papers.json'):
 
 # ── 카테고리별 수집 ───────────────────────────────────────────────────────
 all_papers  = []
-seen_titles = set()   # 전체 공유 - 카테고리 간 중복 제거
+seen_titles = set()
 
 for cfg in CATEGORY_CONFIGS:
-    cat          = cfg['category']
-    must_kws     = cfg['must_keywords']
-    detail_kws   = cfg['detail_keywords']
+    cat        = cfg['category']
+    must_kws   = cfg['must_keywords']
+    detail_kws = cfg['detail_keywords']
     arxiv_papers = []
     cr_papers    = []
 
@@ -182,7 +178,6 @@ for cfg in CATEGORY_CONFIGS:
             authors  = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
             abstract = entry.find('atom:summary',   ns).text.strip().replace('\n', ' ')
 
-            # 5년 필터
             try:
                 pub_dt = datetime.strptime(date_raw, '%Y-%m-%d').date()
                 if (datetime.now().date() - pub_dt).days > 365 * 5:
@@ -208,7 +203,7 @@ for cfg in CATEGORY_CONFIGS:
                 'url':      url,
                 'abstract': abstract[:200] + '...',
                 'source':   'arXiv',
-                'category': cat,   # 강제 할당
+                'category': cat,
             })
 
         arxiv_papers.sort(key=lambda x: x['sort_date'], reverse=True)
@@ -262,7 +257,6 @@ for cfg in CATEGORY_CONFIGS:
                         any(k in title_lower for k in detail_kws)):
                     continue
 
-            # 날짜 처리
             accepted_parts = item.get('accepted', {}).get('date-parts', [[]])[0]
             pub_parts      = item.get('published', {}).get('date-parts', [['']])[0]
             if accepted_parts:
@@ -297,7 +291,7 @@ for cfg in CATEGORY_CONFIGS:
                 'url':      url,
                 'abstract': abstract_clean[:200] + '...' if abstract_clean.strip() else '',
                 'source':   'CrossRef (' + journal + ')' if journal else 'CrossRef',
-                'category': cat,   # 강제 할당
+                'category': cat,
             })
 
         cr_papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
@@ -316,10 +310,6 @@ all_papers.sort(key=lambda x: x.get('sort_date', x['date']), reverse=True)
 print(f'\n  총 수집: {len(all_papers)}건')
 
 
-# ── first_seen / is_new 처리 ──────────────────────────────────────────────
-today_str  = datetime.now().strftime('%Y-%m-%d')
-today_date = datetime.now().date()
-
 # ── URL 정규화 (arXiv v1/v2 버전 차이 처리) ─────────────────────────────
 def normalize_url(url):
     return re.sub(r'v[0-9]+$', '', url.strip())
@@ -336,29 +326,35 @@ for p in all_papers:
     pub_date = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
 
     if url_norm in existing_first_seen_norm:
-        # 기존 first_seen 유지
         p['first_seen'] = existing_first_seen_norm[url_norm]
     elif url_norm in existing_urls_norm:
-        # 기존에 있던 논문 → 발행일로 (NEW 방지)
         p['first_seen'] = pub_date
     elif not existing_urls:
-        # 첫 실행 → 발행일로 (전부 NEW 방지)
         p['first_seen'] = pub_date
     else:
-        # 진짜 신규 → 오늘
         p['first_seen'] = today_str
 
-    # is_new: first_seen 기준 30일 이내 → NEW (발행일/미래날짜 무관)
+    # ✅ is_new 판단:
+    # - pub_date가 과거 → pub_date 기준 30일 이내
+    # - pub_date가 미래 → first_seen 기준 30일 이내
     try:
-        fs_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
-        p['is_new'] = (today_date - fs_date).days <= 30
+        pub_d = datetime.strptime(
+            normalize_date(p.get('sort_date', p.get('date', '')), today_str)[:10],
+            '%Y-%m-%d'
+        ).date()
+        if pub_d > today_date:
+            # 미래 발행 논문 → first_seen 기준
+            fs_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
+            p['is_new'] = (today_date - fs_date).days <= 30
+        else:
+            # 과거 발행 논문 → pub_date 기준
+            p['is_new'] = (today_date - pub_d).days <= 30
     except Exception:
         p['is_new'] = False
 
 new_count = sum(1 for p in all_papers if p['is_new'])
 print(f'신규 논문 (30일 이내): {new_count}건 / 전체: {len(all_papers)}건')
 
-# ── 카테고리별 통계 출력 ───────────────────────────────────────────────────
 cat_counts = {}
 for p in all_papers:
     cat = p.get('category', '기타')
