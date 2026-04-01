@@ -51,7 +51,8 @@ to_list = [e.strip() for e in NOTIFY_EMAIL.split(',') if e.strip()]
 cc_list = [e.strip() for e in NOTIFY_CC.split(',')   if e.strip()]
 
 today        = datetime.now().strftime('%Y-%m-%d')
-is_wednesday = datetime.now().weekday() == 2
+# is_wednesday = datetime.now().weekday() == 2
+is_wednesday = True
 week_ago     = str(date.today() - timedelta(days=7))
 
 # ── 가격 데이터 로드 ──────────────────────────────────────────────────────
@@ -120,9 +121,9 @@ for m in metals:
         price_alerts.append('⚠️ ' + name + ' ' + arrow + str(round(chg_pct, 1)) + '%')
 
 # ── 발송 조건 체크 ────────────────────────────────────────────────────────
-if not is_wednesday and not price_alerts:
-    print('수요일 아님 + 가격 급등락 없음 → 메일 발송 안 함')
-    sys.exit(0)
+# if not is_wednesday and not price_alerts:
+    # print('수요일 아님 + 가격 급등락 없음 → 메일 발송 안 함')
+    # sys.exit(0)
 
 # ── 제목 생성 ─────────────────────────────────────────────────────────────
 news_cnt = str(len(new_news))
