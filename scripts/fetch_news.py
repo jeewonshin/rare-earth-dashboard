@@ -5,28 +5,90 @@ import re
 from datetime import datetime, timedelta
 from collections import Counter, defaultdict
 
-print("뉴스 수집 중...")
+print('뉴스 수집 중...')
 
 CATEGORIES = {
-    "NdFeB": ["NdFeB","Nd-Fe-B","네오디뮴 자석","영구자석","neodymium magnet","소결자석","네오디뮴","neodymium","praseodymium"],
-    "MnBi":  ["MnBi","망간비스무트","Mn-Bi","manganese bismuth","MnBi magnet","비스무트 자석"],
-    "NdFeB_Recycling": ["재활용","recycling","회수","recovery","urban mining","도시광산","폐자석","재자원화","rare earth recycl","magnet recycl","수소분쇄"],
+    'NdFeB': ['NdFeB','Nd-Fe-B','네오디뮴 자석','영구자석','neodymium magnet','소결자석','네오디뮴','neodymium','praseodymium'],
+    'MnBi':  ['MnBi','망간비스무트','Mn-Bi','manganese bismuth','MnBi magnet','비스무트 자석'],
+    'NdFeB_Recycling': ['재활용','recycling','회수','recovery','urban mining','도시광산','폐자석','재자원화','rare earth recycl','magnet recycl','수소분쇄'],
 }
 
 RSS_FEEDS = [
-    "https://news.google.com/rss/search?q=네오디뮴+자석&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=영구자석+희토류&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=NdFeB+자석&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=희토류+재활용&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=MnBi+자석&hl=ko&gl=KR&ceid=KR:ko",
-    "https://news.google.com/rss/search?q=neodymium+magnet&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=NdFeB+rare+earth&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=rare+earth+recycling+magnet&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=MnBi+permanent+magnet&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=permanent+magnet+supply+chain&hl=en-US&gl=US&ceid=US:en",
+    'https://news.google.com/rss/search?q=네오디뮴+자석&hl=ko&gl=KR&ceid=KR:ko',
+    'https://news.google.com/rss/search?q=영구자석+희토류&hl=ko&gl=KR&ceid=KR:ko',
+    'https://news.google.com/rss/search?q=NdFeB+자석&hl=ko&gl=KR&ceid=KR:ko',
+    'https://news.google.com/rss/search?q=희토류+재활용&hl=ko&gl=KR&ceid=KR:ko',
+    'https://news.google.com/rss/search?q=MnBi+자석&hl=ko&gl=KR&ceid=KR:ko',
+    'https://news.google.com/rss/search?q=neodymium+magnet&hl=en-US&gl=US&ceid=US:en',
+    'https://news.google.com/rss/search?q=NdFeB+rare+earth&hl=en-US&gl=US&ceid=US:en',
+    'https://news.google.com/rss/search?q=rare+earth+recycling+magnet&hl=en-US&gl=US&ceid=US:en',
+    'https://news.google.com/rss/search?q=MnBi+permanent+magnet&hl=en-US&gl=US&ceid=US:en',
+    'https://news.google.com/rss/search?q=permanent+magnet+supply+chain&hl=en-US&gl=US&ceid=US:en',
 ]
 
-RELEVANCE_KEYWORDS = ["자석","magnet","희토류","rare earth","neodymium","네오디뮴","NdFeB","MnBi","영구자석","permanent magnet","재활용","recycling","dysprosium","praseodymium","소결","sintered"]
+RELEVANCE_KEYWORDS = ['자석','magnet','희토류','rare earth','neodymium','네오디뮴','NdFeB','MnBi','영구자석','permanent magnet','재활용','recycling','dysprosium','praseodymium','소결','sintered']
+
+# 광고성/스팸 도메인 차단 목록
+BLOCKED_DOMAINS = [
+    'daara.co.kr',
+    'exhi.daara.co.kr',
+    'daaraexpo.com',
+    'yeogie.com',
+    'kidd.co.kr',
+    'navimro.com',
+    'imarketkorea.com',
+    'kkmagnet.co.kr',
+    'dhmagnet.co.kr',
+    'domagnet.co.kr',
+    'magnets21.co.kr',
+    'dj8225.com',
+    'neomagnets.net',
+    'jlmagnet.com',
+    'magnet.co.kr',
+    'imacmagnet.com',
+    'alibaba.com',
+    'aliexpress.com',
+    'made-in-china.com',
+    'indiamart.com',
+    'globalsources.com',
+    'thomasnet.com',
+    'directindustry.com',
+    'tradekorea.com',
+    'ec21.com',
+    'kompass.com',
+    'coupang.com',
+    'gmarket.co.kr',
+    'auction.co.kr',
+    '11st.co.kr',
+    'interpark.com',
+    'shopping.naver.com',
+    'tmon.co.kr',
+    'wemakeprice.com',
+    'newswire.co.kr',
+    'prnews.co.kr',
+    'boannews.com',
+    'prnewswire.com',
+    'businesswire.com',
+    'globenewswire.com',
+    'einpresswire.com',
+    'prlog.org',
+    'ec.lt',
+    'steadyincomeinvestors.com',
+]
+
+# 광고성 제목 패턴 차단
+BLOCKED_TITLE_PATTERNS = [
+    r'[.*자석.*\\/.*자석',  # 슬래시 나열 제품명 패턴
+    r'Tools\\s*[.*]\\s*Parts',  # 다아라 스타일 카탈로그
+    r'MRO\\s*[.*]\\s*부품',  # MRO 산업재료
+    r'비철금속',  # 비철금속 카탈로그
+    r'\\d{7}',  # 7자리 제품코드
+    r'J\\.L\\. Magnet',  # 특정 업체 광고
+    r'부품\\s*[.*]\\s*소재',  # 부품소재 카탈로그
+    r'Non-ferrous Metals',  # 비철금속 영문
+    r'강력자석.*네오디[뮴음]|네오디[뮴음].*강력자석',  # 자석 제품 나열
+    r'\\d+\\s*-\\s*(다아라|야후|네이버쇼핑)',  # 쇼핑 플랫폼
+]
 
 def classify_category(title, abstract=""):
     text = (title + " " + abstract).lower()
@@ -39,31 +101,54 @@ def classify_category(title, abstract=""):
     return "기타"
 
 def detect_lang(title): return "ko" if len(re.findall(r"[가-힣]", title)) > 2 else "en"
-def is_relevant(title, s=""): return any(k.lower() in (title+" "+s).lower() for k in RELEVANCE_KEYWORDS)
-def parse_pub_date(ds):
-    if not ds: return None
+
+def is_relevant(title, url="", snippet=""):
+    # 1. 도메인 차단
+    if any(domain in url for domain in BLOCKED_DOMAINS):
+        return False
+    # 2. 제목 패턴 차단
+    for pat in BLOCKED_TITLE_PATTERNS:
+        if re.search(pat, title, re.IGNORECASE):
+            return False
+    # 3. 관련성 키워드 확인
+    text = (title + " " + snippet).lower()
+    return any(kw.lower() in text for kw in RELEVANCE_KEYWORDS)
+
+def parse_pub_date(date_str):
+    if not date_str: return None
     for fmt in ["%a, %d %b %Y %H:%M:%S %Z","%a, %d %b %Y %H:%M:%S %z","%Y-%m-%dT%H:%M:%SZ"]:
-        try: return datetime.strptime(ds.strip(), fmt)
+        try: return datetime.strptime(date_str.strip(), fmt)
         except: pass
     return None
 
 def parse_rss(url):
     items = []
     try:
-        r = requests.get(url, timeout=20, headers={"User-Agent":"Mozilla/5.0"})
-        r.raise_for_status()
-        for block in re.findall(r"<item>(.*?)</item>", r.text, re.DOTALL):
+        resp = requests.get(url, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+        resp.raise_for_status()
+        for block in re.findall(r"<item>(.*?)</item>", resp.text, re.DOTALL):
             def get(tag, b=block):
                 m = re.search(rf"<{tag}[^>]*>(.*?)</{tag}>", b, re.DOTALL)
-                return re.sub(r"<[^>]+>","",m.group(1)).strip() if m else ""
-            title = get("title")
+                return re.sub(r"<[^>]+>", "", m.group(1)).strip() if m else ""
+            title    = get("title")
+            link     = get("link")
             if not title: continue
+            # 광고성 도메인 차단
+            if any(domain in link for domain in BLOCKED_DOMAINS): continue
+            # 광고성 제목 패턴 차단
+            if any(re.search(p, title, re.IGNORECASE) for p in BLOCKED_TITLE_PATTERNS): continue
             dt = parse_pub_date(get("pubDate"))
             ds = dt.strftime("%Y-%m-%d") if dt else ""
-            items.append({"title":title,"url":get("link"),"pub_date":ds,"date":ds,
-                          "source":get("source"),"first_seen":datetime.now().strftime("%Y-%m-%d"),
-                          "source_lang":detect_lang(title),"category":classify_category(title)})
-    except Exception as e: print(f"  피드 오류: {url[:60]} -> {e}")
+            items.append({
+                "title": title, "url": link,
+                "pub_date": ds, "date": ds,
+                "source": get("source"),
+                "first_seen": datetime.now().strftime("%Y-%m-%d"),
+                "source_lang": detect_lang(title),
+                "category": classify_category(title),
+            })
+    except Exception as e:
+        print(f"  피드 오류: {url[:60]} -> {e}")
     return items
 
 def normalize_title(t):
@@ -136,19 +221,19 @@ def main():
         url = item.get("url","")
         item["first_seen"] = existing_fs[url] if (url in existing_fs and existing_fs[url]) else today_str
 
-    # ── news_raw.json: 중복 포함 원본 (트렌드 차트용) ──
+    # news_raw.json: 중복 포함 원본 (트렌드용)
     raw = new_items + existing
-    raw = [n for n in raw if is_relevant(n.get("title",""))]
+    raw = [n for n in raw if is_relevant(n.get("title",""), n.get("url",""))]
     c90 = (datetime.now()-timedelta(days=90)).strftime("%Y-%m-%d")
     raw = [n for n in raw if n.get("date","")>=c90]
     raw.sort(key=lambda x: x.get("date",""), reverse=True)
     os.makedirs("data", exist_ok=True)
     with open("data/news_raw.json","w",encoding="utf-8") as f: json.dump(raw,f,ensure_ascii=False,indent=2)
-    print(f"news_raw.json: {len(raw)}건 저장 (중복 포함, 트렌드용)")
+    print(f"news_raw.json: {len(raw)}건 (중복 포함, 트렌드용)")
 
-    # ── news.json: 중복 제거본 (뉴스 목록용) ──
+    # news.json: 중복 제거본 (뉴스목록용)
     news_list = new_items + existing
-    news_list = [n for n in news_list if is_relevant(n.get("title",""))]
+    news_list = [n for n in news_list if is_relevant(n.get("title",""), n.get("url",""))]
     news_list.sort(key=lambda x: x.get("date",x.get("pub_date","")), reverse=True)
     print("중복 제거 중...")
     news_list = deduplicate_news(news_list)
