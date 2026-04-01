@@ -220,9 +220,9 @@ if is_wednesday:
     # 뉴스 섹션 (카테고리별 + 국내/해외)
     html += '<h2 style="color:#276749;margin-top:24px">&#x1F4F0; 이번 주 뉴스 동향 ' + str(len(new_news)) + '건</h2>'
     CAT_CONFIG = [
-        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB 소결자석'),
-        ('MnBi',            '#6b46c1', '#faf5ff', '🟣 MnBi 자석'),
-        ('NdFeB_Recycling', '#276749', '#f0fff4', '🟢 Recycling 재활용'),
+        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB'),
+        ('MnBi',            '#6b46c1', '#faf5ff', '🟣 MnBi'),
+        ('NdFeB_Recycling', '#276749', '#f0fff4', '🟢 Recycling'),
         ('기타',             '#718096', '#f7fafc', '⚪ 희토류 일반'),
     ]
     if new_news:
