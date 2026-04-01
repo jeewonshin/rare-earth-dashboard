@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-01 05:52",
+  "updated": "2026-04-01 07:02",
   "source": "arXiv + CrossRef",
   "new_count": 3,
   "categories": [
@@ -54,18 +54,6 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
-      "authors": "Soroush Rahmati",
-      "date": "2026-02",
-      "sort_date": "2026-02-01",
-      "url": "https://doi.org/10.1016/j.jece.2025.120983",
-      "abstract": "",
-      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-04-01",
       "is_new": false
     },
     {
@@ -237,11 +225,11 @@
       "is_new": false
     },
     {
-      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
-      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
+      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
+      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20250001",
+      "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -249,11 +237,11 @@
       "is_new": false
     },
     {
-      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
-      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
+      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
+      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20240073",
+      "url": "https://doi.org/10.3724/s1004-0277.20250001",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -270,6 +258,18 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
+      "is_new": false
+    },
+    {
+      "title": "The dynamics of accelerating end-of-life rare earth permanent magnet recycling: A technological innovation systems approach",
+      "authors": "Maarten Koese, Sander van Nielen, Jessie Bradley et al.",
+      "date": "2025-06",
+      "sort_date": "2025-06-01",
+      "url": "https://doi.org/10.1016/j.apenergy.2025.125707",
+      "abstract": "",
+      "source": "CrossRef (Applied Energy)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-04-01",
       "is_new": false
     },
     {
