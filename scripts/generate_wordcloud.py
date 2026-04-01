@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-generate_wordcloud.py (v4)
+generate_wordcloud.py (v5)
 - 뉴스 전용 (news.json)
-- 검색 키워드 제거 (RSS 검색어 자체는 의미 없음)
+- 최근 30일 필터 (10건 미만이면 전체 사용)
+- 검색 키워드 제거 (RSS 검색어는 의미 없음)
 - 이미지 내 제목 없음
 출력: assets/images/wc_news_ko.png, wc_news_en.png
 """
@@ -12,6 +13,7 @@ import re
 import json
 from collections import Counter
 from pathlib import Path
+from datetime import datetime, timedelta
 
 try:
     from wordcloud import WordCloud
@@ -44,43 +46,39 @@ EN_STOPWORDS = {
     "is","are","was","were","be","been","being","have","has","had",
     "do","does","did","will","would","could","should","may","might",
     "from","as","this","that","these","those","it","its","we","our",
-    "their","can","via","using","based","high","new","used","also",
-    "two","three","one","study","show","shows","shown","result","results",
-    "effect","effects","paper","article","research","method","methods",
-    "approach","propose","proposed","present","presented","between",
-    "which","during","after","than","more","not","all","both","while",
-    "but","or","if","when","where","how","each","other","different",
-    "com","www","http","https","html","org","net",
-    "inc","ltd","corp","co","amp","deal","deals","today","say","says",
-    "said","report","reports","reported","get","set","make","made",
-    # ── 검색 키워드 (RSS 검색어이므로 제거) ──────────────────────────────
+    "their","can","via","based","high","used","also","two","three","one",
+    "study","show","shows","shown","result","results","effect","effects",
+    "paper","article","research","method","methods","approach","propose",
+    "proposed","present","presented","between","which","during","after",
+    "than","more","not","all","both","while","but","or","if","when",
+    "where","how","each","other","different","com","www","http","https",
+    "html","org","net","inc","ltd","corp","co","amp",
+    "get","set","make","made","said","say","says","report","reports",
+    # ── RSS 검색 키워드 제거 ──────────────────────────────────────────────
     "neodymium","ndfeb","nd","fe","magnet","magnets","magnetic",
     "rare","earth","permanent","recycling","recycle","recycled",
     "mnbi","manganese","bismuth","sintered",
-    # ── 너무 일반적인 뉴스 단어 ──────────────────────────────────────────
-    "new","news","latest","update","updated","says","say","report",
-    "today","week","year","years","month","months","day","days",
-    "market","markets","price","prices","supply","demand",
-    "global","china","chinese","japan","korea","korean","us","eu",
-    "company","companies","industry","technology","material","materials",
-    "use","using","need","needs","increase","decrease",
-    "grow","growth","rise","fall","billion","million","percent",
-    "key","top","major","important","critical","significant",
+    # ── 일반적인 뉴스 단어 제거 ──────────────────────────────────────────
+    "new","news","latest","update","updated","today","week","year",
+    "years","month","months","day","days","market","markets","price",
+    "prices","supply","demand","global","china","chinese","japan",
+    "korea","korean","us","eu","company","companies","industry",
+    "technology","material","materials","use","using","need","needs",
+    "increase","decrease","grow","growth","rise","fall","billion",
+    "million","percent","key","top","major","important","critical",
     "according","amid","despite","including","following","likely",
-    "could","would","should","expected","announced","plan","plans",
-    "investment","production","capacity","output",
+    "expected","announced","plan","plans","investment","production",
+    "capacity","output","could","would","should",
 }
 
 # ── 도메인 불용어 ────────────────────────────────────────────────────────────
 DOMAIN_STOPWORDS = {
-    # 너무 일반적인 소재/자석 용어 제거
     "magnet","magnets","magnetic","rare","earth","neodymium",
     "recycling","permanent","sintered","material","materials",
     "property","properties","temperature","performance",
-    "phase","phases","structure","structures",
-    "alloy","alloys","process","processing",
-    "application","applications","field","energy",
-    "power","system","systems","metal","metals",
+    "phase","phases","structure","structures","alloy","alloys",
+    "process","processing","application","applications","field",
+    "energy","power","system","systems","metal","metals",
     "oxide","oxides","hard","soft",
 }
 
@@ -90,19 +88,18 @@ KO_STOPWORDS = {
     "의","을","를","이","가","은","는","에","에서","로","으로","와","과",
     "한","및","등","대한","통한","위한","관한","으로의","에의","에서의",
     "따른","따라","통해","위해","대해",
-    # ── 검색 키워드 (RSS 검색어이므로 제거) ──────────────────────────────
+    # ── RSS 검색 키워드 제거 ──────────────────────────────────────────────
     "자석","영구자석","희토류","재활용","소결자석","네오디뮴",
     "망간","비스무트","네오디뮴자석","희토류자석","강력자석",
-    # ── 소재/연구 분야 일반 단어 ─────────────────────────────────────────
+    # ── 소재/연구 일반 단어 제거 ─────────────────────────────────────────
     "자성","재료","연구","특성","개발","기술","분석","제조",
     "향상","적용","활용","관련","소재","공정",
-    # ── 너무 일반적인 뉴스 단어 ──────────────────────────────────────────
-    "시장","가격","공급","수요","기업","업체","투자",
-    "수출","수입","중국","미국","일본","한국","글로벌","세계",
-    "올해","지난해","내년","최근","현재","향후","지난","이번",
-    "증가","감소","상승","하락","성장","전망","현황","동향",
-    "국내","해외","글로벌","정부","산업","생산",
-    "뉴스","기사","보도","관계자","발표","계획",
+    # ── 일반적인 뉴스 단어 제거 ──────────────────────────────────────────
+    "시장","가격","공급","수요","기업","업체","투자","수출","수입",
+    "중국","미국","일본","한국","글로벌","세계","올해","지난해",
+    "내년","최근","현재","향후","지난","이번","증가","감소",
+    "상승","하락","성장","전망","현황","동향","국내","해외",
+    "정부","산업","생산","뉴스","기사","보도","관계자","발표","계획",
 }
 
 ALL_EN_STOPWORDS = EN_STOPWORDS | DOMAIN_STOPWORDS
@@ -179,8 +176,8 @@ def filter_freq(counter, min_count=1):
         if count < min_count:
             continue
         if "_" in word:
-            parts = word.split("_")
-            if any(word_freq.get(p, 0) < 2 for p in parts):
+            p = word.split("_")
+            if any(word_freq.get(x, 0) < 2 for x in p):
                 continue
         filtered[word] = count
     return filtered
@@ -225,7 +222,7 @@ def make_wordcloud(freq, output_path, colormap, label,
     fig, ax = plt.subplots(figsize=(7, 4))
     ax.imshow(wc, interpolation="bilinear")
     ax.axis("off")
-    ax.set_title("")   # 제목 제거
+    ax.set_title("")
     plt.tight_layout(pad=0.1)
     plt.savefig(output_path, dpi=100, bbox_inches="tight")
     plt.close(fig)
@@ -236,22 +233,34 @@ def make_wordcloud(freq, output_path, colormap, label,
 
 # ── 메인 ─────────────────────────────────────────────────────────────────────
 def main():
-    print("\n워드클라우드 생성 시작 (v4 - 검색 키워드 제거)\n")
+    print("\n워드클라우드 생성 시작 (v5 - 최근 30일 필터)\n")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     print("데이터 로드 중...")
-    news_raw = get_items(load_json(NEWS_PATH))
-    print(f"  뉴스: {len(news_raw)}건\n")
+    news_all = get_items(load_json(NEWS_PATH))
+    print(f"  뉴스 전체: {len(news_all)}건")
+
+    # ── 30일 필터 (10건 미만이면 전체 사용) ──────────────────────────────
+    month_ago = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+    recent    = [
+        n for n in news_all
+        if n.get("date", n.get("pub_date", "")) >= month_ago
+    ]
+    if len(recent) >= 10:
+        news_raw = recent
+        print(f"  워드클라우드 대상: 최근 30일 {len(news_raw)}건")
+    else:
+        news_raw = news_all
+        print(f"  워드클라우드 대상: 전체 {len(news_raw)}건 (30일치 {len(recent)}건 부족)")
 
     korean_font = get_korean_font_path()
 
-    results = {}
-
-    # 국내 뉴스 워드클라우드 (한글)
-    print("국내 뉴스 워드클라우드 생성 중...")
+    # ── 국내 뉴스 워드클라우드 (한글) ────────────────────────────────────
+    print("\n국내 뉴스 워드클라우드 생성 중...")
     ko_texts = [n.get("title", "") for n in news_raw
                 if n.get("source_lang", "") == "ko"]
-    results["news_ko"] = make_wordcloud(
+    print(f"  국내 뉴스: {len(ko_texts)}건")
+    make_wordcloud(
         collect_tokens(ko_texts, "ko"),
         OUTPUT_DIR / "wc_news_ko.png",
         colormap="Purples",
@@ -260,11 +269,12 @@ def main():
         min_count=1,
     )
 
-    # 해외 뉴스 워드클라우드 (영문)
-    print("해외 뉴스 워드클라우드 생성 중...")
+    # ── 해외 뉴스 워드클라우드 (영문) ────────────────────────────────────
+    print("\n해외 뉴스 워드클라우드 생성 중...")
     en_texts = [n.get("title", "") for n in news_raw
                 if n.get("source_lang", "") != "ko"]
-    results["news_en"] = make_wordcloud(
+    print(f"  해외 뉴스: {len(en_texts)}건")
+    make_wordcloud(
         collect_tokens(en_texts, "en"),
         OUTPUT_DIR / "wc_news_en.png",
         colormap="Blues",
@@ -272,9 +282,7 @@ def main():
         min_count=1,
     )
 
-    success = sum(1 for v in results.values() if v)
-    print(f"\n완료! ({success}/2)")
-    print(f"저장 위치: {OUTPUT_DIR.resolve()}")
+    print(f"\n완료! 저장 위치: {OUTPUT_DIR.resolve()}")
 
 
 if __name__ == "__main__":
