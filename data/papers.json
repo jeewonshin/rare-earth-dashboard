@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-01 08:49",
+  "updated": "2026-04-01 23:46",
   "source": "arXiv + CrossRef",
   "new_count": 7,
   "categories": [
@@ -102,18 +102,6 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
-      "authors": "Soroush Rahmati",
-      "date": "2026-02",
-      "sort_date": "2026-02-01",
-      "url": "https://doi.org/10.1016/j.jece.2025.120983",
-      "abstract": "",
-      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-04-01",
       "is_new": false
     },
     {
@@ -330,6 +318,18 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
+      "is_new": false
+    },
+    {
+      "title": "The dynamics of accelerating end-of-life rare earth permanent magnet recycling: A technological innovation systems approach",
+      "authors": "Maarten Koese, Sander van Nielen, Jessie Bradley et al.",
+      "date": "2025-06",
+      "sort_date": "2025-06-01",
+      "url": "https://doi.org/10.1016/j.apenergy.2025.125707",
+      "abstract": "",
+      "source": "CrossRef (Applied Energy)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-04-01",
       "is_new": false
     },
     {
