@@ -1,7 +1,7 @@
 {
-  "updated": "2026-04-01 03:01",
+  "updated": "2026-04-01 05:29",
   "source": "arXiv + CrossRef",
-  "new_count": 23,
+  "new_count": 28,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -33,6 +33,54 @@
       "is_new": true
     },
     {
+      "title": "Optimizing Density Functional Theory for Strain-Dependent Magnetic Properties of Monolayer MnBi$_2$Te$_4$ with Diffusion Monte Carlo",
+      "authors": "Jeonghwan Ahn, Swarnava Ghosh, Seoung-Hun Kang et al.",
+      "date": "2026-03-17",
+      "sort_date": "2026-03-17",
+      "url": "http://arxiv.org/abs/2603.16162v1",
+      "abstract": "Monolayer MnBi$_{2}$Te$_{4}$ (MBT) is an intrinsically magnetic topological insulator whose magnetic response is strongly affected by strain and electron correlation. In density functional theory with...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-04-01",
+      "is_new": true
+    },
+    {
+      "title": "Linear response of the Chern insulator MnBi$_2$Te$_4$: A Wannier function approach",
+      "authors": "Matthew Albert, Javier Sivianes, Jason G. Kattan et al.",
+      "date": "2026-03-11",
+      "sort_date": "2026-03-11",
+      "url": "http://arxiv.org/abs/2603.11268v1",
+      "abstract": "Recent work demonstrated that in the long wavelength limit the linear response of a Chern insulator to finite-frequency electric fields is the sum of two terms: A general frequency-dependent Kubo cont...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-04-01",
+      "is_new": true
+    },
+    {
+      "title": "Magnetic criticality and magnetocaloric response in MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$",
+      "authors": "Nazma Firdosh, Shreyashi Sinha, Sujit Manna",
+      "date": "2026-03-11",
+      "sort_date": "2026-03-11",
+      "url": "http://arxiv.org/abs/2603.10824v1",
+      "abstract": "MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$ are antiferromagnetic topological insulators belonging to the MnBi$_{2n}$Te$_{3n+1}$ series, where structural layering provides a natural route to tune magnetic inter...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-04-01",
+      "is_new": true
+    },
+    {
+      "title": "Magneto-optical Response of 5-SL MnBi$_2$Te$_4$ in Spin-Flip States",
+      "authors": "Shahid Sattar, Roman Stepanov, A. H. MacDonald et al.",
+      "date": "2026-03-10",
+      "sort_date": "2026-03-10",
+      "url": "http://arxiv.org/abs/2603.09578v1",
+      "abstract": "Magneto-optical effects like Kerr and Faraday rotations provide a direct probe of topological order in thin films of the magnetic topological insulator MnBi$_2$Te$_4$ (MBT). Motivated by recent experi...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-04-01",
+      "is_new": true
+    },
+    {
       "title": "EV battery recycling economics and rare earth element recovery for sustainable resource management",
       "authors": "Raajasekar Mathiyalagan, Jayakrishna Kandasamy",
       "date": "2026-03-09",
@@ -54,6 +102,30 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
+      "is_new": true
+    },
+    {
+      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
+      "authors": "Soroush Rahmati",
+      "date": "2026-02",
+      "sort_date": "2026-02-01",
+      "url": "https://doi.org/10.1016/j.jece.2025.120983",
+      "abstract": "",
+      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-04-01",
+      "is_new": true
+    },
+    {
+      "title": "RKKY signatures as a probe of band properties and photoinduced topological phase transitions in MnBi$_2$Te$_4$ films",
+      "authors": "Ya-Xi Li, Rui-Qiang Wang, Ming-Xun Deng et al.",
+      "date": "2026-01-14",
+      "sort_date": "2026-01-14",
+      "url": "http://arxiv.org/abs/2601.09303v1",
+      "abstract": "We present a systematic study of the Ruderman-Kittel-Kasuya-Yosida (RKKY) interaction in MnBi$_2$Te$_4$ films under both dark and illuminated conditions. In the dark, the intrinsic magnetism of MnBi$_...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-04-01",
       "is_new": true
     },
     {
@@ -258,18 +330,6 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": true
-    },
-    {
-      "title": "The dynamics of accelerating end-of-life rare earth permanent magnet recycling: A technological innovation systems approach",
-      "authors": "Maarten Koese, Sander van Nielen, Jessie Bradley et al.",
-      "date": "2025-06",
-      "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.1016/j.apenergy.2025.125707",
-      "abstract": "",
-      "source": "CrossRef (Applied Energy)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-04-01",
       "is_new": true
     },
     {
