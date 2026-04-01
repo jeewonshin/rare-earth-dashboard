@@ -2,10 +2,12 @@ import smtplib
 import json
 import os
 import sys
+import re
 from datetime import datetime, date, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
+from email.utils import parsedate
 
 print('알림 메일 발송 시작...')
 
@@ -17,7 +19,6 @@ DASHBOARD_URL = 'http://lgemagone.xyz'
 
 
 def find_image_path(filename):
-    """이미지 파일을 여러 경로에서 탐색 후 존재하는 경로 반환"""
     candidates = [
         os.path.join('assets', 'images', filename),
         os.path.join(os.path.dirname(__file__), '..', 'assets', 'images', filename),
@@ -27,6 +28,23 @@ def find_image_path(filename):
         if os.path.exists(p):
             return p
     return None
+
+
+def parse_date_safe(ds):
+    """다양한 날짜 형식을 YYYY-MM-DD로 변환"""
+    if not ds: return ''
+    ds = str(ds).strip()
+    # YYYY-MM-DD
+    if re.match(r'^\d{4}-\d{2}-\d{2}', ds):
+        return ds[:10]
+    # RFC 2822: "Wed, 26 Mar 2025 07:00:00 GMT"
+    try:
+        t = parsedate(ds)
+        if t:
+            return f'{t[0]:04d}-{t[1]:02d}-{t[2]:02d}'
+    except Exception:
+        pass
+    return ''
 
 
 to_list = [e.strip() for e in NOTIFY_EMAIL.split(',') if e.strip()]
@@ -72,15 +90,21 @@ try:
 except Exception as e:
     print(f'patents.json 로드 실패: {e}')
 
-# ── 뉴스 데이터 로드 (date 기준 7일 이내) ────────────────────────────────
+# ── 뉴스 데이터 로드 (date 기준 7일 이내, 날짜 형식 자동 변환) ───────────
 new_news = []
 try:
     with open('data/news.json', 'r', encoding='utf-8') as f:
         news_raw = json.load(f)
     all_items   = news_raw if isinstance(news_raw, list) else news_raw.get('items', news_raw)
     total_count = len(all_items)
-    new_news    = [n for n in all_items if n.get('date', n.get('pub_date', '')) >= week_ago]
-    new_news.sort(key=lambda x: x.get('date', x.get('pub_date', '')), reverse=True)
+    new_news = [
+        n for n in all_items
+        if parse_date_safe(n.get('date', n.get('pub_date', ''))) >= week_ago
+    ]
+    new_news.sort(
+        key=lambda x: parse_date_safe(x.get('date', x.get('pub_date', ''))),
+        reverse=True
+    )
     print(f'뉴스 전체: {total_count}건 | 7일 이내 (date 기준): {len(new_news)}건')
 except Exception as e:
     print(f'news.json 로드 실패: {e}')
@@ -196,7 +220,7 @@ if is_wednesday:
     # 뉴스 섹션 (카테고리별 + 국내/해외)
     html += '<h2 style="color:#276749;margin-top:24px">&#x1F4F0; 이번 주 뉴스 동향 ' + str(len(new_news)) + '건</h2>'
     CAT_CONFIG = [
-        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB 자석'),
+        ('NdFeB',           '#2b6cb0', '#ebf8ff', '🔵 NdFeB 소결자석'),
         ('MnBi',            '#6b46c1', '#faf5ff', '🟣 MnBi 자석'),
         ('NdFeB_Recycling', '#276749', '#f0fff4', '🟢 Recycling 재활용'),
         ('기타',             '#718096', '#f7fafc', '⚪ 희토류 일반'),
@@ -219,7 +243,7 @@ if is_wednesday:
                     title_n = n.get('title', '제목 없음')
                     url_n   = n.get('url', '#')
                     source  = n.get('source', '')
-                    date_n  = n.get('date', n.get('pub_date', ''))
+                    date_n  = parse_date_safe(n.get('date', n.get('pub_date', '')))
                     html += '<div style="border-left:3px solid ' + border_color + ';padding:6px 10px;margin:4px 0;background:' + bg_color + '">'
                     html += '<a href="' + url_n + '" style="color:#1a365d;font-weight:bold;text-decoration:none;font-size:13px">' + title_n + '</a>'
                     html += '<br><small style="color:#999">' + source + ' &middot; ' + date_n + '</small>'
@@ -255,11 +279,9 @@ html += '<p style="color:#bbb;font-size:11px;text-align:right;margin-top:20px">�
 html += '</div></body></html>'
 
 # ── 메일 구성 (CID 이미지 임베드) ────────────────────────────────────────
-# HTML + 인라인 이미지를 related로 묶음
 msg_related = MIMEMultipart('related')
 msg_related.attach(MIMEText(html, 'html', 'utf-8'))
 
-# 워드클라우드 이미지 CID 첨부
 if wc_ko_path:
     with open(wc_ko_path, 'rb') as f:
         img_ko = MIMEImage(f.read(), _subtype='png')
@@ -276,7 +298,6 @@ if wc_en_path:
     msg_related.attach(img_en)
     print('  EN 이미지 CID 첨부 완료')
 
-# 외부 wrapper
 msg_outer = MIMEMultipart('mixed')
 msg_outer['Subject'] = subject
 msg_outer['From']    = GMAIL_USER
