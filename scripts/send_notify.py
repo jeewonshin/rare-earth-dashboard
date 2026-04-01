@@ -87,9 +87,9 @@ try:
     total_count      = len(all_items)
     has_first_seen   = sum(1 for n in all_items if n.get('first_seen'))
     # first_seen 없으면 '' → week_ago보다 항상 작아서 자동 제외
-    new_news = [n for n in all_items if n.get('first_seen', '') >= week_ago]
+    new_news = [n for n in all_items if n.get('date', n.get('pub_date', '')) >= week_ago]
     new_news.sort(key=lambda x: x.get('date', x.get('pub_date', '')), reverse=True)
-    print(f'뉴스 전체: {total_count}건 | first_seen 있음: {has_first_seen}건 | 7일 이내: {len(new_news)}건')
+    print(f'뉴스 전체: {total_count}건 | 7일 이내 (date 기준): {len(new_news)}건')
 except Exception as e:
     print(f'news.json 로드 실패: {e}')
 
