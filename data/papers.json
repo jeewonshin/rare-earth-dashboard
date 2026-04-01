@@ -1,7 +1,7 @@
 {
-  "updated": "2026-04-01 01:50",
+  "updated": "2026-04-01 02:36",
   "source": "arXiv + CrossRef",
-  "new_count": 1,
+  "new_count": 27,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -18,7 +18,7 @@
       "source": "CrossRef (Materials Research Bulletin)",
       "category": "NdFeB",
       "first_seen": "2026-03-27",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "A nonlinear discrete-time compartmental model for rare earth e-waste recycling",
@@ -30,7 +30,7 @@
       "source": "CrossRef (Waste Management)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Optimizing Density Functional Theory for Strain-Dependent Magnetic Properties of Monolayer MnBi$_2$Te$_4$ with Diffusion Monte Carlo",
@@ -42,7 +42,7 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-03-17",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Linear response of the Chern insulator MnBi$_2$Te$_4$: A Wannier function approach",
@@ -54,7 +54,7 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-03-11",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Magnetic criticality and magnetocaloric response in MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$",
@@ -66,7 +66,7 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-03-11",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Magneto-optical Response of 5-SL MnBi$_2$Te$_4$ in Spin-Flip States",
@@ -78,7 +78,7 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-03-10",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "EV battery recycling economics and rare earth element recovery for sustainable resource management",
@@ -90,7 +90,7 @@
       "source": "CrossRef (Discover Sustainability)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Micromagnetic study on the effect of grain size distribution in hot-deformed Nd–Fe–B magnets",
@@ -102,7 +102,7 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
@@ -150,7 +150,7 @@
       "source": "CrossRef (Resources Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Grain boundary diffusion of dysprosium using DyF3 dip-coating method to enhance the magnetic properties of sintered Nd-Fe-B magnet",
@@ -186,7 +186,7 @@
       "source": "CrossRef (Surfaces and Interfaces)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Effect of sputtering-coated Al–Cu alloy on magnetic properties and microstructure of grain boundary diffusion-sintered Nd-Fe-B permanent magnet",
@@ -210,7 +210,7 @@
       "source": "CrossRef (Minerals Engineering)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Environmental aspects of rare-earth elements life cycle",
@@ -222,7 +222,7 @@
       "source": "CrossRef (Russian Journal of Resources, Conservation and Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Extraction of Rare Earth Elements from Organic Acid Leachate Using Formo-Phenolic-like Resins",
@@ -234,7 +234,7 @@
       "source": "CrossRef (Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Analysis of structural differences in hot deformed Nd-Fe-B magnets——From the perspective of grain boundary plane distribution",
@@ -258,7 +258,7 @@
       "source": "CrossRef (Resources, Conservation and Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "A Cross-Disciplinary Review of Rare Earth Elements: Deposit Types, Mineralogy, Machine Learning, Environmental Impact, and Recycling",
@@ -270,7 +270,7 @@
       "source": "CrossRef (Minerals)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Distribution of grain boundary plane orientation texture in hot deformed Nd-Fe-B magnets and its texture enhancement mechanism",
@@ -330,7 +330,7 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Optimizing Ce-doped Nd-Fe-B magnets for high-efficient grain boundary diffusion of Tb-Fe alloy",
@@ -354,7 +354,7 @@
       "source": "CrossRef (IEEE Transactions on Magnetics)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Misorientation statistics across hot-deformed Nd<sub>2</sub>Fe<sub>14</sub>B permanent magnet boundaries and the potential correlation with magnetic properties",
@@ -378,7 +378,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Transformation of in-plane to out-of-plane anisotropy in MnBi alloy for permanent magnet application: a First-principles study",
@@ -390,7 +390,7 @@
       "source": "CrossRef (Scientific Reports)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Oxygen adsorption on pristine MnBi and Ta-capped MnBi thin-films: Ab-initio study of structural and electronic properties, and magnetic anisotropy",
@@ -402,7 +402,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Magnetocrystalline anisotropy of interstitially and substitutionally Sn-doped MnBi for high temperature permanent magnet applications",
@@ -414,7 +414,7 @@
       "source": "CrossRef (AIP Advances)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "A core–shell magnet Mn<sub>70</sub>Bi<sub>30</sub> grown at seeds in magnetic fields and its impacts on its spin-dynamics, Curie point and other tailored properties",
@@ -426,7 +426,7 @@
       "source": "CrossRef (Nanotechnology)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Engineering microstructure to improve coercivity of bulk MnBi magnet",
@@ -438,7 +438,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Influence of Bi Content on the Temperature of the Formation of the Hard Magnetic MnBi Phase: Simultaneous Irreversible Drop of Resistance",
@@ -450,7 +450,7 @@
       "source": "CrossRef (Magnetochemistry)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Magnetic domain configurations of pulsed laser deposited MnBi hard magnetic films",
@@ -462,7 +462,7 @@
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     },
     {
       "title": "Microstructure and Magnetic Properties of Fe-doped MnBi Permanent Magnet Alloys",
@@ -474,7 +474,7 @@
       "source": "CrossRef (Journal of Magnetics)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
-      "is_new": false
+      "is_new": true
     }
   ]
 }
