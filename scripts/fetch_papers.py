@@ -322,14 +322,13 @@ today_date = datetime.now().date()
 
 # ── URL 정규화 (arXiv v1/v2 버전 차이 처리) ─────────────────────────────
 def normalize_url(url):
-    """arXiv URL 버전 번호 제거: .../abs/2408.12345v2 → .../abs/2408.12345"""
-    return re.sub(r'v\d+$', '', url.strip())
+    return re.sub(r'v[0-9]+$', '', url.strip())
 
-# 정규화된 URL로 기존 데이터 재구성
-existing_first_seen_norm = {
-    normalize_url(u): s for u, s in existing_first_seen.items()
-}
+existing_first_seen_norm = {normalize_url(u): s for u, s in existing_first_seen.items()}
 existing_urls_norm = {normalize_url(u) for u in existing_urls}
+
+today_str  = datetime.now().strftime('%Y-%m-%d')
+today_date = datetime.now().date()
 
 for p in all_papers:
     url      = p.get('url', '')
@@ -337,20 +336,24 @@ for p in all_papers:
     pub_date = normalize_date(p.get('sort_date', p.get('date', today_str)), today_str)
 
     if url_norm in existing_first_seen_norm:
-        # 기존에 first_seen이 기록된 논문 → 그대로 유지
+        # 기존 first_seen 유지
         p['first_seen'] = existing_first_seen_norm[url_norm]
     elif url_norm in existing_urls_norm:
-        # 기존에 있던 논문인데 first_seen 없음 → 발행일로 설정 (NEW 방지)
+        # 기존에 있던 논문 → 발행일로 (NEW 방지)
         p['first_seen'] = pub_date
     elif not existing_urls:
-        # 첫 실행 → 발행일로 설정 (첫 실행 시 전부 NEW 뜨는 것 방지)
+        # 첫 실행 → 발행일로 (전부 NEW 방지)
         p['first_seen'] = pub_date
     else:
-        # 진짜 신규 논문 → 오늘 날짜
+        # 진짜 신규 → 오늘
         p['first_seen'] = today_str
 
-    # is_new: first_seen이 오늘인 것만 NEW (발행일 기준 X)
-    p['is_new'] = (p['first_seen'] == today_str)
+    # is_new: first_seen 기준 30일 이내 → NEW (발행일/미래날짜 무관)
+    try:
+        fs_date = datetime.strptime(p['first_seen'], '%Y-%m-%d').date()
+        p['is_new'] = (today_date - fs_date).days <= 30
+    except Exception:
+        p['is_new'] = False
 
 new_count = sum(1 for p in all_papers if p['is_new'])
 print(f'신규 논문 (30일 이내): {new_count}건 / 전체: {len(all_papers)}건')
