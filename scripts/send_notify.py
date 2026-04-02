@@ -59,10 +59,10 @@ from datetime import timezone
 KST          = timezone(timedelta(hours=9))
 now_kst      = datetime.now(KST)
 today        = now_kst.strftime('%Y-%m-%d')
-# is_wednesday = now_kst.weekday() == 2
+is_wednesday = now_kst.weekday() == 2
 
 # ✅ 임시 수정
-is_wednesday = True  # 테스트용 강제 활
+# is_wednesday = True  # 테스트용 강제 활
 
 week_ago     = (now_kst - timedelta(days=7)).strftime('%Y-%m-%d')
 
@@ -133,9 +133,9 @@ for m in metals:
         price_alerts.append('⚠️ ' + name + ' ' + arrow + str(round(chg_pct, 1)) + '%')
 
 # ── 발송 조건 체크 ────────────────────────────────────────────────────────
-# if not is_wednesday and not price_alerts:
-    # print('수요일 아님 + 가격 급등락 없음 → 메일 발송 안 함')
-    # sys.exit(0)
+if not is_wednesday and not price_alerts:
+    print('수요일 아님 + 가격 급등락 없음 → 메일 발송 안 함')
+    sys.exit(0)
 
 # ── 제목 생성 ─────────────────────────────────────────────────────────────
 news_cnt = str(len(new_news))
