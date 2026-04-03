@@ -1,7 +1,7 @@
 {
-  "updated": "2026-04-02 06:06",
+  "updated": "2026-04-03 06:04",
   "source": "arXiv + CrossRef",
-  "new_count": 3,
+  "new_count": 4,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -12,12 +12,24 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-02",
+      "sort_date": "2026-04-03",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
       "category": "NdFeB",
       "first_seen": "2026-03-27",
+      "is_new": true
+    },
+    {
+      "title": "Technological Pathways for Rare Earth Elements Recovery from WEEE: A Systematic Mapping Review",
+      "authors": "Luca Taglieri, Pietro Romano, Francesco Vegliò et al.",
+      "date": "2026-04-01",
+      "sort_date": "2026-04-01",
+      "url": "https://doi.org/10.3390/recycling11040065",
+      "abstract": "Rare earth elements (REEs) are essential to many low-carbon and digital technologies, yet the primary supply is geographically concentrated; waste electrical and electronic equipment (WEEE) could act ...",
+      "source": "CrossRef (Recycling)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-04-03",
       "is_new": true
     },
     {
@@ -258,18 +270,6 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
       "first_seen": "2025-06-01",
-      "is_new": false
-    },
-    {
-      "title": "Research on Short Process Recycling Technology of Bonded NdFeB Magnet Waste",
-      "authors": "Pei-pei XUE, Pei-hong ZHU, Min LIU et al.",
-      "date": "2025-06-01",
-      "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.202503009",
-      "abstract": "",
-      "source": "CrossRef (Chinese Rare Earths)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
       "is_new": false
     },
     {
