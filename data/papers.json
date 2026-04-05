@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-04 05:42",
+  "updated": "2026-04-05 06:06",
   "source": "arXiv + CrossRef",
   "new_count": 8,
   "categories": [
@@ -12,7 +12,7 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-04",
+      "sort_date": "2026-04-05",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -114,6 +114,18 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
+      "is_new": false
+    },
+    {
+      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
+      "authors": "Soroush Rahmati",
+      "date": "2026-02",
+      "sort_date": "2026-02-01",
+      "url": "https://doi.org/10.1016/j.jece.2025.120983",
+      "abstract": "",
+      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-04-05",
       "is_new": false
     },
     {
@@ -318,18 +330,6 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
       "first_seen": "2025-06-01",
-      "is_new": false
-    },
-    {
-      "title": "Research on Short Process Recycling Technology of Bonded NdFeB Magnet Waste",
-      "authors": "Pei-pei XUE, Pei-hong ZHU, Min LIU et al.",
-      "date": "2025-06-01",
-      "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.202503009",
-      "abstract": "",
-      "source": "CrossRef (Chinese Rare Earths)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-04-04",
       "is_new": false
     },
     {

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-04 05:43",
+  "updated": "2026-04-05 06:07",
   "source": "KIPRIS (한국특허정보원)",
   "source_url": "https://plus.kipris.or.kr",
   "new_count": 0,
@@ -17,6 +17,18 @@
       "ipc": "H01F 1/08",
       "url": "https://doi.org/10.8080/1020240188567",
       "abstract": "망가니즈(Mn)계 물질 및 비스무트(Bi)계 물질을 용융시켜, 망가니즈-비스무트(MnBi)계 합금잉곳을 제조하는 단계, 가스분무(gas-atomization)를 통해, 상기 MnBi계 합금잉곳을 분사하여, MnBi계 예비분말을 제조하는 단계, 상기 MnBi계 예비분말을 열처리하여, 저온 상(low-temperature phase, LTP)을 포함하는 LTP...",
+      "source": "KIPRIS",
+      "category": "MnBi",
+      "is_new": false
+    },
+    {
+      "title": "일방향 자력선을 가진 영구자석의 제조방법",
+      "app_no": "1020240082596",
+      "applicant": "정재광",
+      "app_date": "2024-06-25",
+      "ipc": "H01F 6/00",
+      "url": "https://doi.org/10.8080/1020240082596",
+      "abstract": "본 발명은 일방향 자력선을 가진 영구자석의 제조방법에 관한 것으로, 비스무트 광물로 자력선의 방향을 제어하고 방향성이 제어된 비스무트원석을 영구자석 재료에 첨가하여 용광로에 넣어 길게 직사각형태로 제조한 후 일정 크기의 정사각형으로 절단한 상태에서 각 정사각형을 경사지게 절단하여 자력이 없는 비스무트원석 상태에서 막과 반막으로 분리하고, 하나의 하우징내에 ...",
       "source": "KIPRIS",
       "category": "MnBi",
       "is_new": false
