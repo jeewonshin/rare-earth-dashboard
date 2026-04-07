@@ -525,7 +525,7 @@
           document.getElementById('badge-news-' + cat).innerHTML =
             `<span class="badge-new">📰 ${items.length}건</span>`;
           document.getElementById('updated-news-' + cat).textContent =
-            '출처: Google News + 네이버 뉴스';
+            '출처: Google News';
       setTimeout(() => drawTrendChart(newsRaw || news), 150);
       document.getElementById('trend-updated').textContent = '업데이트: ' + new Date().toLocaleDateString('ko-KR');
         });
