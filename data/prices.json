@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-07 06:22",
+  "updated": "2026-04-08 06:24",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -7,11 +7,11 @@
       "name": "네오디뮴 (Nd)",
       "grade": "99.5%min FOB China",
       "today": {
-        "date": "2026.04.01",
-        "value": 116.94,
+        "date": "2026.04.03",
+        "value": 119.25,
         "unit": "USD/kg",
-        "change_val": 0.71,
-        "change_pct": 0.61
+        "change_val": 2.0,
+        "change_pct": 1.71
       },
       "history": [
         {
@@ -2069,6 +2069,14 @@
         {
           "date": "2026.04.01",
           "value": 116.94
+        },
+        {
+          "date": "2026.04.02",
+          "value": 117.25
+        },
+        {
+          "date": "2026.04.03",
+          "value": 119.25
         }
       ]
     },
@@ -2076,11 +2084,11 @@
       "name": "세륨 (Ce)",
       "grade": "99%min FOB China",
       "today": {
-        "date": "2026.04.01",
-        "value": 2.13,
+        "date": "2026.04.03",
+        "value": 2140.0,
         "unit": "USD/kg",
-        "change_val": 0.01,
-        "change_pct": 0.47
+        "change_val": 0.0,
+        "change_pct": 0.0
       },
       "history": [
         {
@@ -4134,6 +4142,14 @@
         {
           "date": "2026.04.01",
           "value": 2.13
+        },
+        {
+          "date": "2026.04.02",
+          "value": 2140.0
+        },
+        {
+          "date": "2026.04.03",
+          "value": 2140.0
         }
       ]
     },
