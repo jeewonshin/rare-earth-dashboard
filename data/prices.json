@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-08 06:24",
+  "updated": "2026-04-09 06:56",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -2085,7 +2085,7 @@
       "grade": "99%min FOB China",
       "today": {
         "date": "2026.04.03",
-        "value": 2140.0,
+        "value": 2.14,
         "unit": "USD/kg",
         "change_val": 0.0,
         "change_pct": 0.0
@@ -4145,11 +4145,11 @@
         },
         {
           "date": "2026.04.02",
-          "value": 2140.0
+          "value": 2.14
         },
         {
           "date": "2026.04.03",
-          "value": 2140.0
+          "value": 2.14
         }
       ]
     },
