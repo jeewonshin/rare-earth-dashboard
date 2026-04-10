@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-09 06:56",
+  "updated": "2026-04-10 07:08",
   "source": "arXiv + CrossRef",
   "new_count": 8,
   "categories": [
@@ -12,12 +12,24 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-09",
+      "sort_date": "2026-04-10",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
       "category": "NdFeB",
       "first_seen": "2026-03-27",
+      "is_new": true
+    },
+    {
+      "title": "Fluctuation Mechanism of Single-Ion Anisotropy of Topological Insulator MnBi$_2$Te$_4$",
+      "authors": "V. V. Val'kov, A. O. Zlotnikov, A. Gamov",
+      "date": "2026-04-09",
+      "sort_date": "2026-04-09",
+      "url": "http://arxiv.org/abs/2604.07852v1",
+      "abstract": "We demonstrate that charge fluctuations induced by electron hopping, combined with spin-orbit coupling, lift the sixfold degeneracy of the orbital singlet $^{6}S$ of Mn ions in the topological insulat...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-04-10",
       "is_new": true
     },
     {
@@ -87,18 +99,6 @@
       "sort_date": "2026-03-11",
       "url": "http://arxiv.org/abs/2603.10824v1",
       "abstract": "MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$ are antiferromagnetic topological insulators belonging to the MnBi$_{2n}$Te$_{3n+1}$ series, where structural layering provides a natural route to tune magnetic inter...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-08",
-      "is_new": true
-    },
-    {
-      "title": "Magneto-optical Response of 5-SL MnBi$_2$Te$_4$ in Spin-Flip States",
-      "authors": "Shahid Sattar, Roman Stepanov, A. H. MacDonald et al.",
-      "date": "2026-03-10",
-      "sort_date": "2026-03-10",
-      "url": "http://arxiv.org/abs/2603.09578v1",
-      "abstract": "Magneto-optical effects like Kerr and Faraday rotations provide a direct probe of topological order in thin films of the magnetic topological insulator MnBi$_2$Te$_4$ (MBT). Motivated by recent experi...",
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-04-08",
