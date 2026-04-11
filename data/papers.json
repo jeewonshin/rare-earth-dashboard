@@ -1,7 +1,7 @@
 {
-  "updated": "2026-04-10 07:08",
+  "updated": "2026-04-11 05:46",
   "source": "arXiv + CrossRef",
-  "new_count": 8,
+  "new_count": 7,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -12,7 +12,7 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-10",
+      "sort_date": "2026-04-11",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -42,6 +42,18 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-04-09",
+      "is_new": true
+    },
+    {
+      "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
+      "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
+      "date": "2026-04",
+      "sort_date": "2026-04-01",
+      "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "NdFeB",
+      "first_seen": "2026-04-11",
       "is_new": true
     },
     {
@@ -90,7 +102,7 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-04-08",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Magnetic criticality and magnetocaloric response in MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$",
@@ -102,7 +114,7 @@
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-04-08",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "EV battery recycling economics and rare earth element recovery for sustainable resource management",
@@ -354,18 +366,6 @@
       "source": "CrossRef (IEEE Transactions on Magnetics)",
       "category": "NdFeB",
       "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Misorientation statistics across hot-deformed Nd<sub>2</sub>Fe<sub>14</sub>B permanent magnet boundaries and the potential correlation with magnetic properties",
-      "authors": "Qian Li, Yuan Teng",
-      "date": "2025",
-      "sort_date": "2025-01-01",
-      "url": "https://doi.org/10.1039/d5ra00545k",
-      "abstract": "The preferred misorientation angles of nanocrystalline Nd–Fe–B magnets were analyzed for grain boundary plane distribution using a five parameter analysis method....",
-      "source": "CrossRef (RSC Advances)",
-      "category": "NdFeB",
-      "first_seen": "2025-01-01",
       "is_new": false
     },
     {
