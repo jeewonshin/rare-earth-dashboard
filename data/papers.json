@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-11 05:46",
+  "updated": "2026-04-12 06:51",
   "source": "arXiv + CrossRef",
   "new_count": 7,
   "categories": [
@@ -12,7 +12,7 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-11",
+      "sort_date": "2026-04-12",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -321,11 +321,11 @@
       "is_new": false
     },
     {
-      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
-      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
+      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
+      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20240073",
+      "url": "https://doi.org/10.3724/s1004-0277.20250001",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -333,11 +333,11 @@
       "is_new": false
     },
     {
-      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
-      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
+      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
+      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20250001",
+      "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
