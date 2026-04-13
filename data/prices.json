@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-12 06:51",
+  "updated": "2026-04-13 07:29",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -7,11 +7,11 @@
       "name": "네오디뮴 (Nd)",
       "grade": "99.5%min FOB China",
       "today": {
-        "date": "2026.04.09",
-        "value": 120.04,
+        "date": "2026.04.10",
+        "value": 120.42,
         "unit": "USD/kg",
-        "change_val": -0.21,
-        "change_pct": -0.17
+        "change_val": 0.38,
+        "change_pct": 0.32
       },
       "history": [
         {
@@ -2089,6 +2089,10 @@
         {
           "date": "2026.04.09",
           "value": 120.04
+        },
+        {
+          "date": "2026.04.10",
+          "value": 120.42
         }
       ]
     },
@@ -2096,11 +2100,11 @@
       "name": "세륨 (Ce)",
       "grade": "99%min FOB China",
       "today": {
-        "date": "2026.04.09",
+        "date": "2026.04.10",
         "value": 2.19,
         "unit": "USD/kg",
-        "change_val": 0.05,
-        "change_pct": 2.34
+        "change_val": 0.0,
+        "change_pct": 0.0
       },
       "history": [
         {
@@ -4174,6 +4178,10 @@
         {
           "date": "2026.04.09",
           "value": 2.19
+        },
+        {
+          "date": "2026.04.10",
+          "value": 2.19
         }
       ]
     },
@@ -4181,11 +4189,11 @@
       "name": "망간 (Mn)",
       "grade": "75%min FOB China",
       "today": {
-        "date": "2026.04.09",
-        "value": 1133.34,
+        "date": "2026.04.10",
+        "value": 1132.58,
         "unit": "USD/mt",
-        "change_val": 4.92,
-        "change_pct": 0.44
+        "change_val": -0.76,
+        "change_pct": -0.07
       },
       "history": [
         {
@@ -6251,6 +6259,10 @@
         {
           "date": "2026.04.09",
           "value": 1133.34
+        },
+        {
+          "date": "2026.04.10",
+          "value": 1132.58
         }
       ]
     },
@@ -6258,11 +6270,11 @@
       "name": "창연 (Bi)",
       "grade": "99.99%min FOB China",
       "today": {
-        "date": "2026.04.09",
-        "value": 21496.86,
+        "date": "2026.04.10",
+        "value": 21336.29,
         "unit": "USD/mt",
-        "change_val": 93.25,
-        "change_pct": 0.44
+        "change_val": -160.57,
+        "change_pct": -0.75
       },
       "history": [
         {
@@ -8324,6 +8336,10 @@
         {
           "date": "2026.04.09",
           "value": 21496.86
+        },
+        {
+          "date": "2026.04.10",
+          "value": 21336.29
         }
       ]
     }

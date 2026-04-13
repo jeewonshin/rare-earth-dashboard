@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-12 06:51",
+  "updated": "2026-04-13 07:30",
   "source": "arXiv + CrossRef",
   "new_count": 7,
   "categories": [
@@ -12,7 +12,7 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-12",
+      "sort_date": "2026-04-13",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -321,11 +321,11 @@
       "is_new": false
     },
     {
-      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
-      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
+      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
+      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20250001",
+      "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -333,11 +333,11 @@
       "is_new": false
     },
     {
-      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
-      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
+      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
+      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20240073",
+      "url": "https://doi.org/10.3724/s1004-0277.20250001",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -381,30 +381,6 @@
       "is_new": false
     },
     {
-      "title": "Transformation of in-plane to out-of-plane anisotropy in MnBi alloy for permanent magnet application: a First-principles study",
-      "authors": "Khoveto Vero, J. P. Borah",
-      "date": "2024-08-16",
-      "sort_date": "2024-08-16",
-      "url": "https://doi.org/10.1038/s41598-024-69908-0",
-      "abstract": "",
-      "source": "CrossRef (Scientific Reports)",
-      "category": "MnBi",
-      "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Oxygen adsorption on pristine MnBi and Ta-capped MnBi thin-films: Ab-initio study of structural and electronic properties, and magnetic anisotropy",
-      "authors": "U.F. Moukila Mberi Ndombo, B.R. Malonda-Boungou, H.B. Mabiala-Poaty et al.",
-      "date": "2024-03",
-      "sort_date": "2024-03-01",
-      "url": "https://doi.org/10.1016/j.jmmm.2024.171915",
-      "abstract": "",
-      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
-      "category": "MnBi",
-      "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
       "title": "Magnetocrystalline anisotropy of interstitially and substitutionally Sn-doped MnBi for high temperature permanent magnet applications",
       "authors": "Minyeong Choi, Yang-Ki Hong, Hoyun Won et al.",
       "date": "2023-10-01",
@@ -417,18 +393,6 @@
       "is_new": false
     },
     {
-      "title": "A core–shell magnet Mn<sub>70</sub>Bi<sub>30</sub> grown at seeds in magnetic fields and its impacts on its spin-dynamics, Curie point and other tailored properties",
-      "authors": "Sanjeev Kumar Sharma, Debabrata Pradhan, Shanker Ram",
-      "date": "2023-06-01",
-      "sort_date": "2023-06-01",
-      "url": "https://doi.org/10.1088/1361-6528/acd34c",
-      "abstract": "Abstract\n               The MnBi alloys is a model series of rare-Earth free magnets for surge of technologies of small parts of automobiles, power generators, medical tools, memory systems, and many ...",
-      "source": "CrossRef (Nanotechnology)",
-      "category": "MnBi",
-      "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
       "title": "Engineering microstructure to improve coercivity of bulk MnBi magnet",
       "authors": "Wei Tang, Gaoyuan Ouyang, Xubo Liu et al.",
       "date": "2022-12",
@@ -436,42 +400,6 @@
       "url": "https://doi.org/10.1016/j.jmmm.2022.169912",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
-      "category": "MnBi",
-      "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Influence of Bi Content on the Temperature of the Formation of the Hard Magnetic MnBi Phase: Simultaneous Irreversible Drop of Resistance",
-      "authors": "José Vergara, Cristina Favieres, Vicente Madurga",
-      "date": "2022-07-29",
-      "sort_date": "2022-07-29",
-      "url": "https://doi.org/10.3390/magnetochemistry8080082",
-      "abstract": "Pulsed laser-deposited (PLD) MnBi films were fabricated by alternating deposition of Mn and Bi layers. In order to obtain the ferromagnetic MnBi phase, heat treatments were performed on the samples. S...",
-      "source": "CrossRef (Magnetochemistry)",
-      "category": "MnBi",
-      "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Magnetic domain configurations of pulsed laser deposited MnBi hard magnetic films",
-      "authors": "J. Vergara, C. Favieres, V. Madurga",
-      "date": "2022-07",
-      "sort_date": "2022-07-01",
-      "url": "https://doi.org/10.1016/j.jmmm.2022.169316",
-      "abstract": "",
-      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
-      "category": "MnBi",
-      "first_seen": "2026-03-30",
-      "is_new": false
-    },
-    {
-      "title": "Microstructure and Magnetic Properties of Fe-doped MnBi Permanent Magnet Alloys",
-      "authors": "Yuan-Hao Tu, Qiong Wu, Hong-Liang Ge et al.",
-      "date": "2021-06-30",
-      "sort_date": "2021-06-30",
-      "url": "https://doi.org/10.4283/jmag.2021.26.2.188",
-      "abstract": "",
-      "source": "CrossRef (Journal of Magnetics)",
       "category": "MnBi",
       "first_seen": "2026-03-30",
       "is_new": false
