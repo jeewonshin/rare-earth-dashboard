@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-13 07:29",
+  "updated": "2026-04-14 07:10",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -7,11 +7,11 @@
       "name": "네오디뮴 (Nd)",
       "grade": "99.5%min FOB China",
       "today": {
-        "date": "2026.04.10",
-        "value": 120.42,
+        "date": "2026.04.13",
+        "value": 119.35,
         "unit": "USD/kg",
-        "change_val": 0.38,
-        "change_pct": 0.32
+        "change_val": -1.07,
+        "change_pct": -0.89
       },
       "history": [
         {
@@ -2093,6 +2093,10 @@
         {
           "date": "2026.04.10",
           "value": 120.42
+        },
+        {
+          "date": "2026.04.13",
+          "value": 119.35
         }
       ]
     },
@@ -2100,11 +2104,11 @@
       "name": "세륨 (Ce)",
       "grade": "99%min FOB China",
       "today": {
-        "date": "2026.04.10",
-        "value": 2.19,
+        "date": "2026.04.13",
+        "value": 2.17,
         "unit": "USD/kg",
-        "change_val": 0.0,
-        "change_pct": 0.0
+        "change_val": -0.02,
+        "change_pct": -0.91
       },
       "history": [
         {
@@ -4182,6 +4186,10 @@
         {
           "date": "2026.04.10",
           "value": 2.19
+        },
+        {
+          "date": "2026.04.13",
+          "value": 2.17
         }
       ]
     },
@@ -4189,11 +4197,11 @@
       "name": "망간 (Mn)",
       "grade": "75%min FOB China",
       "today": {
-        "date": "2026.04.10",
-        "value": 1132.58,
+        "date": "2026.04.13",
+        "value": 1130.38,
         "unit": "USD/mt",
-        "change_val": -0.76,
-        "change_pct": -0.07
+        "change_val": -2.2,
+        "change_pct": -0.19
       },
       "history": [
         {
@@ -6263,6 +6271,10 @@
         {
           "date": "2026.04.10",
           "value": 1132.58
+        },
+        {
+          "date": "2026.04.13",
+          "value": 1130.38
         }
       ]
     },
@@ -6270,11 +6282,11 @@
       "name": "창연 (Bi)",
       "grade": "99.99%min FOB China",
       "today": {
-        "date": "2026.04.10",
-        "value": 21336.29,
+        "date": "2026.04.13",
+        "value": 21294.93,
         "unit": "USD/mt",
-        "change_val": -160.57,
-        "change_pct": -0.75
+        "change_val": -41.36,
+        "change_pct": -0.19
       },
       "history": [
         {
@@ -8340,6 +8352,10 @@
         {
           "date": "2026.04.10",
           "value": 21336.29
+        },
+        {
+          "date": "2026.04.13",
+          "value": 21294.93
         }
       ]
     }
