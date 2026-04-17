@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-16 07:14",
+  "updated": "2026-04-17 07:15",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -2108,11 +2108,11 @@
       "name": "세륨 (Ce)",
       "grade": "99%min FOB China",
       "today": {
-        "date": "2026.04.14",
-        "value": 2.19,
+        "date": "2026.04.16",
+        "value": 2.2,
         "unit": "USD/kg",
-        "change_val": 0.02,
-        "change_pct": 0.92
+        "change_val": 0.01,
+        "change_pct": 0.46
       },
       "history": [
         {
@@ -4198,6 +4198,14 @@
         {
           "date": "2026.04.14",
           "value": 2.19
+        },
+        {
+          "date": "2026.04.15",
+          "value": 2.19
+        },
+        {
+          "date": "2026.04.16",
+          "value": 2.2
         }
       ]
     },
@@ -4205,11 +4213,11 @@
       "name": "망간 (Mn)",
       "grade": "75%min FOB China",
       "today": {
-        "date": "2026.04.14",
-        "value": 1133.23,
+        "date": "2026.04.16",
+        "value": 1133.3,
         "unit": "USD/mt",
-        "change_val": 2.85,
-        "change_pct": 0.25
+        "change_val": 3.27,
+        "change_pct": 0.29
       },
       "history": [
         {
@@ -6287,6 +6295,14 @@
         {
           "date": "2026.04.14",
           "value": 1133.23
+        },
+        {
+          "date": "2026.04.15",
+          "value": 1130.03
+        },
+        {
+          "date": "2026.04.16",
+          "value": 1133.3
         }
       ]
     },
@@ -6294,11 +6310,11 @@
       "name": "창연 (Bi)",
       "grade": "99.99%min FOB China",
       "today": {
-        "date": "2026.04.14",
-        "value": 21348.53,
+        "date": "2026.04.16",
+        "value": 21350.0,
         "unit": "USD/mt",
-        "change_val": 53.6,
-        "change_pct": 0.25
+        "change_val": 61.62,
+        "change_pct": 0.29
       },
       "history": [
         {
@@ -8372,6 +8388,14 @@
         {
           "date": "2026.04.14",
           "value": 21348.53
+        },
+        {
+          "date": "2026.04.15",
+          "value": 21288.38
+        },
+        {
+          "date": "2026.04.16",
+          "value": 21350.0
         }
       ]
     }
