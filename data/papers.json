@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-20 09:20",
+  "updated": "2026-04-21 00:32",
   "source": "arXiv + CrossRef",
   "new_count": 7,
   "categories": [
@@ -12,24 +12,24 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-20",
+      "sort_date": "2026-04-21",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
       "category": "NdFeB",
-      "first_seen": "2026-03-27",
+      "first_seen": "2026-04-21",
       "is_new": true
     },
     {
       "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
       "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
       "date": "2026-07",
-      "sort_date": "2026-04-20",
+      "sort_date": "2026-04-21",
       "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "NdFeB",
-      "first_seen": "2026-04-11",
+      "first_seen": "2026-04-21",
       "is_new": true
     },
     {
@@ -41,7 +41,7 @@
       "abstract": "We demonstrate that charge fluctuations induced by electron hopping, combined with spin-orbit coupling, lift the sixfold degeneracy of the orbital singlet $^{6}S$ of Mn ions in the topological insulat...",
       "source": "arXiv",
       "category": "MnBi",
-      "first_seen": "2026-04-10",
+      "first_seen": "2026-04-09",
       "is_new": true
     },
     {
@@ -53,7 +53,7 @@
       "abstract": "MnBi$_2$Te$_4$ (MBT) thin films provide a unique material platform in which magnetism, topology, and magneto-optical (MO) response can be tuned through layer-thickness and relative spin alignments. In...",
       "source": "arXiv",
       "category": "MnBi",
-      "first_seen": "2026-04-09",
+      "first_seen": "2026-04-08",
       "is_new": true
     },
     {
@@ -65,7 +65,7 @@
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
-      "first_seen": "2026-04-14",
+      "first_seen": "2026-04-01",
       "is_new": true
     },
     {
@@ -77,7 +77,7 @@
       "abstract": "Rare earth elements (REEs) are essential to many low-carbon and digital technologies, yet the primary supply is geographically concentrated; waste electrical and electronic equipment (WEEE) could act ...",
       "source": "CrossRef (Recycling)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-04-03",
+      "first_seen": "2026-04-01",
       "is_new": true
     },
     {
@@ -89,7 +89,7 @@
       "abstract": "",
       "source": "CrossRef (Waste Management)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2026-04-01",
       "is_new": true
     },
     {
@@ -101,7 +101,7 @@
       "abstract": "Monolayer MnBi$_{2}$Te$_{4}$ (MBT) is an intrinsically magnetic topological insulator whose magnetic response is strongly affected by strain and electron correlation. In density functional theory with...",
       "source": "arXiv",
       "category": "MnBi",
-      "first_seen": "2026-04-08",
+      "first_seen": "2026-03-17",
       "is_new": false
     },
     {
@@ -113,7 +113,7 @@
       "abstract": "Recent work demonstrated that in the long wavelength limit the linear response of a Chern insulator to finite-frequency electric fields is the sum of two terms: A general frequency-dependent Kubo cont...",
       "source": "arXiv",
       "category": "MnBi",
-      "first_seen": "2026-04-08",
+      "first_seen": "2026-03-11",
       "is_new": false
     },
     {
@@ -125,7 +125,7 @@
       "abstract": "MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$ are antiferromagnetic topological insulators belonging to the MnBi$_{2n}$Te$_{3n+1}$ series, where structural layering provides a natural route to tune magnetic inter...",
       "source": "arXiv",
       "category": "MnBi",
-      "first_seen": "2026-04-08",
+      "first_seen": "2026-03-11",
       "is_new": false
     },
     {
@@ -137,7 +137,7 @@
       "abstract": "",
       "source": "CrossRef (Discover Sustainability)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2026-03-09",
       "is_new": false
     },
     {
@@ -149,7 +149,7 @@
       "abstract": "Hot deformation is a potential technique to fabricate anisotropic rare earth permanent magnets required for high-performance electric motors. The magnetic properties of hot-deformed Nd–Fe–B magnets ar...",
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
-      "first_seen": "2026-03-30",
+      "first_seen": "2026-02-01",
       "is_new": false
     },
     {
@@ -173,7 +173,7 @@
       "abstract": "",
       "source": "CrossRef (Resources Recycling)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-12-31",
       "is_new": false
     },
     {
@@ -209,7 +209,7 @@
       "abstract": "",
       "source": "CrossRef (Surfaces and Interfaces)",
       "category": "NdFeB",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-11-01",
       "is_new": false
     },
     {
@@ -233,7 +233,7 @@
       "abstract": "",
       "source": "CrossRef (Minerals Engineering)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-10-01",
       "is_new": false
     },
     {
@@ -245,7 +245,7 @@
       "abstract": "In the Russian Federation, it is planned to increase industrial capacities for the extraction and use of rare earth metals, which requires consideration of emerging environmental risks. The article is...",
       "source": "CrossRef (Russian Journal of Resources, Conservation and Recycling)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-09-30",
       "is_new": false
     },
     {
@@ -257,7 +257,7 @@
       "abstract": "Formo-phenolic-like resins were synthesized by replacing phenol with phloroglucinol, a biobased and biocompatible compound, and using different aldehydes, such as biomass-derived furaldehyde and glyox...",
       "source": "CrossRef (Recycling)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-08-17",
       "is_new": false
     },
     {
@@ -281,7 +281,7 @@
       "abstract": "",
       "source": "CrossRef (Resources, Conservation and Recycling)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-08-01",
       "is_new": false
     },
     {
@@ -293,7 +293,7 @@
       "abstract": "Rare-earth elements (REEs), including lanthanides, scandium, and yttrium, are important for advanced technologies such as renewable energy systems, electronics, medical diagnostics, and precision agri...",
       "source": "CrossRef (Minerals)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-03-30",
+      "first_seen": "2025-07-09",
       "is_new": false
     },
     {
@@ -353,7 +353,7 @@
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB_Recycling",
-      "first_seen": "2026-04-19",
+      "first_seen": "2025-06-01",
       "is_new": false
     },
     {
@@ -377,7 +377,7 @@
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
-      "first_seen": "2026-03-30",
+      "first_seen": "2024-11-01",
       "is_new": false
     },
     {
@@ -389,7 +389,7 @@
       "abstract": "",
       "source": "CrossRef (Scientific Reports)",
       "category": "MnBi",
-      "first_seen": "2026-04-14",
+      "first_seen": "2024-08-16",
       "is_new": false
     },
     {
@@ -401,7 +401,7 @@
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
-      "first_seen": "2026-04-14",
+      "first_seen": "2024-03-01",
       "is_new": false
     },
     {
@@ -413,7 +413,7 @@
       "abstract": "First-principles calculations were performed to calculate the electronic structures of low temperature phase (LTP) MnBi (Mn50Bi50) and substitutionally and interstitially Sn-doped MnBi [Mn50Bi25Sn25, ...",
       "source": "CrossRef (AIP Advances)",
       "category": "MnBi",
-      "first_seen": "2026-03-30",
+      "first_seen": "2023-10-01",
       "is_new": false
     },
     {
@@ -425,7 +425,7 @@
       "abstract": "Abstract\n               The MnBi alloys is a model series of rare-Earth free magnets for surge of technologies of small parts of automobiles, power generators, medical tools, memory systems, and many ...",
       "source": "CrossRef (Nanotechnology)",
       "category": "MnBi",
-      "first_seen": "2026-04-14",
+      "first_seen": "2023-06-01",
       "is_new": false
     },
     {
@@ -437,7 +437,7 @@
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
-      "first_seen": "2026-03-30",
+      "first_seen": "2022-12-01",
       "is_new": false
     },
     {
@@ -449,7 +449,7 @@
       "abstract": "Pulsed laser-deposited (PLD) MnBi films were fabricated by alternating deposition of Mn and Bi layers. In order to obtain the ferromagnetic MnBi phase, heat treatments were performed on the samples. S...",
       "source": "CrossRef (Magnetochemistry)",
       "category": "MnBi",
-      "first_seen": "2026-04-14",
+      "first_seen": "2022-07-29",
       "is_new": false
     },
     {
@@ -461,7 +461,7 @@
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "MnBi",
-      "first_seen": "2026-04-14",
+      "first_seen": "2022-07-01",
       "is_new": false
     },
     {
@@ -473,7 +473,7 @@
       "abstract": "",
       "source": "CrossRef (Journal of Magnetics)",
       "category": "MnBi",
-      "first_seen": "2026-04-14",
+      "first_seen": "2021-06-30",
       "is_new": false
     }
   ]
