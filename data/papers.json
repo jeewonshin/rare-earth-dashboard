@@ -1,7 +1,7 @@
 {
-  "updated": "2026-04-21 07:14",
+  "updated": "2026-04-23 07:16",
   "source": "arXiv + CrossRef",
-  "new_count": 7,
+  "new_count": 8,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -12,7 +12,7 @@
       "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
       "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
       "date": "2026-05",
-      "sort_date": "2026-04-21",
+      "sort_date": "2026-04-23",
       "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
       "source": "CrossRef (Materials Research Bulletin)",
@@ -24,7 +24,7 @@
       "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
       "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
       "date": "2026-07",
-      "sort_date": "2026-04-21",
+      "sort_date": "2026-04-23",
       "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
@@ -90,6 +90,18 @@
       "source": "CrossRef (Waste Management)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-04-01",
+      "is_new": true
+    },
+    {
+      "title": "A comprehensive review on advanced recovery of rare earth elements from NdFeB waste: Bibliometric insights and process advancements",
+      "authors": "Jianfeng Ran, Qing Guo, Weichao Huang et al.",
+      "date": "2026-04",
+      "sort_date": "2026-04-01",
+      "url": "https://doi.org/10.1016/j.jre.2026.04.026",
+      "abstract": "",
+      "source": "CrossRef (Journal of Rare Earths)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-04-23",
       "is_new": true
     },
     {
@@ -249,18 +261,6 @@
       "is_new": false
     },
     {
-      "title": "Extraction of Rare Earth Elements from Organic Acid Leachate Using Formo-Phenolic-like Resins",
-      "authors": "Evan Lelong, Julien Couturier, Clément Levard et al.",
-      "date": "2025-08-17",
-      "sort_date": "2025-08-17",
-      "url": "https://doi.org/10.3390/recycling10040165",
-      "abstract": "Formo-phenolic-like resins were synthesized by replacing phenol with phloroglucinol, a biobased and biocompatible compound, and using different aldehydes, such as biomass-derived furaldehyde and glyox...",
-      "source": "CrossRef (Recycling)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2025-08-17",
-      "is_new": false
-    },
-    {
       "title": "Analysis of structural differences in hot deformed Nd-Fe-B magnets——From the perspective of grain boundary plane distribution",
       "authors": "Qian Li, Hanxiao Zhou, Yuan Teng",
       "date": "2025-08",
@@ -321,11 +321,11 @@
       "is_new": false
     },
     {
-      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
-      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
+      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
+      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20240073",
+      "url": "https://doi.org/10.3724/s1004-0277.20250001",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -333,11 +333,11 @@
       "is_new": false
     },
     {
-      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
-      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
+      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
+      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20250001",
+      "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
