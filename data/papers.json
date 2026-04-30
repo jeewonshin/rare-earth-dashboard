@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-28 04:52",
+  "updated": "2026-04-30 04:50",
   "source": "arXiv + CrossRef",
   "new_count": 8,
   "categories": [
@@ -9,25 +9,25 @@
   ],
   "items": [
     {
-      "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
-      "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
-      "date": "2026-05",
-      "sort_date": "2026-04-28",
-      "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
+      "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
+      "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
+      "date": "2026-07",
+      "sort_date": "2026-04-30",
+      "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
       "abstract": "",
-      "source": "CrossRef (Materials Research Bulletin)",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "NdFeB",
       "first_seen": "2026-04-21",
       "is_new": true
     },
     {
-      "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
-      "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
-      "date": "2026-07",
-      "sort_date": "2026-04-28",
-      "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
+      "title": "The correlation between microstructure and grain boundary plane distribution of hot-deformed Nd-Fe-B magnets—From the perspective of the five parameter analysis method",
+      "authors": "Qian Li, Wenhui Wang, Sujie Tang et al.",
+      "date": "2026-05",
+      "sort_date": "2026-04-30",
+      "url": "https://doi.org/10.1016/j.materresbull.2026.114027",
       "abstract": "",
-      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "source": "CrossRef (Materials Research Bulletin)",
       "category": "NdFeB",
       "first_seen": "2026-04-21",
       "is_new": true
@@ -390,6 +390,18 @@
       "source": "CrossRef (Scientific Reports)",
       "category": "MnBi",
       "first_seen": "2024-08-16",
+      "is_new": false
+    },
+    {
+      "title": "Oxygen adsorption on pristine MnBi and Ta-capped MnBi thin-films: Ab-initio study of structural and electronic properties, and magnetic anisotropy",
+      "authors": "U.F. Moukila Mberi Ndombo, B.R. Malonda-Boungou, H.B. Mabiala-Poaty et al.",
+      "date": "2024-03",
+      "sort_date": "2024-03-01",
+      "url": "https://doi.org/10.1016/j.jmmm.2024.171915",
+      "abstract": "",
+      "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
+      "category": "MnBi",
+      "first_seen": "2026-04-30",
       "is_new": false
     },
     {
