@@ -1,7 +1,7 @@
 {
-  "updated": "2026-05-01 05:02",
+  "updated": "2026-05-02 04:36",
   "source": "arXiv + CrossRef",
-  "new_count": 8,
+  "new_count": 4,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -12,7 +12,7 @@
       "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
       "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
       "date": "2026-07",
-      "sort_date": "2026-05-01",
+      "sort_date": "2026-05-02",
       "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
@@ -66,7 +66,7 @@
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
       "first_seen": "2026-04-01",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Technological Pathways for Rare Earth Elements Recovery from WEEE: A Systematic Mapping Review",
@@ -78,7 +78,7 @@
       "source": "CrossRef (Recycling)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-04-01",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "A nonlinear discrete-time compartmental model for rare earth e-waste recycling",
@@ -90,7 +90,7 @@
       "source": "CrossRef (Waste Management)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-04-01",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "A comprehensive review on advanced recovery of rare earth elements from NdFeB waste: Bibliometric insights and process advancements",
@@ -102,7 +102,7 @@
       "source": "CrossRef (Journal of Rare Earths)",
       "category": "NdFeB_Recycling",
       "first_seen": "2026-04-23",
-      "is_new": true
+      "is_new": false
     },
     {
       "title": "Optimizing Density Functional Theory for Strain-Dependent Magnetic Properties of Monolayer MnBi$_2$Te$_4$ with Diffusion Monte Carlo",
@@ -321,11 +321,11 @@
       "is_new": false
     },
     {
-      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
-      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
+      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
+      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20250001",
+      "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
@@ -333,11 +333,11 @@
       "is_new": false
     },
     {
-      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
-      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
+      "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
+      "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20240073",
+      "url": "https://doi.org/10.3724/s1004-0277.20250001",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
       "category": "NdFeB",
