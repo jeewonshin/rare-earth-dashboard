@@ -1,7 +1,7 @@
 {
-  "updated": "2026-05-04 04:55",
+  "updated": "2026-05-05 04:36",
   "source": "arXiv + CrossRef",
-  "new_count": 4,
+  "new_count": 5,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -12,12 +12,24 @@
       "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
       "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
       "date": "2026-07",
-      "sort_date": "2026-05-04",
+      "sort_date": "2026-05-05",
       "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "NdFeB",
       "first_seen": "2026-04-21",
+      "is_new": true
+    },
+    {
+      "title": "Metastable MnBi$_2$Te$_4$ enabled by magnetic-field-assisted synthesis",
+      "authors": "Abhinna Rajbanshi, G. M. Zills, Alexander M. Donald et al.",
+      "date": "2026-05-04",
+      "sort_date": "2026-05-04",
+      "url": "http://arxiv.org/abs/2605.02119v1",
+      "abstract": "Magnetic topological insulators provide a unique platform to explore the interplay between magnetism and topology. MnBi$_2$Te$_4$, known for its A-type antiferromagnetic (AFM) ground state, undergoes ...",
+      "source": "arXiv",
+      "category": "MnBi",
+      "first_seen": "2026-05-05",
       "is_new": true
     },
     {
@@ -123,18 +135,6 @@
       "sort_date": "2026-03-11",
       "url": "http://arxiv.org/abs/2603.11268v1",
       "abstract": "Recent work demonstrated that in the long wavelength limit the linear response of a Chern insulator to finite-frequency electric fields is the sum of two terms: A general frequency-dependent Kubo cont...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-27",
-      "is_new": false
-    },
-    {
-      "title": "Magnetic criticality and magnetocaloric response in MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$",
-      "authors": "Nazma Firdosh, Shreyashi Sinha, Sujit Manna",
-      "date": "2026-03-11",
-      "sort_date": "2026-03-11",
-      "url": "http://arxiv.org/abs/2603.10824v1",
-      "abstract": "MnBi$_2$Te$_4$ and MnBi$_4$Te$_7$ are antiferromagnetic topological insulators belonging to the MnBi$_{2n}$Te$_{3n+1}$ series, where structural layering provides a natural route to tune magnetic inter...",
       "source": "arXiv",
       "category": "MnBi",
       "first_seen": "2026-04-27",
