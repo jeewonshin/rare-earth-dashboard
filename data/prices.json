@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-05 04:36",
+  "updated": "2026-05-11 14:01",
   "source": "KOMIS (한국자원정보서비스)",
   "source_url": "https://www.komis.or.kr/Komis/RsrcPrice/MinorMetals",
   "metals": [
@@ -7,11 +7,11 @@
       "name": "네오디뮴 (Nd)",
       "grade": "99.5%min FOB China",
       "today": {
-        "date": "2026.04.29",
-        "value": 124.66,
+        "date": "2026.05.09",
+        "value": 122.84,
         "unit": "USD/kg",
-        "change_val": 1.32,
-        "change_pct": 1.07
+        "change_val": 0.29,
+        "change_pct": 0.24
       },
       "history": [
         {
@@ -2145,6 +2145,22 @@
         {
           "date": "2026.04.29",
           "value": 124.66
+        },
+        {
+          "date": "2026.05.06",
+          "value": 123.81
+        },
+        {
+          "date": "2026.05.07",
+          "value": 124.51
+        },
+        {
+          "date": "2026.05.08",
+          "value": 122.55
+        },
+        {
+          "date": "2026.05.09",
+          "value": 122.84
         }
       ]
     },
@@ -2152,11 +2168,11 @@
       "name": "세륨 (Ce)",
       "grade": "99%min FOB China",
       "today": {
-        "date": "2026.04.29",
-        "value": 2.2,
+        "date": "2026.05.09",
+        "value": 2.23,
         "unit": "USD/kg",
-        "change_val": 0.01,
-        "change_pct": 0.46
+        "change_val": 0.0,
+        "change_pct": 0.0
       },
       "history": [
         {
@@ -4286,6 +4302,22 @@
         {
           "date": "2026.04.29",
           "value": 2.2
+        },
+        {
+          "date": "2026.05.06",
+          "value": 2.18
+        },
+        {
+          "date": "2026.05.07",
+          "value": 2.24
+        },
+        {
+          "date": "2026.05.08",
+          "value": 2.23
+        },
+        {
+          "date": "2026.05.09",
+          "value": 2.23
         }
       ]
     },
@@ -4293,11 +4325,11 @@
       "name": "망간 (Mn)",
       "grade": "75%min FOB China",
       "today": {
-        "date": "2026.04.29",
-        "value": 1131.84,
+        "date": "2026.05.09",
+        "value": 1104.68,
         "unit": "USD/mt",
-        "change_val": -0.85,
-        "change_pct": -0.08
+        "change_val": -14.63,
+        "change_pct": -1.31
       },
       "history": [
         {
@@ -6419,6 +6451,22 @@
         {
           "date": "2026.04.29",
           "value": 1131.84
+        },
+        {
+          "date": "2026.05.06",
+          "value": 1133.46
+        },
+        {
+          "date": "2026.05.07",
+          "value": 1134.91
+        },
+        {
+          "date": "2026.05.08",
+          "value": 1119.31
+        },
+        {
+          "date": "2026.05.09",
+          "value": 1104.68
         }
       ]
     },
@@ -6426,11 +6474,11 @@
       "name": "창연 (Bi)",
       "grade": "99.99%min FOB China",
       "today": {
-        "date": "2026.04.29",
-        "value": 21322.38,
+        "date": "2026.05.09",
+        "value": 21361.92,
         "unit": "USD/mt",
-        "change_val": -15.97,
-        "change_pct": -0.07
+        "change_val": 0.0,
+        "change_pct": 0.0
       },
       "history": [
         {
@@ -8548,6 +8596,22 @@
         {
           "date": "2026.04.29",
           "value": 21322.38
+        },
+        {
+          "date": "2026.05.06",
+          "value": 21352.96
+        },
+        {
+          "date": "2026.05.07",
+          "value": 21380.32
+        },
+        {
+          "date": "2026.05.08",
+          "value": 21361.92
+        },
+        {
+          "date": "2026.05.09",
+          "value": 21361.92
         }
       ]
     }

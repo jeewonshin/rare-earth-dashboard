@@ -1,7 +1,7 @@
 {
-  "updated": "2026-05-05 04:36",
+  "updated": "2026-05-11 14:02",
   "source": "arXiv + CrossRef",
-  "new_count": 5,
+  "new_count": 2,
   "categories": [
     "NdFeB",
     "MnBi",
@@ -12,24 +12,12 @@
       "title": "Influence of grain boundary diffusion on the magnetic properties and microstructure homogeneity of hot-extruded Nd-Fe-B ring magnets",
       "authors": "Yufei Chen, Jianhui Dong, Ningtao Quan et al.",
       "date": "2026-07",
-      "sort_date": "2026-05-05",
+      "sort_date": "2026-05-11",
       "url": "https://doi.org/10.1016/j.jmmm.2026.174083",
       "abstract": "",
       "source": "CrossRef (Journal of Magnetism and Magnetic Materials)",
       "category": "NdFeB",
       "first_seen": "2026-04-21",
-      "is_new": true
-    },
-    {
-      "title": "Metastable MnBi$_2$Te$_4$ enabled by magnetic-field-assisted synthesis",
-      "authors": "Abhinna Rajbanshi, G. M. Zills, Alexander M. Donald et al.",
-      "date": "2026-05-04",
-      "sort_date": "2026-05-04",
-      "url": "http://arxiv.org/abs/2605.02119v1",
-      "abstract": "Magnetic topological insulators provide a unique platform to explore the interplay between magnetism and topology. MnBi$_2$Te$_4$, known for its A-type antiferromagnetic (AFM) ground state, undergoes ...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-05-05",
       "is_new": true
     },
     {
@@ -42,30 +30,6 @@
       "source": "CrossRef (Materials Research Bulletin)",
       "category": "NdFeB",
       "first_seen": "2026-04-21",
-      "is_new": true
-    },
-    {
-      "title": "Fluctuation Mechanism of Single-Ion Anisotropy of Topological Insulator MnBi$_2$Te$_4$",
-      "authors": "V. V. Val'kov, A. O. Zlotnikov, A. Gamov",
-      "date": "2026-04-09",
-      "sort_date": "2026-04-09",
-      "url": "http://arxiv.org/abs/2604.07852v1",
-      "abstract": "We demonstrate that charge fluctuations induced by electron hopping, combined with spin-orbit coupling, lift the sixfold degeneracy of the orbital singlet $^{6}S$ of Mn ions in the topological insulat...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-27",
-      "is_new": true
-    },
-    {
-      "title": "Topological Magneto-Optical Switching in Even-Layered MnBi$_2$Te$_4$",
-      "authors": "Shahid Sattar, Roman Stepanov, C. M. Canali",
-      "date": "2026-04-08",
-      "sort_date": "2026-04-08",
-      "url": "http://arxiv.org/abs/2604.07315v1",
-      "abstract": "MnBi$_2$Te$_4$ (MBT) thin films provide a unique material platform in which magnetism, topology, and magneto-optical (MO) response can be tuned through layer-thickness and relative spin alignments. In...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-27",
       "is_new": true
     },
     {
@@ -117,30 +81,6 @@
       "is_new": false
     },
     {
-      "title": "Optimizing Density Functional Theory for Strain-Dependent Magnetic Properties of Monolayer MnBi$_2$Te$_4$ with Diffusion Monte Carlo",
-      "authors": "Jeonghwan Ahn, Swarnava Ghosh, Seoung-Hun Kang et al.",
-      "date": "2026-03-17",
-      "sort_date": "2026-03-17",
-      "url": "http://arxiv.org/abs/2603.16162v1",
-      "abstract": "Monolayer MnBi$_{2}$Te$_{4}$ (MBT) is an intrinsically magnetic topological insulator whose magnetic response is strongly affected by strain and electron correlation. In density functional theory with...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-27",
-      "is_new": false
-    },
-    {
-      "title": "Linear response of the Chern insulator MnBi$_2$Te$_4$: A Wannier function approach",
-      "authors": "Matthew Albert, Javier Sivianes, Jason G. Kattan et al.",
-      "date": "2026-03-11",
-      "sort_date": "2026-03-11",
-      "url": "http://arxiv.org/abs/2603.11268v1",
-      "abstract": "Recent work demonstrated that in the long wavelength limit the linear response of a Chern insulator to finite-frequency electric fields is the sum of two terms: A general frequency-dependent Kubo cont...",
-      "source": "arXiv",
-      "category": "MnBi",
-      "first_seen": "2026-04-27",
-      "is_new": false
-    },
-    {
       "title": "EV battery recycling economics and rare earth element recovery for sustainable resource management",
       "authors": "Raajasekar Mathiyalagan, Jayakrishna Kandasamy",
       "date": "2026-03-09",
@@ -162,6 +102,18 @@
       "source": "CrossRef (AIP Advances)",
       "category": "NdFeB",
       "first_seen": "2026-02-01",
+      "is_new": false
+    },
+    {
+      "title": "Non-aqueous pathways for rare earth element recovery from NdFeB magnets",
+      "authors": "Soroush Rahmati",
+      "date": "2026-02",
+      "sort_date": "2026-02-01",
+      "url": "https://doi.org/10.1016/j.jece.2025.120983",
+      "abstract": "",
+      "source": "CrossRef (Journal of Environmental Chemical Engineering)",
+      "category": "NdFeB_Recycling",
+      "first_seen": "2026-05-11",
       "is_new": false
     },
     {
@@ -321,18 +273,6 @@
       "is_new": false
     },
     {
-      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
-      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
-      "date": "2025-06-01",
-      "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.20240073",
-      "abstract": "",
-      "source": "CrossRef (Chinese Rare Earths)",
-      "category": "NdFeB",
-      "first_seen": "2025-06-01",
-      "is_new": false
-    },
-    {
       "title": "Effect of Heat Treatment on Microstructure and Coercivity of Grain Boundary Diffusion Nd-Fe-B Magnets",
       "authors": "Min HUANG, Yong DING, Chun-guo WANG et al.",
       "date": "2025-06-01",
@@ -345,15 +285,15 @@
       "is_new": false
     },
     {
-      "title": "Research on Short Process Recycling Technology of Bonded NdFeB Magnet Waste",
-      "authors": "Pei-pei XUE, Pei-hong ZHU, Min LIU et al.",
+      "title": "Ni Doping Improves the Grain Boundary Diffusion Efficiency of Sintered Nd-Fe-B Magnets",
+      "authors": "Ze-yuan GAO, San-gen LUO, Hong-long YANG et al.",
       "date": "2025-06-01",
       "sort_date": "2025-06-01",
-      "url": "https://doi.org/10.3724/s1004-0277.202503009",
+      "url": "https://doi.org/10.3724/s1004-0277.20240073",
       "abstract": "",
       "source": "CrossRef (Chinese Rare Earths)",
-      "category": "NdFeB_Recycling",
-      "first_seen": "2026-05-01",
+      "category": "NdFeB",
+      "first_seen": "2025-06-01",
       "is_new": false
     },
     {
